@@ -4,62 +4,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Калькулятор реликвий</title>
+    <title>Калькулятор реликвий — HSR</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/enhancements.css">
 </head>
 
 <body>
-    <div class="container">
+<div class="container">
         <header>
-            <h1>Калькулятор реликвий</h1>
+            <div class="header-top">
+                <h1>Калькулятор реликвий</h1>
+                <div class="header-actions">
+                    <button class="toolbar-btn export-btn" id="exportBtn" title="Экспорт всех сетов в JSON">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Экспорт
+                    </button>
+                    <button class="toolbar-btn import-btn" id="importBtn" title="Импорт сетов из JSON">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3" transform="rotate(180 12 9)"/></svg>
+                        Импорт
+                    </button>
+                    <input type="file" id="importFileInput" accept=".json" class="hidden">
+                </div>
+            </div>
         </header>
 
         <main>
-                    <div class="artifact-card-footer">
-                        <div class="artifact-footer-left">
-                            <span class="drop-chance"></span>
-                            <span class="resin-count"></span>
-                        </div>
-                    </div>
-                <div class="sets-window">
-                    <h2>Ваши сеты</h2>
-                    <div id="sets-list" class="sets-list">
-                        <p class="empty-message">Нет добавленных сетов</p>
-                    <div class="artifact-summary" aria-label="Итоги">
-                        <div class="artifact-summary-row">
-                            <span class="artifact-summary-label">Итого смолы:</span>
-                            <span class="artifact-summary-value">1</span>
-                        </div>
-                        <div class="artifact-summary-row">
-                            <span class="artifact-summary-label">Суммарный шанс:</span>
-                            <span class="artifact-summary-value">1</span>
-                        </div>
-                    </div>
-                    </div>
+            <!-- Панель фильтров и сортировки -->
+            <div class="sets-toolbar">
+                <div class="toolbar-search-wrap">
+                    <svg class="toolbar-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="setsSearchInput" placeholder="Поиск по сетам, персонажам, тегам..." class="toolbar-search">
                 </div>
-
-                <button class="add-set-btn" id="addSetBtn">
-                    <span class="btn-icon">+</span>
-                    Добавить сет
-                </button>
+                <div class="toolbar-right">
+                    <select id="sortSelect" class="sort-select">
+                        <option value="date-desc">Новые первые</option>
+                        <option value="date-asc">Старые первые</option>
+                        <option value="name-asc">По имени A–Z</option>
+                        <option value="name-desc">По имени Z–A</option>
+                        <option value="progress-desc">По прогрессу ↓</option>
+                    </select>
+                </div>
             </div>
+            <!-- Фильтр по элементу -->
+            <div class="element-filter-row" id="setsElementFilter"></div>
+            <!-- Фильтр по тегам (появляется динамически) -->
+            <div class="tag-filter-row hidden" id="setsTagFilter">
+                <span class="filter-label">Теги:</span>
+                <div class="tag-filter-chips" id="setsTagChips"></div>
+            </div>
+
+            <div class="sets-window">
+                <h2>Ваши сеты</h2>
+                <div id="sets-list" class="sets-list">
+                    <p class="empty-message">Нет добавленных сетов</p>
+                </div>
+            </div>
+
+            <button class="add-set-btn" id="addSetBtn">
+                <span class="btn-icon">+</span>
+                Добавить сет
+            </button>
         </main>
     </div>
 
+    <!-- Модал: выбор персонажа -->
     <div id="createSetModal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2>Создание сета</h2>
             <div class="character-selector">
                 <button class="add-character-btn" id="addCharacterBtn">Выбрать персонажа</button>
-                <div id="characterDropdown" class="character-dropdown hidden"></div>
+                <div id="characterDropdown" class="character-dropdown hidden">
+                    <div class="char-search-bar">
+                        <svg class="char-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" id="charSearchInput" placeholder="Поиск персонажа..." class="char-search-input" autocomplete="off">
+                    </div>
+                    <div class="char-element-filters" id="charElementFilters"></div>
+                    <div class="char-options-list" id="charOptionsList"></div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Модал: редактор реликвий -->
     <div id="artifactModal" class="modal">
         <div class="modal-content artifact-modal">
             <span class="close-modal" onclick="closeArtifactModal()">&times;</span>
@@ -79,12 +109,12 @@
                                 </div>
                             </div>
                         </div>
-                            <div class="artifact-card-footer">
-                                <div class="artifact-footer-left">
-                                    <span class="drop-chance"></span>
-                                    <span class="resin-count"></span>
-                                </div>
+                        <div class="artifact-card-footer">
+                            <div class="artifact-footer-left">
+                                <span class="drop-chance"></span>
+                                <span class="resin-count"></span>
                             </div>
+                        </div>
                     </div>
                     <div class="artifact-card" data-slot="hands">
                         <div class="artifact-card-header">Перчатки</div>
@@ -130,16 +160,23 @@
                     </div>
                 </div>
                 <div class="character-display">
-                    <h3 id="selectedCharacterName">Персонаж</h3>
-                    <img id="selectedCharacterImg" src="https://via.placeholder.com/250x350" alt="Character">
+                    <div class="char-display-header">
+                        <h3 id="selectedCharacterName">Персонаж</h3>
+                        <span id="selectedCharacterElement" class="char-element-badge" style="display:none"></span>
+                    </div>
+                    <img id="selectedCharacterImg" src="" alt="Character">
                     <div class="artifact-summary" aria-label="Итоги">
                         <div class="artifact-summary-row">
                             <span class="artifact-summary-label">Итого смолы:</span>
-                            <span class="artifact-summary-value">1</span>
+                            <span class="artifact-summary-value" id="totalResinValue">—</span>
                         </div>
                         <div class="artifact-summary-row">
                             <span class="artifact-summary-label">Суммарный шанс:</span>
-                            <span class="artifact-summary-value">1</span>
+                            <span class="artifact-summary-value" id="totalChanceValue">—</span>
+                        </div>
+                        <div class="artifact-summary-row">
+                            <span class="artifact-summary-label">Получено:</span>
+                            <span class="artifact-summary-value" id="totalObtainedValue">0 / 6</span>
                         </div>
                     </div>
                 </div>
@@ -187,7 +224,7 @@
                         </div>
                     </div>
                     <div class="artifact-card" data-slot="rope">
-                        <div class="artifact-card-header">Веревка</div>
+                        <div class="artifact-card-header">Верёвка</div>
                         <div class="artifact-card-body">
                             <button class="artifact-set-btn" type="button" title="Выбрать сет">+</button>
                             <div class="artifact-stats">
@@ -213,15 +250,20 @@
         </div>
     </div>
 
+    <!-- Модал: название сета + теги -->
     <div id="nameSetModal" class="modal">
         <div class="modal-content name-modal">
             <span class="close-modal" onclick="closeNameModal()">&times;</span>
-            <h2>Название сета</h2>
+            <h2>Сохранение сета</h2>
+            <label class="modal-field-label">Название</label>
             <input type="text" id="setNameInput" placeholder="Введите название сета" maxlength="50">
+            <label class="modal-field-label">Теги <span class="label-hint">(через запятую)</span></label>
+            <input type="text" id="setTagsInput" placeholder="carry, f2p, endgame, pf..." maxlength="150">
             <button class="save-set-btn" onclick="confirmSetName()">Сохранить</button>
         </div>
     </div>
 
+    <!-- Модал: выбор сета реликвий -->
     <div id="setSelectionModal" class="modal">
         <div class="modal-content selection-modal">
             <span class="close-modal" onclick="closeSetSelectionModal()">&times;</span>
@@ -230,6 +272,7 @@
         </div>
     </div>
 
+    <!-- Модал: главный стат -->
     <div id="mainStatModal" class="modal">
         <div class="modal-content selection-modal">
             <span class="close-modal" onclick="closeMainStatModal()">&times;</span>
@@ -238,6 +281,7 @@
         </div>
     </div>
 
+    <!-- Модал: подстат -->
     <div id="substatModal" class="modal">
         <div class="modal-content selection-modal">
             <span class="close-modal" onclick="closeSubstatModal()">&times;</span>
@@ -248,7 +292,7 @@
             <div id="substatStep2" class="substat-step hidden">
                 <div class="substat-options">
                     <div class="option-group">
-                        <label>Проки (0-5):</label>
+                        <label>Проки (0–5):</label>
                         <div id="upgradesOptions" class="button-group"></div>
                     </div>
                     <div class="option-group">
@@ -257,6 +301,18 @@
                     </div>
                 </div>
                 <button class="save-set-btn" onclick="confirmSubstat()">Готово</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="shareModal" class="modal">
+        <div class="modal-content share-modal">
+            <span class="close-modal" onclick="closeShareModal()">&times;</span>
+            <h2>Сет сохранён</h2>
+            <p class="share-hint">Поделитесь ссылкой — по ней сет откроется в режиме просмотра:</p>
+            <div class="share-url-row">
+                <input type="text" id="shareUrlInput" class="share-url-input" readonly>
+                <button id="copyShareBtn" class="toolbar-btn" onclick="copyShareUrl()">Копировать</button>
             </div>
         </div>
     </div>

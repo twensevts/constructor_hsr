@@ -216,8 +216,16 @@ function updateCardDisplay(slot) {
         const str = chance < 0.0001 ? chance.toExponential(2) : chance.toFixed(4);
         footer.textContent = `Шанс: ${str}%`;
     }
-    if (resinEl && chance !== null) {
-        resinEl.textContent = 'Кол-во смолы: 1';
+    if (resinEl && chance !== null && chance > 0) {
+        const isPlanar = pieceData[slot]?.set?.type === 'planar';
+        const stamPerPiece = isPlanar ? 20 : 10;
+        const expected = Math.round((100 / chance) * stamPerPiece);
+        const formatted = typeof formatStamina === 'function'
+            ? formatStamina(expected)
+            : (expected > 999 ? `~${Math.round(expected / 1000)}K` : `~${expected}`);
+        resinEl.textContent = `Смола: ${formatted}`;
+    } else if (resinEl) {
+        resinEl.textContent = '';
     }
 
     if (footerWrap) {
@@ -228,9 +236,12 @@ function updateCardDisplay(slot) {
             obtainedCb.className = 'obtained-artifact-checkbox';
             obtainedCb.title = 'Отметить артефакт как полученный';
             obtainedCb.addEventListener('change', () => {
-                data.obtained = obtainedCb.checked;
+                pieceData[slot].obtained = obtainedCb.checked;
                 if (typeof window.updateObtainedForCurrentSet === 'function') {
                     window.updateObtainedForCurrentSet(slot, obtainedCb.checked);
+                }
+                if (typeof window.updateModalSummary === 'function') {
+                    window.updateModalSummary();
                 }
             });
             footerWrap.appendChild(obtainedCb);
@@ -239,6 +250,11 @@ function updateCardDisplay(slot) {
         const shouldShow = chance !== null;
         obtainedCb.checked = !!data.obtained;
         obtainedCb.classList.toggle('hidden', !shouldShow);
+    }
+
+    // Обновляем итоговую панель в центре модала
+    if (typeof window.updateModalSummary === 'function') {
+        window.updateModalSummary();
     }
 }
 
@@ -297,12 +313,12 @@ function getAllPiecesForSave() {
     const result = [];
     SLOTS.forEach(slot => {
         const d = pieceData[slot];
-        if (!d.set || !d.mainStat) return;
+        if (!d.set) return;
         result.push({
             slot,
             setId: d.set.id,
             obtained: !!d.obtained,
-            mainStat: { id: d.mainStat.id, name: d.mainStat.name, value: d.mainStat.value },
+            mainStat: d.mainStat ? { id: d.mainStat.id, name: d.mainStat.name, value: d.mainStat.value } : null,
             substats: d.substats.filter(Boolean).map(s => ({
                 id: s.id,
                 name: s.name,
