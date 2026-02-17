@@ -64,7 +64,7 @@ function saveSet() {
 
 function confirmSetName() {
     const setName = document.getElementById('setNameInput').value.trim();
-    
+
     if (!setName) {
         alert('Введите название сета');
         return;
@@ -122,6 +122,7 @@ function renderSets() {
         setItem.className = 'set-item';
         setItem.innerHTML = `
             <span style="font-weight: bold; font-size: 1.1rem;">${set.setName}</span>
+            <img src="src/images/character_demo.jpg" alt="${set.characterName}">
             <button onclick="removeSet(${set.id})" style="background: #ff4757; color: white; border: none; padding: 10px; cursor: pointer; margin-top: auto; border-radius: 5px;">Удалить</button>
         `;
         setsList.appendChild(setItem);
