@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор реликвий</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1>Калькулятор реликвий</h1>
         </header>
-        
+
         <main>
             <div class="sets-container">
                 <div class="sets-window">
@@ -21,7 +23,7 @@
                         <p class="empty-message">Нет добавленных сетов</p>
                     </div>
                 </div>
-                
+
                 <button class="add-set-btn" id="addSetBtn">
                     <span class="btn-icon">+</span>
                     Добавить сет
@@ -29,7 +31,69 @@
             </div>
         </main>
     </div>
-    
+
+    <!-- Модальное окно создания сета -->
+    <div id="createSetModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Создание сета</h2>
+            <div class="character-selector">
+                <button class="add-character-btn" id="addCharacterBtn">Выбрать персонажа</button>
+                <div id="characterDropdown" class="character-dropdown hidden">
+                    <div class="character-option" data-character="castoria">
+                        <div class="character-icon">
+                            <span>👤</span>
+                        </div>
+                        <span>Кастория</span>
+                    </div>
+                    <div class="character-option" data-character="acheron">
+                        <div class="character-icon">
+                            <span>👤</span>
+                        </div>
+                        <span>Ахерон</span>
+                    </div>
+                    <div class="character-option" data-character="faenon">
+                        <div class="character-icon">
+                            <span>👤</span>
+                        </div>
+                        <span>Фаенон</span>
+                    </div>
+                    <div class="character-option" data-character="temen">
+                        <div class="character-icon">
+                            <span>👤</span>
+                        </div>
+                        <span>Темень</span>
+                    </div>
+                    <div class="character-option" data-character="aventurin">
+                        <div class="character-icon">
+                            <span>👤</span>
+                        </div>
+                        <span>Авантюрин</span>
+                    </div>
+                    <div class="character-option" data-character="anaksa">
+                        <div class="character-icon">
+                            <span>👤</span>
+                        </div>
+                        <span>Анакса</span>
+                    </div>
+                    <div class="character-option" data-character="gerta">
+                        <div class="character-icon">
+                            <span>👤</span>
+                        </div>
+                        <span>Великая Герта</span>
+                    </div>
+                    <div class="character-option" data-character="tribbie">
+                        <div class="character-icon">
+                            <span>👤</span>
+                        </div>
+                        <span>Трибби</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
+
 </html>
