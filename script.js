@@ -40,15 +40,28 @@ function initCharacterOptions() {
             const characterName = option.querySelector('span:last-child').textContent;
             const characterId = option.dataset.character;
 
-            console.log(`Выбран персонаж: ${characterName}`);
-
-            // Здесь будет логика добавления персонажа в сет
-            // Пока просто скрываем список
+            // Закрываем модальное окно создания
+            createSetModal.classList.remove('show');
             characterDropdown.classList.add('hidden');
 
-            // TODO: Добавить логику создания сета с выбранным персонажем
+            // Открываем окно с артефактами
+            openArtifactModal(characterName, characterId);
         });
     });
+}
+
+// Открыть модальное окно артефактов
+function openArtifactModal(characterName, characterId) {
+    const artifactModal = document.getElementById('artifactModal');
+    document.getElementById('selectedCharacterName').textContent = characterName;
+    document.getElementById('selectedCharacterImg').src = `https://via.placeholder.com/250x350?text=${characterName}`;
+    artifactModal.classList.add('show');
+}
+
+// Закрыть модальное окно артефактов
+function closeArtifactModal() {
+    const artifactModal = document.getElementById('artifactModal');
+    artifactModal.classList.remove('show');
 }
 
 // Инициализация обработчиков выбора персонажа
