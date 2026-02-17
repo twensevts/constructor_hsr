@@ -1,0 +1,50 @@
+.artifact-modal {
+    max-width: 900px;
+    width: 90%;
+}
+
+.artifact-layout {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.artifact-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.artifact-slot {
+    width: 150px;
+    height: 150px;
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9f9f9;
+    color: #999;
+    cursor: pointer;
+}
+
+.artifact-slot:hover {
+    border-color: #667eea;
+    background: #f0f0ff;
+}
+
+.character-display {
+    text-align: center;
+}
+
+.character-display h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.character-display img {
+    width: 250px;
+    height: 350px;
+    object-fit: cover;
+}
