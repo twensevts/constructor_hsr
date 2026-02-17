@@ -56,8 +56,23 @@ function saveSet() {
         return;
     }
 
+    const nameSetModal = document.getElementById('nameSetModal');
+    nameSetModal.classList.add('show');
+    document.getElementById('setNameInput').value = '';
+    document.getElementById('setNameInput').focus();
+}
+
+function confirmSetName() {
+    const setName = document.getElementById('setNameInput').value.trim();
+    
+    if (!setName) {
+        alert('Введите название сета');
+        return;
+    }
+
     const newSet = {
         id: Date.now(),
+        setName: setName,
         characterName: currentCharacter.name,
         characterId: currentCharacter.id,
         pieces: []
@@ -65,8 +80,14 @@ function saveSet() {
 
     sets.push(newSet);
     renderSets();
+    closeNameModal();
     closeArtifactModal();
     currentCharacter = { name: '', id: '' };
+}
+
+function closeNameModal() {
+    const nameSetModal = document.getElementById('nameSetModal');
+    nameSetModal.classList.remove('show');
 }
 
 function closeArtifactModal() {
@@ -100,7 +121,7 @@ function renderSets() {
         const setItem = document.createElement('div');
         setItem.className = 'set-item';
         setItem.innerHTML = `
-            <span style="font-weight: bold; font-size: 1.1rem;">${set.characterName}</span>
+            <span style="font-weight: bold; font-size: 1.1rem;">${set.setName}</span>
             <button onclick="removeSet(${set.id})" style="background: #ff4757; color: white; border: none; padding: 10px; cursor: pointer; margin-top: auto; border-radius: 5px;">Удалить</button>
         `;
         setsList.appendChild(setItem);
