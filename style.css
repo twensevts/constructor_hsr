@@ -70,7 +70,6 @@ main {
     background: #5568d3;
 }
 
-/* Модальное окно */
 .modal {
     display: none;
     position: fixed;
@@ -170,9 +169,15 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
-/* Модальное окно артефактов */
+.character-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .artifact-modal {
     max-width: 900px;
     width: 90%;
@@ -223,5 +228,30 @@ main {
     width: 250px;
     height: 350px;
     object-fit: cover;
-    background: #e0e0e0;
+}
+
+.save-set-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.save-set-btn:hover {
+    background: #5568d3;
+}
+
+.set-item {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

@@ -1,7 +1,6 @@
-// Массив для хранения сетов
 let sets = [];
+let currentCharacter = { name: '', id: '' };
 
-// Получаем элементы
 const addSetBtn = document.getElementById('addSetBtn');
 const setsList = document.getElementById('sets-list');
 const createSetModal = document.getElementById('createSetModal');
@@ -9,30 +8,25 @@ const closeModal = document.querySelector('.close-modal');
 const addCharacterBtn = document.getElementById('addCharacterBtn');
 const characterDropdown = document.getElementById('characterDropdown');
 
-// Обработчик открытия модального окна
 addSetBtn.addEventListener('click', () => {
     createSetModal.classList.add('show');
     characterDropdown.classList.add('hidden');
 });
 
-// Обработчик закрытия модального окна
 closeModal.addEventListener('click', () => {
     createSetModal.classList.remove('show');
 });
 
-// Закрытие при клике вне модального окна
 window.addEventListener('click', (e) => {
     if (e.target === createSetModal) {
         createSetModal.classList.remove('show');
     }
 });
 
-// Показать/скрыть выпадающий список персонажей
 addCharacterBtn.addEventListener('click', () => {
     characterDropdown.classList.toggle('hidden');
 });
 
-// Обработка выбора персонажа
 function initCharacterOptions() {
     const characterOptions = document.querySelectorAll('.character-option');
     characterOptions.forEach(option => {
@@ -40,34 +34,48 @@ function initCharacterOptions() {
             const characterName = option.querySelector('span:last-child').textContent;
             const characterId = option.dataset.character;
 
-            // Закрываем модальное окно создания
             createSetModal.classList.remove('show');
             characterDropdown.classList.add('hidden');
 
-            // Открываем окно с артефактами
             openArtifactModal(characterName, characterId);
         });
     });
 }
 
-// Открыть модальное окно артефактов
 function openArtifactModal(characterName, characterId) {
+    currentCharacter = { name: characterName, id: characterId };
     const artifactModal = document.getElementById('artifactModal');
     document.getElementById('selectedCharacterName').textContent = characterName;
-    document.getElementById('selectedCharacterImg').src = `https://via.placeholder.com/250x350?text=${characterName}`;
+    document.getElementById('selectedCharacterImg').src = 'src/images/character_demo.jpg';
     artifactModal.classList.add('show');
 }
 
-// Закрыть модальное окно артефактов
+function saveSet() {
+    if (!currentCharacter.name) {
+        alert('Выберите персонажа');
+        return;
+    }
+
+    const newSet = {
+        id: Date.now(),
+        characterName: currentCharacter.name,
+        characterId: currentCharacter.id,
+        pieces: []
+    };
+
+    sets.push(newSet);
+    renderSets();
+    closeArtifactModal();
+    currentCharacter = { name: '', id: '' };
+}
+
 function closeArtifactModal() {
     const artifactModal = document.getElementById('artifactModal');
     artifactModal.classList.remove('show');
 }
 
-// Инициализация обработчиков выбора персонажа
 initCharacterOptions();
 
-// Функция добавления сета (старая версия)
 function addSet() {
     const setNumber = sets.length + 1;
     const newSet = {
@@ -80,7 +88,6 @@ function addSet() {
     renderSets();
 }
 
-// Функция отображения сетов
 function renderSets() {
     if (sets.length === 0) {
         setsList.innerHTML = '<p class="empty-message">Нет добавленных сетов</p>';
@@ -93,18 +100,16 @@ function renderSets() {
         const setItem = document.createElement('div');
         setItem.className = 'set-item';
         setItem.innerHTML = `
-            <span style="font-weight: bold; font-size: 1.1rem;">${set.name}</span>
-            <button onclick="removeSet(${set.id})" style="background: #ff4757; color: white; border: none; padding: 10px; cursor: pointer; margin-top: auto;">Удалить</button>
+            <span style="font-weight: bold; font-size: 1.1rem;">${set.characterName}</span>
+            <button onclick="removeSet(${set.id})" style="background: #ff4757; color: white; border: none; padding: 10px; cursor: pointer; margin-top: auto; border-radius: 5px;">Удалить</button>
         `;
         setsList.appendChild(setItem);
     });
 }
 
-// Функция удаления сета
 function removeSet(id) {
     sets = sets.filter(set => set.id !== id);
     renderSets();
 }
 
-// Инициализация
 renderSets();

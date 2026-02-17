@@ -19,7 +19,6 @@
                 <div class="sets-window">
                     <h2>Ваши сеты</h2>
                     <div id="sets-list" class="sets-list">
-                        <!-- Здесь будут отображаться добавленные сеты -->
                         <p class="empty-message">Нет добавленных сетов</p>
                     </div>
                 </div>
@@ -32,7 +31,6 @@
         </main>
     </div>
 
-    <!-- Модальное окно создания сета -->
     <div id="createSetModal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
@@ -42,49 +40,49 @@
                 <div id="characterDropdown" class="character-dropdown hidden">
                     <div class="character-option" data-character="castoria">
                         <div class="character-icon">
-                            <span>👤</span>
+                            <img src="src/images/character_icon_demo.jpg" alt="Кастория">
                         </div>
                         <span>Кастория</span>
                     </div>
                     <div class="character-option" data-character="acheron">
                         <div class="character-icon">
-                            <span>👤</span>
+                            <img src="src/images/character_icon_demo.jpg" alt="Ахерон">
                         </div>
                         <span>Ахерон</span>
                     </div>
                     <div class="character-option" data-character="faenon">
                         <div class="character-icon">
-                            <span>👤</span>
+                            <img src="src/images/character_icon_demo.jpg" alt="Фаенон">
                         </div>
                         <span>Фаенон</span>
                     </div>
                     <div class="character-option" data-character="temen">
                         <div class="character-icon">
-                            <span>👤</span>
+                            <img src="src/images/character_icon_demo.jpg" alt="Темень">
                         </div>
                         <span>Темень</span>
                     </div>
                     <div class="character-option" data-character="aventurin">
                         <div class="character-icon">
-                            <span>👤</span>
+                            <img src="src/images/character_icon_demo.jpg" alt="Авантюрин">
                         </div>
                         <span>Авантюрин</span>
                     </div>
                     <div class="character-option" data-character="anaksa">
                         <div class="character-icon">
-                            <span>👤</span>
+                            <img src="src/images/character_icon_demo.jpg" alt="Анакса">
                         </div>
                         <span>Анакса</span>
                     </div>
                     <div class="character-option" data-character="gerta">
                         <div class="character-icon">
-                            <span>👤</span>
+                            <img src="src/images/character_icon_demo.jpg" alt="Великая Герта">
                         </div>
                         <span>Великая Герта</span>
                     </div>
                     <div class="character-option" data-character="tribbie">
                         <div class="character-icon">
-                            <span>👤</span>
+                            <img src="src/images/character_icon_demo.jpg" alt="Трибби">
                         </div>
                         <span>Трибби</span>
                     </div>
@@ -93,7 +91,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно с артефактами -->
     <div id="artifactModal" class="modal">
         <div class="modal-content artifact-modal">
             <span class="close-modal" onclick="closeArtifactModal()">&times;</span>
@@ -113,29 +110,7 @@
                     <div class="artifact-slot" data-slot="rope">Веревка</div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Модальное окно с артефактами -->
-    <div id="artifactModal" class="modal">
-        <div class="modal-content artifact-modal">
-            <span class="close-modal" onclick="closeArtifactModal()">&times;</span>
-            <div class="artifact-layout">
-                <div class="artifact-column">
-                    <div class="artifact-slot" data-slot="head">Голова</div>
-                    <div class="artifact-slot" data-slot="hands">Перчатки</div>
-                    <div class="artifact-slot" data-slot="body">Тело</div>
-                </div>
-                <div class="character-display">
-                    <h3 id="selectedCharacterName">Персонаж</h3>
-                    <img id="selectedCharacterImg" src="https://via.placeholder.com/250x350" alt="Character">
-                </div>
-                <div class="artifact-column">
-                    <div class="artifact-slot" data-slot="feet">Ботинки</div>
-                    <div class="artifact-slot" data-slot="sphere">Сфера</div>
-                    <div class="artifact-slot" data-slot="rope">Веревка</div>
-                </div>
-            </div>
+            <button class="save-set-btn" id="saveSetBtn" onclick="saveSet()">Сохранить сет</button>
         </div>
     </div>
 
