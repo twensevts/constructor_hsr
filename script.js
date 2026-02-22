@@ -59,7 +59,7 @@ function openArtifactModal(character) {
     currentCharacter = character;
     const artifactModal = document.getElementById('artifactModal');
     document.getElementById('selectedCharacterName').textContent = character.name;
-    document.getElementById('selectedCharacterImg').src = character.icon;
+    document.getElementById('selectedCharacterImg').src = character.photo;
     artifactModal.classList.add('show');
 }
 
@@ -138,7 +138,7 @@ function renderSets() {
 
     sets.forEach(set => {
         const character = getCharacterById(set.characterId);
-        const photoSrc = character ? character.icon : 'src/images/character_demo.jpg';
+        const photoSrc = character ? character.photo : 'src/images/character_demo.jpg';
         const setItem = document.createElement('div');
         setItem.className = 'set-item';
         setItem.innerHTML = `

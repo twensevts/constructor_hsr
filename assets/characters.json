@@ -6,7 +6,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Lightning",
-    "version": "2.1"
+    "version": "2.1",
+    "splash": "assets/images/splash/acheron_splash.png"
   },
   {
     "id": "aglaea",
@@ -15,7 +16,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Lightning",
-    "version": "3.0"
+    "version": "3.0",
+    "splash": "assets/images/splash/aglaea_splash.png"
   },
   {
     "id": "anaxa",
@@ -24,7 +26,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Wind",
-    "version": "3.2"
+    "version": "3.2",
+    "splash": "assets/images/splash/anaxa_splash.png"
   },
   {
     "id": "archer",
@@ -33,7 +36,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "3.4"
+    "version": "3.4",
+    "splash": "assets/images/splash/archer_splash.png"
   },
   {
     "id": "argenti",
@@ -42,7 +46,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "1.5"
+    "version": "1.5",
+    "splash": "assets/images/splash/argenti_splash.png"
   },
   {
     "id": "arlan",
@@ -51,7 +56,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Lightning",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/arlan_splash.png"
   },
   {
     "id": "asta",
@@ -60,7 +66,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Fire",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/asta_splash.png"
   },
   {
     "id": "aventurine",
@@ -69,7 +76,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Imaginary",
-    "version": "2.1"
+    "version": "2.1",
+    "splash": "assets/images/splash/aventurine_splash.png"
   },
   {
     "id": "bailu",
@@ -78,7 +86,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Lightning",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/bailu_splash.png"
   },
   {
     "id": "black_swan",
@@ -87,7 +96,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Wind",
-    "version": "2.0"
+    "version": "2.0",
+    "splash": "assets/images/splash/black_swan_splash.png"
   },
   {
     "id": "blade",
@@ -96,7 +106,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Wind",
-    "version": "1.2"
+    "version": "1.2",
+    "splash": "assets/images/splash/blade_splash.png"
   },
   {
     "id": "boothill",
@@ -105,7 +116,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "2.2"
+    "version": "2.2",
+    "splash": "assets/images/splash/boothill_splash.png"
   },
   {
     "id": "bronya",
@@ -114,7 +126,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Wind",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/bronya_splash.png"
   },
   {
     "id": "castorice",
@@ -123,7 +136,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "3.2"
+    "version": "3.2",
+    "splash": "assets/images/splash/castorice_splash.png"
   },
   {
     "id": "cerydra",
@@ -132,7 +146,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Wind",
-    "version": "3.5"
+    "version": "3.5",
+    "splash": "assets/images/splash/cerydra_splash.png"
   },
   {
     "id": "cipher",
@@ -141,7 +156,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "3.3"
+    "version": "3.3",
+    "splash": "assets/images/splash/cipher_splash.png"
   },
   {
     "id": "clara",
@@ -150,7 +166,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/clara_splash.png"
   },
   {
     "id": "cyrene",
@@ -159,7 +176,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Ice",
-    "version": "3.7"
+    "version": "3.7",
+    "splash": "assets/images/splash/cyrene_splash.png"
   },
   {
     "id": "dan_heng",
@@ -168,7 +186,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Wind",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/dan_heng_splash.png"
   },
   {
     "id": "dan_heng_imbibitor_lunae",
@@ -177,7 +196,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Imaginary",
-    "version": "1.3"
+    "version": "1.3",
+    "splash": "assets/images/splash/dan_heng_imbibitor_lunae_splash.png"
   },
   {
     "id": "dan_heng_permansor_terrae",
@@ -186,7 +206,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "3.6"
+    "version": "3.6",
+    "splash": "assets/images/splash/dan_heng_permansor_terrae_splash.png"
   },
   {
     "id": "dr_ratio",
@@ -195,7 +216,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Imaginary",
-    "version": "1.6"
+    "version": "1.6",
+    "splash": "assets/images/splash/dr_ratio_splash.png"
   },
   {
     "id": "evernight",
@@ -204,7 +226,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Ice",
-    "version": "3.6"
+    "version": "3.6",
+    "splash": "assets/images/splash/evernight_splash.png"
   },
   {
     "id": "feixiao",
@@ -213,7 +236,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Wind",
-    "version": "2.5"
+    "version": "2.5",
+    "splash": "assets/images/splash/feixiao_splash.png"
   },
   {
     "id": "firefly",
@@ -222,7 +246,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Fire",
-    "version": "2.3"
+    "version": "2.3",
+    "splash": "assets/images/splash/firefly_splash.png"
   },
   {
     "id": "fu_xuan",
@@ -231,7 +256,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "1.3"
+    "version": "1.3",
+    "splash": "assets/images/splash/fu_xuan_splash.png"
   },
   {
     "id": "fugue",
@@ -240,7 +266,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Fire",
-    "version": "2.7"
+    "version": "2.7",
+    "splash": "assets/images/splash/fugue_splash.png"
   },
   {
     "id": "gallagher",
@@ -249,7 +276,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Fire",
-    "version": "2.1"
+    "version": "2.1",
+    "splash": "assets/images/splash/gallagher_splash.png"
   },
   {
     "id": "gepard",
@@ -258,7 +286,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Ice",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/gepard_splash.png"
   },
   {
     "id": "guinaifen",
@@ -267,7 +296,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Fire",
-    "version": "1.4"
+    "version": "1.4",
+    "splash": "assets/images/splash/guinaifen_splash.png"
   },
   {
     "id": "hanya",
@@ -276,7 +306,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "1.5"
+    "version": "1.5",
+    "splash": "assets/images/splash/hanya_splash.png"
   },
   {
     "id": "herta",
@@ -285,7 +316,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Ice",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/herta_splash.png"
   },
   {
     "id": "himeko",
@@ -294,7 +326,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Fire",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/himeko_splash.png"
   },
   {
     "id": "hook",
@@ -303,7 +336,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Fire",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/hook_splash.png"
   },
   {
     "id": "huohuo",
@@ -312,7 +346,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Wind",
-    "version": "1.5"
+    "version": "1.5",
+    "splash": "assets/images/splash/huohuo_splash.png"
   },
   {
     "id": "hyacine",
@@ -321,7 +356,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Wind",
-    "version": "3.3"
+    "version": "3.3",
+    "splash": "assets/images/splash/hyacine_splash.png"
   },
   {
     "id": "hysilens",
@@ -330,7 +366,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "3.5"
+    "version": "3.5",
+    "splash": "assets/images/splash/hysilens_splash.png"
   },
   {
     "id": "jade",
@@ -339,7 +376,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "2.3"
+    "version": "2.3",
+    "splash": "assets/images/splash/jade_splash.png"
   },
   {
     "id": "jiaoqiu",
@@ -348,7 +386,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Fire",
-    "version": "2.4"
+    "version": "2.4",
+    "splash": "assets/images/splash/jiaoqiu_splash.png"
   },
   {
     "id": "jing_yuan",
@@ -357,7 +396,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Lightning",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/jing_yuan_splash.png"
   },
   {
     "id": "jingliu",
@@ -366,7 +406,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Ice",
-    "version": "1.4"
+    "version": "1.4",
+    "splash": "assets/images/splash/jingliu_splash.png"
   },
   {
     "id": "kafka",
@@ -375,7 +416,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Lightning",
-    "version": "1.2"
+    "version": "1.2",
+    "splash": "assets/images/splash/kafka_splash.png"
   },
   {
     "id": "lingsha",
@@ -384,7 +426,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Fire",
-    "version": "2.5"
+    "version": "2.5",
+    "splash": "assets/images/splash/lingsha_splash.png"
   },
   {
     "id": "luka",
@@ -393,7 +436,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "1.2"
+    "version": "1.2",
+    "splash": "assets/images/splash/luka_splash.png"
   },
   {
     "id": "luocha",
@@ -402,7 +446,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Imaginary",
-    "version": "1.1"
+    "version": "1.1",
+    "splash": "assets/images/splash/luocha_splash.png"
   },
   {
     "id": "lynx",
@@ -411,7 +456,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "1.3"
+    "version": "1.3",
+    "splash": "assets/images/splash/lynx_splash.png"
   },
   {
     "id": "march_7th",
@@ -438,7 +484,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Ice",
-    "version": "2.0"
+    "version": "2.0",
+    "splash": "assets/images/splash/misha_splash.png"
   },
   {
     "id": "moze",
@@ -447,7 +494,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Lightning",
-    "version": "2.5"
+    "version": "2.5",
+    "splash": "assets/images/splash/moze_splash.png"
   },
   {
     "id": "mydei",
@@ -456,7 +504,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Imaginary",
-    "version": "3.1"
+    "version": "3.1",
+    "splash": "assets/images/splash/mydei_splash.png"
   },
   {
     "id": "natasha",
@@ -465,7 +514,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/natasha_splash.png"
   },
   {
     "id": "pela",
@@ -474,7 +524,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Ice",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/pela_splash.png"
   },
   {
     "id": "phainon",
@@ -483,7 +534,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "3.4"
+    "version": "3.4",
+    "splash": "assets/images/splash/phainon_splash.png"
   },
   {
     "id": "qingque",
@@ -492,7 +544,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/qingque_splash.png"
   },
   {
     "id": "rappa",
@@ -501,7 +554,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Imaginary",
-    "version": "2.6"
+    "version": "2.6",
+    "splash": "assets/images/splash/rappa_splash.png"
   },
   {
     "id": "robin",
@@ -510,7 +564,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "2.2"
+    "version": "2.2",
+    "splash": "assets/images/splash/robin_splash.png"
   },
   {
     "id": "ruan_mei",
@@ -519,7 +574,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Ice",
-    "version": "1.6"
+    "version": "1.6",
+    "splash": "assets/images/splash/ruan_mei_splash.png"
   },
   {
     "id": "saber",
@@ -528,7 +584,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Wind",
-    "version": "3.4"
+    "version": "3.4",
+    "splash": "assets/images/splash/saber_splash.png"
   },
   {
     "id": "sampo",
@@ -537,7 +594,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Wind",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/sampo_splash.png"
   },
   {
     "id": "seele",
@@ -546,7 +604,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/seele_splash.png"
   },
   {
     "id": "serval",
@@ -555,7 +614,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Lightning",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/serval_splash.png"
   },
   {
     "id": "silver_wolf",
@@ -564,7 +624,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "1.1"
+    "version": "1.1",
+    "splash": "assets/images/splash/silver_wolf_splash.png"
   },
   {
     "id": "sparkle",
@@ -573,7 +634,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "2.0"
+    "version": "2.0",
+    "splash": "assets/images/splash/sparkle_splash.png"
   },
   {
     "id": "sunday",
@@ -582,7 +644,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Imaginary",
-    "version": "2.7"
+    "version": "2.7",
+    "splash": "assets/images/splash/sunday_splash.png"
   },
   {
     "id": "sushang",
@@ -591,7 +654,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/sushang_splash.png"
   },
   {
     "id": "the_dahlia",
@@ -600,7 +664,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Fire",
-    "version": "3.8"
+    "version": "3.8",
+    "splash": "assets/images/splash/the_dahlia_splash.png"
   },
   {
     "id": "the_herta",
@@ -609,7 +674,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Ice",
-    "version": "3.0"
+    "version": "3.0",
+    "splash": "assets/images/splash/the_herta_splash.png"
   },
   {
     "id": "tingyun",
@@ -618,7 +684,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Lightning",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/tingyun_splash.png"
   },
   {
     "id": "topaz_numby",
@@ -672,7 +739,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "3.1"
+    "version": "3.1",
+    "splash": "assets/images/splash/tribbie_splash.png"
   },
   {
     "id": "welt",
@@ -681,7 +749,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Imaginary",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/welt_splash.png"
   },
   {
     "id": "xueyi",
@@ -690,7 +759,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Quantum",
-    "version": "1.6"
+    "version": "1.6",
+    "splash": "assets/images/splash/xueyi_splash.png"
   },
   {
     "id": "yanqing",
@@ -699,7 +769,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Ice",
-    "version": "1.0"
+    "version": "1.0",
+    "splash": "assets/images/splash/yanqing_splash.png"
   },
   {
     "id": "yao_guang",
@@ -708,7 +779,8 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "4.0"
+    "version": "4.0",
+    "splash": "assets/images/splash/yao_guang_splash.png"
   },
   {
     "id": "yukong",
@@ -717,7 +789,8 @@
     "rarity": "4 Star",
     "path": "",
     "combat_type": "Imaginary",
-    "version": "1.1"
+    "version": "1.1",
+    "splash": "assets/images/splash/yukong_splash.png"
   },
   {
     "id": "yunli",
@@ -726,6 +799,7 @@
     "rarity": "5 Star",
     "path": "",
     "combat_type": "Physical",
-    "version": "2.4"
+    "version": "2.4",
+    "splash": "assets/images/splash/yunli_splash.png"
   }
 ]

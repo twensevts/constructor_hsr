@@ -1,13 +1,20 @@
 .artifact-modal {
-    max-width: 900px;
-    width: 90%;
+    max-width: 1170px;
+    width: auto;
+    padding: 45px 50px 15px 50px;
 }
 
 .artifact-layout {
     display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 8px;
+}
+
+.artifact-modal .save-set-btn {
+    margin-top: 12px;
+    margin-bottom: 0;
 }
 
 .artifact-column {
@@ -17,8 +24,8 @@
 }
 
 .artifact-slot {
-    width: 200px;
-    height: 150px;
+    width: 240px;
+    height: 180px;
     border: 2px solid #ddd;
     display: flex;
     gap: 10px;
@@ -33,10 +40,7 @@
 }
 
 .artifact-icon {
-    width: 60px;
-    height: 60px;
-    background: #e0e0e0;
-    flex-shrink: 0;
+    display: none;
 }
 
 .artifact-stats {
@@ -66,17 +70,25 @@
 }
 
 .character-display {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .character-display h3 {
     font-size: 1.5rem;
     color: #333;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 
 .character-display img {
-    width: 250px;
-    height: 350px;
-    object-fit: cover;
+    max-width: 540px;
+    max-height: 85vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center center;
+    border-radius: 4px;
 }
