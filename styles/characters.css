@@ -11,7 +11,7 @@
     width: 100%;
 }
 
-.character-dropdown.hidden {
+.character-selector .hidden {
     display: none;
 }
 

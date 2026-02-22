@@ -1,5 +1,5 @@
 let sets = [];
-let currentCharacter = { name: '', id: '' };
+let currentCharacter = null;
 
 const addSetBtn = document.getElementById('addSetBtn');
 const setsList = document.getElementById('sets-list');
@@ -10,6 +10,7 @@ const characterDropdown = document.getElementById('characterDropdown');
 
 addSetBtn.addEventListener('click', () => {
     createSetModal.classList.add('show');
+    addCharacterBtn.classList.remove('hidden');
     characterDropdown.classList.add('hidden');
 });
 
@@ -24,34 +25,46 @@ window.addEventListener('click', (e) => {
 });
 
 addCharacterBtn.addEventListener('click', () => {
-    characterDropdown.classList.toggle('hidden');
+    addCharacterBtn.classList.add('hidden');
+    characterDropdown.classList.remove('hidden');
 });
 
+function renderCharacterOptions() {
+    characterDropdown.innerHTML = CHARACTERS.map(character => `
+        <div class="character-option" data-character="${character.id}">
+            <div class="character-icon">
+                <img src="${character.icon}" alt="${character.name}">
+            </div>
+            <span>${character.name}</span>
+        </div>
+    `).join('');
+}
+
 function initCharacterOptions() {
-    const characterOptions = document.querySelectorAll('.character-option');
-    characterOptions.forEach(option => {
+    renderCharacterOptions();
+    characterDropdown.querySelectorAll('.character-option').forEach(option => {
         option.addEventListener('click', () => {
-            const characterName = option.querySelector('span:last-child').textContent;
-            const characterId = option.dataset.character;
+            const character = getCharacterById(option.dataset.character);
+            if (!character) return;
 
             createSetModal.classList.remove('show');
+            addCharacterBtn.classList.remove('hidden');
             characterDropdown.classList.add('hidden');
-
-            openArtifactModal(characterName, characterId);
+            openArtifactModal(character);
         });
     });
 }
 
-function openArtifactModal(characterName, characterId) {
-    currentCharacter = { name: characterName, id: characterId };
+function openArtifactModal(character) {
+    currentCharacter = character;
     const artifactModal = document.getElementById('artifactModal');
-    document.getElementById('selectedCharacterName').textContent = characterName;
-    document.getElementById('selectedCharacterImg').src = 'src/images/character_demo.jpg';
+    document.getElementById('selectedCharacterName').textContent = character.name;
+    document.getElementById('selectedCharacterImg').src = character.photo;
     artifactModal.classList.add('show');
 }
 
 function saveSet() {
-    if (!currentCharacter.name) {
+    if (!currentCharacter) {
         alert('Выберите персонажа');
         return;
     }
@@ -82,7 +95,7 @@ function confirmSetName() {
     renderSets();
     closeNameModal();
     closeArtifactModal();
-    currentCharacter = { name: '', id: '' };
+    currentCharacter = null;
 }
 
 function closeNameModal() {
@@ -118,11 +131,13 @@ function renderSets() {
     setsList.innerHTML = '';
 
     sets.forEach(set => {
+        const character = getCharacterById(set.characterId);
+        const photoSrc = character ? character.photo : 'src/images/character_demo.jpg';
         const setItem = document.createElement('div');
         setItem.className = 'set-item';
         setItem.innerHTML = `
             <span style="font-weight: bold; font-size: 1.1rem;">${set.setName}</span>
-            <img src="src/images/character_demo.jpg" alt="${set.characterName}">
+            <img src="${photoSrc}" alt="${set.characterName}">
             <button onclick="removeSet(${set.id})" style="background: #ff4757; color: white; border: none; padding: 10px; cursor: pointer; margin-top: auto; border-radius: 5px;">Удалить</button>
         `;
         setsList.appendChild(setItem);
