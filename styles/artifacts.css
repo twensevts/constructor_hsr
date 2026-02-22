@@ -23,53 +23,82 @@
     gap: 15px;
 }
 
-.artifact-slot {
+.artifact-card {
     width: 240px;
-    height: 180px;
     border: 1px solid rgba(0, 212, 255, 0.25);
     display: flex;
-    gap: 10px;
-    padding: 12px;
+    flex-direction: column;
     background: rgba(21, 28, 46, 0.6);
-    cursor: pointer;
     border-radius: 8px;
+    overflow: hidden;
     transition: all 0.2s ease;
 }
 
-.artifact-slot:hover {
+.artifact-card:hover {
     border-color: rgba(212, 175, 55, 0.5);
     background: rgba(21, 28, 46, 0.9);
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
 }
 
-.artifact-icon {
-    display: none;
+.artifact-card-header {
+    padding: 10px;
+    text-align: center;
+    color: #e8e6e3;
+    font-size: 1rem;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.artifact-card-body {
+    display: flex;
+    flex: 1;
+    min-height: 90px;
+}
+
+.artifact-set-btn {
+    width: 48px;
+    flex-shrink: 0;
+    background: rgba(0, 212, 255, 0.15);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-right: 1px solid rgba(0, 212, 255, 0.2);
+    color: #00d4ff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.artifact-set-btn:hover {
+    background: rgba(0, 212, 255, 0.25);
 }
 
 .artifact-stats {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    flex: 1;
-    gap: 5px;
+    padding: 8px;
+    gap: 6px;
 }
 
-.main-stat {
-    font-weight: 600;
-    font-size: 0.9rem;
+.artifact-stats .main-stat {
+    font-size: 0.8rem;
     color: #d4af37;
-    padding-bottom: 6px;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    font-weight: 600;
 }
 
-.sub-stats {
+.artifact-stats .sub-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4px;
 }
 
-.sub-stat {
+.artifact-stats .sub-stat {
     font-size: 0.75rem;
     color: rgba(200, 210, 220, 0.8);
+}
+
+.artifact-card-footer {
+    min-height: 60px;
+    border-top: 1px solid rgba(0, 212, 255, 0.15);
 }
 
 .character-display {
