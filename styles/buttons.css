@@ -1,19 +1,27 @@
 .add-set-btn,
 .add-character-btn,
 .save-set-btn {
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 12px 24px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 500;
+    background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+    color: #0a0e1a;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 8px;
+    padding: 14px 28px;
     cursor: pointer;
     font-size: 1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
 }
 
 .add-set-btn:hover,
 .add-character-btn:hover,
 .save-set-btn:hover {
-    background: #5568d3;
+    background: linear-gradient(135deg, #e5c158 0%, #c9a227 100%);
+    box-shadow: 0 6px 25px rgba(212, 175, 55, 0.4);
+    transform: translateY(-1px);
 }
 
 .add-set-btn,

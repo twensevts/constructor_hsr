@@ -142,9 +142,9 @@ function renderSets() {
         const setItem = document.createElement('div');
         setItem.className = 'set-item';
         setItem.innerHTML = `
-            <span style="font-weight: bold; font-size: 1.1rem;">${set.setName}</span>
+            <span class="set-item-name">${set.setName}</span>
             <img src="${photoSrc}" alt="${set.characterName}">
-            <button onclick="removeSet(${set.id})" style="background: #ff4757; color: white; border: none; padding: 10px; cursor: pointer; margin-top: auto; border-radius: 5px;">Удалить</button>
+            <button class="remove-set-btn" onclick="removeSet(${set.id})">Удалить</button>
         `;
         setsList.appendChild(setItem);
     });
