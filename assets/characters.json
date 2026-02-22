@@ -1,0 +1,731 @@
+[
+  {
+    "id": "acheron",
+    "name": "Acheron",
+    "icon": "assets/images/icons/acheron_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Lightning",
+    "version": "2.1"
+  },
+  {
+    "id": "aglaea",
+    "name": "Aglaea",
+    "icon": "assets/images/icons/aglaea_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Lightning",
+    "version": "3.0"
+  },
+  {
+    "id": "anaxa",
+    "name": "Anaxa",
+    "icon": "assets/images/icons/anaxa_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Wind",
+    "version": "3.2"
+  },
+  {
+    "id": "archer",
+    "name": "Archer",
+    "icon": "assets/images/icons/archer_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "3.4"
+  },
+  {
+    "id": "argenti",
+    "name": "Argenti",
+    "icon": "assets/images/icons/argenti_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "1.5"
+  },
+  {
+    "id": "arlan",
+    "name": "Arlan",
+    "icon": "assets/images/icons/arlan_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Lightning",
+    "version": "1.0"
+  },
+  {
+    "id": "asta",
+    "name": "Asta",
+    "icon": "assets/images/icons/asta_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "1.0"
+  },
+  {
+    "id": "aventurine",
+    "name": "Aventurine",
+    "icon": "assets/images/icons/aventurine_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Imaginary",
+    "version": "2.1"
+  },
+  {
+    "id": "bailu",
+    "name": "Bailu",
+    "icon": "assets/images/icons/bailu_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Lightning",
+    "version": "1.0"
+  },
+  {
+    "id": "black_swan",
+    "name": "Black Swan",
+    "icon": "assets/images/icons/black_swan_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Wind",
+    "version": "2.0"
+  },
+  {
+    "id": "blade",
+    "name": "Blade",
+    "icon": "assets/images/icons/blade_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Wind",
+    "version": "1.2"
+  },
+  {
+    "id": "boothill",
+    "name": "Boothill",
+    "icon": "assets/images/icons/boothill_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "2.2"
+  },
+  {
+    "id": "bronya",
+    "name": "Bronya",
+    "icon": "assets/images/icons/bronya_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Wind",
+    "version": "1.0"
+  },
+  {
+    "id": "castorice",
+    "name": "Castorice",
+    "icon": "assets/images/icons/castorice_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "3.2"
+  },
+  {
+    "id": "cerydra",
+    "name": "Cerydra",
+    "icon": "assets/images/icons/cerydra_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Wind",
+    "version": "3.5"
+  },
+  {
+    "id": "cipher",
+    "name": "Cipher",
+    "icon": "assets/images/icons/cipher_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "3.3"
+  },
+  {
+    "id": "clara",
+    "name": "Clara",
+    "icon": "assets/images/icons/clara_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "1.0"
+  },
+  {
+    "id": "cyrene",
+    "name": "Cyrene",
+    "icon": "assets/images/icons/cyrene_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "3.7"
+  },
+  {
+    "id": "dan_heng",
+    "name": "Dan Heng",
+    "icon": "assets/images/icons/dan_heng_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Wind",
+    "version": "1.0"
+  },
+  {
+    "id": "dan_heng_imbibitor_lunae",
+    "name": "Dan Heng • Imbibitor Lunae",
+    "icon": "assets/images/icons/dan_heng_imbibitor_lunae_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Imaginary",
+    "version": "1.3"
+  },
+  {
+    "id": "dan_heng_permansor_terrae",
+    "name": "Dan Heng • Permansor Terrae",
+    "icon": "assets/images/icons/dan_heng_permansor_terrae_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "3.6"
+  },
+  {
+    "id": "dr_ratio",
+    "name": "Dr. Ratio",
+    "icon": "assets/images/icons/dr_ratio_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Imaginary",
+    "version": "1.6"
+  },
+  {
+    "id": "evernight",
+    "name": "Evernight",
+    "icon": "assets/images/icons/evernight_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "3.6"
+  },
+  {
+    "id": "feixiao",
+    "name": "Feixiao",
+    "icon": "assets/images/icons/feixiao_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Wind",
+    "version": "2.5"
+  },
+  {
+    "id": "firefly",
+    "name": "Firefly",
+    "icon": "assets/images/icons/firefly_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "2.3"
+  },
+  {
+    "id": "fu_xuan",
+    "name": "Fu Xuan",
+    "icon": "assets/images/icons/fu_xuan_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "1.3"
+  },
+  {
+    "id": "fugue",
+    "name": "Fugue",
+    "icon": "assets/images/icons/fugue_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "2.7"
+  },
+  {
+    "id": "gallagher",
+    "name": "Gallagher",
+    "icon": "assets/images/icons/gallagher_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "2.1"
+  },
+  {
+    "id": "gepard",
+    "name": "Gepard",
+    "icon": "assets/images/icons/gepard_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "1.0"
+  },
+  {
+    "id": "guinaifen",
+    "name": "Guinaifen",
+    "icon": "assets/images/icons/guinaifen_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "1.4"
+  },
+  {
+    "id": "hanya",
+    "name": "Hanya",
+    "icon": "assets/images/icons/hanya_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "1.5"
+  },
+  {
+    "id": "herta",
+    "name": "Herta",
+    "icon": "assets/images/icons/herta_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "1.0"
+  },
+  {
+    "id": "himeko",
+    "name": "Himeko",
+    "icon": "assets/images/icons/himeko_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "1.0"
+  },
+  {
+    "id": "hook",
+    "name": "Hook",
+    "icon": "assets/images/icons/hook_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "1.0"
+  },
+  {
+    "id": "huohuo",
+    "name": "Huohuo",
+    "icon": "assets/images/icons/huohuo_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Wind",
+    "version": "1.5"
+  },
+  {
+    "id": "hyacine",
+    "name": "Hyacine",
+    "icon": "assets/images/icons/hyacine_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Wind",
+    "version": "3.3"
+  },
+  {
+    "id": "hysilens",
+    "name": "Hysilens",
+    "icon": "assets/images/icons/hysilens_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "3.5"
+  },
+  {
+    "id": "jade",
+    "name": "Jade",
+    "icon": "assets/images/icons/jade_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "2.3"
+  },
+  {
+    "id": "jiaoqiu",
+    "name": "Jiaoqiu",
+    "icon": "assets/images/icons/jiaoqiu_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "2.4"
+  },
+  {
+    "id": "jing_yuan",
+    "name": "Jing Yuan",
+    "icon": "assets/images/icons/jing_yuan_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Lightning",
+    "version": "1.0"
+  },
+  {
+    "id": "jingliu",
+    "name": "Jingliu",
+    "icon": "assets/images/icons/jingliu_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "1.4"
+  },
+  {
+    "id": "kafka",
+    "name": "Kafka",
+    "icon": "assets/images/icons/kafka_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Lightning",
+    "version": "1.2"
+  },
+  {
+    "id": "lingsha",
+    "name": "Lingsha",
+    "icon": "assets/images/icons/lingsha_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "2.5"
+  },
+  {
+    "id": "luka",
+    "name": "Luka",
+    "icon": "assets/images/icons/luka_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "1.2"
+  },
+  {
+    "id": "luocha",
+    "name": "Luocha",
+    "icon": "assets/images/icons/luocha_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Imaginary",
+    "version": "1.1"
+  },
+  {
+    "id": "lynx",
+    "name": "Lynx",
+    "icon": "assets/images/icons/lynx_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "1.3"
+  },
+  {
+    "id": "march_7th",
+    "name": "March 7th",
+    "icon": "assets/images/icons/march_7th_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "1.0"
+  },
+  {
+    "id": "march_7th",
+    "name": "March 7th",
+    "icon": "assets/images/icons/march_7th_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Imaginary",
+    "version": "2.4"
+  },
+  {
+    "id": "misha",
+    "name": "Misha",
+    "icon": "assets/images/icons/misha_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "2.0"
+  },
+  {
+    "id": "moze",
+    "name": "Moze",
+    "icon": "assets/images/icons/moze_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Lightning",
+    "version": "2.5"
+  },
+  {
+    "id": "mydei",
+    "name": "Mydei",
+    "icon": "assets/images/icons/mydei_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Imaginary",
+    "version": "3.1"
+  },
+  {
+    "id": "natasha",
+    "name": "Natasha",
+    "icon": "assets/images/icons/natasha_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "1.0"
+  },
+  {
+    "id": "pela",
+    "name": "Pela",
+    "icon": "assets/images/icons/pela_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "1.0"
+  },
+  {
+    "id": "phainon",
+    "name": "Phainon",
+    "icon": "assets/images/icons/phainon_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "3.4"
+  },
+  {
+    "id": "qingque",
+    "name": "Qingque",
+    "icon": "assets/images/icons/qingque_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "1.0"
+  },
+  {
+    "id": "rappa",
+    "name": "Rappa",
+    "icon": "assets/images/icons/rappa_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Imaginary",
+    "version": "2.6"
+  },
+  {
+    "id": "robin",
+    "name": "Robin",
+    "icon": "assets/images/icons/robin_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "2.2"
+  },
+  {
+    "id": "ruan_mei",
+    "name": "Ruan Mei",
+    "icon": "assets/images/icons/ruan_mei_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "1.6"
+  },
+  {
+    "id": "saber",
+    "name": "Saber",
+    "icon": "assets/images/icons/saber_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Wind",
+    "version": "3.4"
+  },
+  {
+    "id": "sampo",
+    "name": "Sampo",
+    "icon": "assets/images/icons/sampo_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Wind",
+    "version": "1.0"
+  },
+  {
+    "id": "seele",
+    "name": "Seele",
+    "icon": "assets/images/icons/seele_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "1.0"
+  },
+  {
+    "id": "serval",
+    "name": "Serval",
+    "icon": "assets/images/icons/serval_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Lightning",
+    "version": "1.0"
+  },
+  {
+    "id": "silver_wolf",
+    "name": "Silver Wolf",
+    "icon": "assets/images/icons/silver_wolf_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "1.1"
+  },
+  {
+    "id": "sparkle",
+    "name": "Sparkle",
+    "icon": "assets/images/icons/sparkle_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "2.0"
+  },
+  {
+    "id": "sunday",
+    "name": "Sunday",
+    "icon": "assets/images/icons/sunday_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Imaginary",
+    "version": "2.7"
+  },
+  {
+    "id": "sushang",
+    "name": "Sushang",
+    "icon": "assets/images/icons/sushang_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "1.0"
+  },
+  {
+    "id": "the_dahlia",
+    "name": "The Dahlia",
+    "icon": "assets/images/icons/the_dahlia_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "3.8"
+  },
+  {
+    "id": "the_herta",
+    "name": "The Herta",
+    "icon": "assets/images/icons/the_herta_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "3.0"
+  },
+  {
+    "id": "tingyun",
+    "name": "Tingyun",
+    "icon": "assets/images/icons/tingyun_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Lightning",
+    "version": "1.0"
+  },
+  {
+    "id": "topaz_numby",
+    "name": "Topaz & Numby",
+    "icon": "assets/images/icons/topaz_numby_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "1.4"
+  },
+  {
+    "id": "trailblazer",
+    "name": "Trailblazer",
+    "icon": "assets/images/icons/trailblazer_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "1.0"
+  },
+  {
+    "id": "trailblazer",
+    "name": "Trailblazer",
+    "icon": "assets/images/icons/trailblazer_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Fire",
+    "version": "1.0"
+  },
+  {
+    "id": "trailblazer",
+    "name": "Trailblazer",
+    "icon": "assets/images/icons/trailblazer_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Imaginary",
+    "version": "2.2"
+  },
+  {
+    "id": "trailblazer",
+    "name": "Trailblazer",
+    "icon": "assets/images/icons/trailblazer_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "3.0"
+  },
+  {
+    "id": "tribbie",
+    "name": "Tribbie",
+    "icon": "assets/images/icons/tribbie_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "3.1"
+  },
+  {
+    "id": "welt",
+    "name": "Welt",
+    "icon": "assets/images/icons/welt_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Imaginary",
+    "version": "1.0"
+  },
+  {
+    "id": "xueyi",
+    "name": "Xueyi",
+    "icon": "assets/images/icons/xueyi_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Quantum",
+    "version": "1.6"
+  },
+  {
+    "id": "yanqing",
+    "name": "Yanqing",
+    "icon": "assets/images/icons/yanqing_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Ice",
+    "version": "1.0"
+  },
+  {
+    "id": "yao_guang",
+    "name": "Yao Guang",
+    "icon": "assets/images/icons/yao_guang_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "4.0"
+  },
+  {
+    "id": "yukong",
+    "name": "Yukong",
+    "icon": "assets/images/icons/yukong_icon.png",
+    "rarity": "4 Star",
+    "path": "",
+    "combat_type": "Imaginary",
+    "version": "1.1"
+  },
+  {
+    "id": "yunli",
+    "name": "Yunli",
+    "icon": "assets/images/icons/yunli_icon.png",
+    "rarity": "5 Star",
+    "path": "",
+    "combat_type": "Physical",
+    "version": "2.4"
+  }
+]

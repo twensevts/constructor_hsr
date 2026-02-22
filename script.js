@@ -59,7 +59,7 @@ function openArtifactModal(character) {
     currentCharacter = character;
     const artifactModal = document.getElementById('artifactModal');
     document.getElementById('selectedCharacterName').textContent = character.name;
-    document.getElementById('selectedCharacterImg').src = character.photo;
+    document.getElementById('selectedCharacterImg').src = character.icon;
     artifactModal.classList.add('show');
 }
 
@@ -108,7 +108,13 @@ function closeArtifactModal() {
     artifactModal.classList.remove('show');
 }
 
-initCharacterOptions();
+loadCharacters().then(() => {
+    initCharacterOptions();
+    renderSets();
+}).catch(err => {
+    console.error('Failed to load characters:', err);
+    setsList.innerHTML = '<p class="empty-message">Ошибка загрузки персонажей</p>';
+});
 
 function addSet() {
     const setNumber = sets.length + 1;
@@ -132,7 +138,7 @@ function renderSets() {
 
     sets.forEach(set => {
         const character = getCharacterById(set.characterId);
-        const photoSrc = character ? character.photo : 'src/images/character_demo.jpg';
+        const photoSrc = character ? character.icon : 'src/images/character_demo.jpg';
         const setItem = document.createElement('div');
         setItem.className = 'set-item';
         setItem.innerHTML = `
@@ -148,5 +154,3 @@ function removeSet(id) {
     sets = sets.filter(set => set.id !== id);
     renderSets();
 }
-
-renderSets();
