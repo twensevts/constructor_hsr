@@ -10,7 +10,8 @@ from bs4 import BeautifulSoup
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
-HTML_PATH = PROJECT_ROOT / "sets.html"
+CAVERN_HTML = PROJECT_ROOT / "sets.html"
+PLANAR_HTML = PROJECT_ROOT / "planar.html"
 JSON_PATH = PROJECT_ROOT / "assets" / "relic_sets.json"
 SETS_IMG_DIR = PROJECT_ROOT / "assets" / "images" / "sets"
 ITEMS_IMG_DIR = PROJECT_ROOT / "assets" / "images" / "items"
@@ -121,13 +122,22 @@ def parse_sets(html_content: str) -> list[dict]:
 
 
 def main():
-    if not HTML_PATH.exists():
-        print(f"Error: {HTML_PATH} not found", file=sys.stderr)
-        sys.exit(1)
-
-    html_content = HTML_PATH.read_text(encoding="utf-8")
-    sets_data = parse_sets(html_content)
-    print(f"Parsed {len(sets_data)} relic sets")
+    sets_data = []
+    if CAVERN_HTML.exists():
+        cavern_html = CAVERN_HTML.read_text(encoding="utf-8")
+        cavern_sets = parse_sets(cavern_html)
+        sets_data.extend(cavern_sets)
+        print(f"Parsed {len(cavern_sets)} cavern sets from {CAVERN_HTML.name}")
+    else:
+        print(f"Warning: {CAVERN_HTML} not found", file=sys.stderr)
+    if PLANAR_HTML.exists():
+        planar_html = PLANAR_HTML.read_text(encoding="utf-8")
+        planar_sets = parse_sets(planar_html)
+        sets_data.extend(planar_sets)
+        print(f"Parsed {len(planar_sets)} planar sets from {PLANAR_HTML.name}")
+    else:
+        print(f"Warning: {PLANAR_HTML} not found", file=sys.stderr)
+    print(f"Total: {len(sets_data)} relic sets")
 
     for relic_set in sets_data:
         set_dir = SETS_IMG_DIR

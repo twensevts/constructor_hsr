@@ -427,7 +427,7 @@
         "id": "knight_s_iron_boots_of_order",
         "name": "Knight's Iron Boots of Order",
         "slot": "feet",
-        "icon": "https://static.wikia.nocookie.net/houkai-star-rail/images/e/ea/Item_Knight%27s_Iron_Boots_of_Order.png/revision/latest/scale-to-width-down/256?cb=20240314012628"
+        "icon": "assets/images/items/feet/knight_s_iron_boots_of_order.png"
       }
     ]
   },
@@ -523,7 +523,7 @@
         "id": "musketeer_s_coarse_leather_gloves",
         "name": "Musketeer's Coarse Leather Gloves",
         "slot": "hands",
-        "icon": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/83/Item_Musketeer%27s_Coarse_Leather_Gloves.png/revision/latest/scale-to-width-down/256?cb=20240314012716"
+        "icon": "assets/images/items/hands/musketeer_s_coarse_leather_gloves.png"
       },
       {
         "id": "musketeer_s_wind_hunting_shawl",
@@ -1076,6 +1076,558 @@
         "name": "Deliverer's Boots of Pioneering",
         "slot": "feet",
         "icon": "assets/images/items/feet/deliverer_s_boots_of_pioneering.png"
+      }
+    ]
+  },
+  {
+    "id": "amphoreus_the_eternal_land",
+    "name": "Amphoreus, The Eternal Land",
+    "icon": "assets/images/sets/amphoreus_the_eternal_land.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's CRIT Rate by 8%. While the\n                wearer's memosprite is on the field, increases all\n                allies' SPD by 8%. This effect cannot be\n                stacked."
+    },
+    "items": [
+      {
+        "id": "last_west_wind_of_amphoreus",
+        "name": "Last West Wind of Amphoreus",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/last_west_wind_of_amphoreus.png"
+      },
+      {
+        "id": "eternal_verses_of_amphoreus",
+        "name": "Eternal Verses of Amphoreus",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/eternal_verses_of_amphoreus.png"
+      }
+    ]
+  },
+  {
+    "id": "arcadia_of_woven_dreams",
+    "name": "Arcadia of Woven Dreams",
+    "icon": "assets/images/sets/arcadia_of_woven_dreams.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "When\n                there are currently more or less than 4 ally targets in battle, each additional/missing ally target\n                increases the wearer and their memosprite 's DMG by\n                9%/12%, up to a maximum of 4/3 stacks."
+    },
+    "items": [
+      {
+        "id": "membrance_maze_s_serene_treehouse",
+        "name": "Membrance Maze's Serene Treehouse",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/membrance_maze_s_serene_treehouse.png"
+      },
+      {
+        "id": "membrance_maze_s_wishing_whistle",
+        "name": "Membrance Maze's Wishing Whistle",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/membrance_maze_s_wishing_whistle.png"
+      }
+    ]
+  },
+  {
+    "id": "belobog_of_the_architects",
+    "name": "Belobog of the Architects",
+    "icon": "assets/images/sets/belobog_of_the_architects.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's DEF by 15%. When the wearer's Effect Hit Rate is 50% or higher, the\n                wearer gains an extra 15% DEF."
+    },
+    "items": [
+      {
+        "id": "belobog_s_fortress_of_preservation",
+        "name": "Belobog's Fortress of Preservation",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/belobog_s_fortress_of_preservation.png"
+      },
+      {
+        "id": "belobog_s_iron_defense",
+        "name": "Belobog's Iron Defense",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/belobog_s_iron_defense.png"
+      }
+    ]
+  },
+  {
+    "id": "bone_collection_s_serene_demesne",
+    "name": "Bone Collection's Serene Demesne",
+    "icon": "assets/images/sets/bone_collection_s_serene_demesne.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's Max HP by 12%. When the wearer's Max HP is 5000\n                or higher, increases the wearer's and their memosprite 's CRIT DMG by 28%."
+    },
+    "items": [
+      {
+        "id": "aidonia_s_deceased_gravestones",
+        "name": "Aidonia's Deceased Gravestones",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/aidonia_s_deceased_gravestones.png"
+      },
+      {
+        "id": "aidonia_s_deathward_bone_chains",
+        "name": "Aidonia's Deathward Bone Chains",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/aidonia_s_deathward_bone_chains.png"
+      }
+    ]
+  },
+  {
+    "id": "broken_keel",
+    "name": "Broken Keel",
+    "icon": "assets/images/sets/broken_keel.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's Effect RES by 10%. When the\n                wearer's Effect RES is at 30% or higher, all allies' CRIT\n                    DMG increases by 10%."
+    },
+    "items": [
+      {
+        "id": "insumousu_s_whalefall_ship",
+        "name": "Insumousu's Whalefall Ship",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/insumousu_s_whalefall_ship.png"
+      },
+      {
+        "id": "insumousu_s_frayed_hawser",
+        "name": "Insumousu's Frayed Hawser",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/insumousu_s_frayed_hawser.png"
+      }
+    ]
+  },
+  {
+    "id": "celestial_differentiator",
+    "name": "Celestial Differentiator",
+    "icon": "assets/images/sets/celestial_differentiator.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's CRIT DMG by 16%. When the wearer's\n                current CRIT DMG reaches 120% or higher, after entering battle, the wearer's CRIT Rate increases by 60% until the end of their first attack."
+    },
+    "items": [
+      {
+        "id": "planet_screwllum_s_mechanical_sun",
+        "name": "Planet Screwllum's Mechanical Sun",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/planet_screwllum_s_mechanical_sun.png"
+      },
+      {
+        "id": "planet_screwllum_s_ring_system",
+        "name": "Planet Screwllum's Ring System",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/planet_screwllum_s_ring_system.png"
+      }
+    ]
+  },
+  {
+    "id": "duran_dynasty_of_running_wolves",
+    "name": "Duran, Dynasty of Running Wolves",
+    "icon": "assets/images/sets/duran_dynasty_of_running_wolves.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "When\n                an ally uses follow-up attacks , the wearer\n                gains 1 stack of Merit, stacking up to 5 time(s). Each stack of Merit increases the DMG dealt by the\n                wearer's follow-up attacks by 5%. When there are 5 stacks, additionally increases the wearer's CRIT DMG by 25%."
+    },
+    "items": [
+      {
+        "id": "duran_s_tent_of_golden_sky",
+        "name": "Duran's Tent of Golden Sky",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/duran_s_tent_of_golden_sky.png"
+      },
+      {
+        "id": "duran_s_mechabeast_bridle",
+        "name": "Duran's Mechabeast Bridle",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/duran_s_mechabeast_bridle.png"
+      }
+    ]
+  },
+  {
+    "id": "firmament_frontline_glamoth",
+    "name": "Firmament Frontline: Glamoth",
+    "icon": "assets/images/sets/firmament_frontline_glamoth.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's ATK by 12%. When the wearer's SPD is equal to or higher than 135/160, the\n                wearer deals 12%/18% more DMG."
+    },
+    "items": [
+      {
+        "id": "glamoth_s_iron_cavalry_regiment",
+        "name": "Glamoth's Iron Cavalry Regiment",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/glamoth_s_iron_cavalry_regiment.png"
+      },
+      {
+        "id": "glamoth_s_silent_tombstone",
+        "name": "Glamoth's Silent Tombstone",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/glamoth_s_silent_tombstone.png"
+      }
+    ]
+  },
+  {
+    "id": "fleet_of_the_ageless",
+    "name": "Fleet of the Ageless",
+    "icon": "assets/images/sets/fleet_of_the_ageless.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's Max HP by 12%. When the wearer's SPD reaches 120 or higher, all allies' ATK increases by 8%."
+    },
+    "items": [
+      {
+        "id": "the_xianzhou_luofu_s_celestial_ark",
+        "name": "The Xianzhou Luofu's Celestial Ark",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/the_xianzhou_luofu_s_celestial_ark.png"
+      },
+      {
+        "id": "the_xianzhou_luofu_s_ambrosial_arbor_vines",
+        "name": "The Xianzhou Luofu's Ambrosial Arbor Vines",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/the_xianzhou_luofu_s_ambrosial_arbor_vines.png"
+      }
+    ]
+  },
+  {
+    "id": "forge_of_the_kalpagni_lantern",
+    "name": "Forge of the Kalpagni Lantern",
+    "icon": "assets/images/sets/forge_of_the_kalpagni_lantern.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's SPD by 6%. When the\n                wearer hits an enemy target that has Fire Weakness , the wearer's Break\n                    Effect increases by 40%, lasting for 1 turn(s)."
+    },
+    "items": [
+      {
+        "id": "forge_s_lotus_lantern_wick",
+        "name": "Forge's Lotus Lantern Wick",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/forge_s_lotus_lantern_wick.png"
+      },
+      {
+        "id": "forge_s_heavenly_flamewheel_silk",
+        "name": "Forge's Heavenly Flamewheel Silk",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/forge_s_heavenly_flamewheel_silk.png"
+      }
+    ]
+  },
+  {
+    "id": "giant_tree_of_rapt_brooding",
+    "name": "Giant Tree of Rapt Brooding",
+    "icon": "assets/images/sets/giant_tree_of_rapt_brooding.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's SPD by 6%. When the\n                wearer's Speed is 135/180 or higher, increases the wearer and their memosprite 's Outgoing Healing by 12%/20%."
+    },
+    "items": [
+      {
+        "id": "grove_of_epiphany_s_pondering_colossus",
+        "name": "Grove of Epiphany's Pondering Colossus",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/grove_of_epiphany_s_pondering_colossus.png"
+      },
+      {
+        "id": "grove_of_epiphany_s_interwoven_veins",
+        "name": "Grove of Epiphany's Interwoven Veins",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/grove_of_epiphany_s_interwoven_veins.png"
+      }
+    ]
+  },
+  {
+    "id": "inert_salsotto",
+    "name": "Inert Salsotto",
+    "icon": "assets/images/sets/inert_salsotto.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's CRIT Rate by 8%. When the\n                wearer's current CRIT Rate reaches 50% or higher, the wearer's Ultimate and follow-up attack DMG increases by 15%."
+    },
+    "items": [
+      {
+        "id": "salsotto_s_moving_city",
+        "name": "Salsotto's Moving City",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/salsotto_s_moving_city.png"
+      },
+      {
+        "id": "salsotto_s_terminator_line",
+        "name": "Salsotto's Terminator Line",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/salsotto_s_terminator_line.png"
+      }
+    ]
+  },
+  {
+    "id": "izumo_gensei_and_takama_divine_realm",
+    "name": "Izumo Gensei and Takama Divine Realm",
+    "icon": "assets/images/sets/izumo_gensei_and_takama_divine_realm.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's ATK by 12%. When entering battle, if at least\n                one other ally follows the same Path as the wearer, then the\n                wearer's CRIT Rate increases by 12%."
+    },
+    "items": [
+      {
+        "id": "izumo_s_magatsu_no_morokami",
+        "name": "Izumo's Magatsu no Morokami",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/izumo_s_magatsu_no_morokami.png"
+      },
+      {
+        "id": "izumo_s_blades_of_origin_and_end",
+        "name": "Izumo's Blades of Origin and End",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/izumo_s_blades_of_origin_and_end.png"
+      }
+    ]
+  },
+  {
+    "id": "lushaka_the_sunken_seas",
+    "name": "Lushaka, the Sunken Seas",
+    "icon": "assets/images/sets/lushaka_the_sunken_seas.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's Energy\n                    Regeneration Rate by 5%. If the wearer is not the first character in the team lineup, then\n                increases the ATK of the first character in the team lineup by 12%."
+    },
+    "items": [
+      {
+        "id": "lushaka_s_waterscape",
+        "name": "Lushaka's Waterscape",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/lushaka_s_waterscape.png"
+      },
+      {
+        "id": "lushaka_s_twinlanes",
+        "name": "Lushaka's Twinlanes",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/lushaka_s_twinlanes.png"
+      }
+    ]
+  },
+  {
+    "id": "pan_cosmic_commercial_enterprise",
+    "name": "Pan-Cosmic Commercial Enterprise",
+    "icon": "assets/images/sets/pan_cosmic_commercial_enterprise.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's Effect Hit Rate by\n                10%. Meanwhile, the wearer's ATK increases by an amount that is\n                equal to 25% of the current Effect Hit Rate, up to a maximum of 25%."
+    },
+    "items": [
+      {
+        "id": "the_ipc_s_mega_hq",
+        "name": "The IPC's Mega HQ",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/the_ipc_s_mega_hq.png"
+      },
+      {
+        "id": "the_ipc_s_trade_route",
+        "name": "The IPC's Trade Route",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/the_ipc_s_trade_route.png"
+      }
+    ]
+  },
+  {
+    "id": "penacony_land_of_the_dreams",
+    "name": "Penacony, Land of the Dreams",
+    "icon": "assets/images/sets/penacony_land_of_the_dreams.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases wearer's Energy\n                    Regeneration Rate by 5%. Increases DMG by 10% for all other allies that are of the same Type as the wearer."
+    },
+    "items": [
+      {
+        "id": "penacony_s_grand_hotel",
+        "name": "Penacony's Grand Hotel",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/penacony_s_grand_hotel.png"
+      },
+      {
+        "id": "penacony_s_dream_seeking_tracks",
+        "name": "Penacony's Dream-Seeking Tracks",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/penacony_s_dream_seeking_tracks.png"
+      }
+    ]
+  },
+  {
+    "id": "revelry_by_the_sea",
+    "name": "Revelry by the Sea",
+    "icon": "assets/images/sets/revelry_by_the_sea.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's ATK by 12%. When the wearer's ATK is higher\n                than or equal to 2,400/3,600, increases the DoT DMG dealt by\n                12%/24%."
+    },
+    "items": [
+      {
+        "id": "warbling_shores_blazing_beacon",
+        "name": "Warbling Shores' Blazing Beacon",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/warbling_shores_blazing_beacon.png"
+      },
+      {
+        "id": "warbling_shores_cantillation_trail",
+        "name": "Warbling Shores' Cantillation Trail",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/warbling_shores_cantillation_trail.png"
+      }
+    ]
+  },
+  {
+    "id": "rutilant_arena",
+    "name": "Rutilant Arena",
+    "icon": "assets/images/sets/rutilant_arena.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's CRIT Rate by 8%. When the\n                wearer's current CRIT Rate reaches 70% or higher, the wearer's Basic ATK and Skill DMG increase by\n                20%."
+    },
+    "items": [
+      {
+        "id": "taikiyan_laser_stadium",
+        "name": "Taikiyan Laser Stadium",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/taikiyan_laser_stadium.png"
+      },
+      {
+        "id": "taikiyan_s_arclight_race_track",
+        "name": "Taikiyan's Arclight Race Track",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/taikiyan_s_arclight_race_track.png"
+      }
+    ]
+  },
+  {
+    "id": "sigonia_the_unclaimed_desolation",
+    "name": "Sigonia, the Unclaimed Desolation",
+    "icon": "assets/images/sets/sigonia_the_unclaimed_desolation.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's CRIT Rate by 4%. When an enemy\n                target gets defeated, the wearer's CRIT DMG increases by\n                4%, stacking up to 10 time(s)."
+    },
+    "items": [
+      {
+        "id": "sigonia_s_gaiathra_berth",
+        "name": "Sigonia's Gaiathra Berth",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/sigonia_s_gaiathra_berth.png"
+      },
+      {
+        "id": "sigonia_s_knot_of_cyclicality",
+        "name": "Sigonia's Knot of Cyclicality",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/sigonia_s_knot_of_cyclicality.png"
+      }
+    ]
+  },
+  {
+    "id": "space_sealing_station",
+    "name": "Space Sealing Station",
+    "icon": "assets/images/sets/space_sealing_station.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's ATK by 12%. When the wearer's SPD reaches 120 or higher, the wearer's ATK\n                increases by an extra 12%."
+    },
+    "items": [
+      {
+        "id": "herta_s_space_station",
+        "name": "Herta's Space Station",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/herta_s_space_station.png"
+      },
+      {
+        "id": "herta_s_wandering_trek",
+        "name": "Herta's Wandering Trek",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/herta_s_wandering_trek.png"
+      }
+    ]
+  },
+  {
+    "id": "sprightly_vonwacq",
+    "name": "Sprightly Vonwacq",
+    "icon": "assets/images/sets/sprightly_vonwacq.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's Energy\n                    Regeneration Rate by 5%. When the wearer's SPD reaches 120 or higher, the wearer's action is Advanced Forward by 40% immediately upon entering battle."
+    },
+    "items": [
+      {
+        "id": "vonwacq_s_island_of_birth",
+        "name": "Vonwacq's Island of Birth",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/vonwacq_s_island_of_birth.png"
+      },
+      {
+        "id": "vonwacq_s_islandic_coast",
+        "name": "Vonwacq's Islandic Coast",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/vonwacq_s_islandic_coast.png"
+      }
+    ]
+  },
+  {
+    "id": "talia_kingdom_of_banditry",
+    "name": "Talia: Kingdom of Banditry",
+    "icon": "assets/images/sets/talia_kingdom_of_banditry.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's Break Effect by 16%. When\n                the wearer's SPD reaches 145 or higher, the\n                wearer's Break Effect increases by an extra 20%."
+    },
+    "items": [
+      {
+        "id": "talia_s_nailscrap_town",
+        "name": "Talia's Nailscrap Town",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/talia_s_nailscrap_town.png"
+      },
+      {
+        "id": "talia_s_exposed_electric_wire",
+        "name": "Talia's Exposed Electric Wire",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/talia_s_exposed_electric_wire.png"
+      }
+    ]
+  },
+  {
+    "id": "tengoku_livestream",
+    "name": "Tengoku Livestream",
+    "icon": "assets/images/sets/tengoku_livestream.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's CRIT DMG by 16%, If 3 or more Skill Points are consumed in\n                the same turn, additionally increases the wearer's CRIT DMG by 32% for 3 turns."
+    },
+    "items": [
+      {
+        "id": "livestream_s_protean_vistas",
+        "name": "Livestream's Protean Vistas",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/livestream_s_protean_vistas.png"
+      },
+      {
+        "id": "livestream_s_chatter_banter",
+        "name": "Livestream's Chatter Banter",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/livestream_s_chatter_banter.png"
+      }
+    ]
+  },
+  {
+    "id": "the_wondrous_bananamusement_park",
+    "name": "The Wondrous BananAmusement Park",
+    "icon": "assets/images/sets/the_wondrous_bananamusement_park.png",
+    "type": "planar",
+    "bonuses": {
+      "2_piece": "Increases the wearer's CRIT DMG by 16%. When a target summoned by the wearer is on the field, CRIT DMG additionally\n                increases by 32%."
+    },
+    "items": [
+      {
+        "id": "bananamusement_park_s_bananaxis_plaza",
+        "name": "BananAmusement Park's BananAxis Plaza",
+        "slot": "sphere",
+        "icon": "assets/images/items/sphere/bananamusement_park_s_bananaxis_plaza.png"
+      },
+      {
+        "id": "bananamusement_park_s_memetic_cables",
+        "name": "BananAmusement Park's Memetic Cables",
+        "slot": "rope",
+        "icon": "assets/images/items/rope/bananamusement_park_s_memetic_cables.png"
       }
     ]
   }

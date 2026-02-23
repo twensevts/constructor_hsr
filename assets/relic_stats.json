@@ -1,0 +1,69 @@
+{
+  "main_stats": {
+    "head": [
+      {"id": "hp", "name": "HP", "value": 705, "weight": 1}
+    ],
+    "hands": [
+      {"id": "atk", "name": "ATK", "value": 352, "weight": 1}
+    ],
+    "body": [
+      {"id": "hp_pct", "name": "HP%", "value": "43.2%", "weight": 20},
+      {"id": "atk_pct", "name": "ATK%", "value": "43.2%", "weight": 20},
+      {"id": "def_pct", "name": "DEF%", "value": "54%", "weight": 20},
+      {"id": "crit_rate", "name": "Шанс крита", "value": "32.4%", "weight": 10},
+      {"id": "crit_dmg", "name": "Крит. урон", "value": "64.8%", "weight": 10},
+      {"id": "heal", "name": "Исходящее лечение", "value": "34.5%", "weight": 10},
+      {"id": "effect_hit", "name": "Шанс эфф.", "value": "43.2%", "weight": 10}
+    ],
+    "feet": [
+      {"id": "hp_pct", "name": "HP%", "value": "43.2%", "weight": 15},
+      {"id": "atk_pct", "name": "ATK%", "value": "43.2%", "weight": 25},
+      {"id": "def_pct", "name": "DEF%", "value": "54%", "weight": 15},
+      {"id": "speed", "name": "Скорость", "value": 25, "weight": 25}
+    ],
+    "sphere": [
+      {"id": "hp_pct", "name": "HP%", "value": "43.2%", "weight": 10},
+      {"id": "atk_pct", "name": "ATK%", "value": "43.2%", "weight": 10},
+      {"id": "def_pct", "name": "DEF%", "value": "54%", "weight": 10},
+      {"id": "physical_dmg", "name": "Физ. урон", "value": "38.8%", "weight": 10},
+      {"id": "fire_dmg", "name": "Огненный урон", "value": "38.8%", "weight": 10},
+      {"id": "ice_dmg", "name": "Ледяной урон", "value": "38.8%", "weight": 10},
+      {"id": "lightning_dmg", "name": "Электрич. урон", "value": "38.8%", "weight": 10},
+      {"id": "wind_dmg", "name": "Ветряной урон", "value": "38.8%", "weight": 10},
+      {"id": "quantum_dmg", "name": "Квантовый урон", "value": "38.8%", "weight": 10},
+      {"id": "imaginary_dmg", "name": "Мнимый урон", "value": "38.8%", "weight": 10}
+    ],
+    "rope": [
+      {"id": "hp_pct", "name": "HP%", "value": "43.2%", "weight": 15},
+      {"id": "atk_pct", "name": "ATK%", "value": "43.2%", "weight": 28},
+      {"id": "def_pct", "name": "DEF%", "value": "54%", "weight": 15},
+      {"id": "break_effect", "name": "Эфф. прорыва", "value": "64.8%", "weight": 18},
+      {"id": "energy_regen", "name": "Восст. энергии", "value": "19.4%", "weight": 12}
+    ]
+  },
+  "substats": [
+    {"id": "hp", "name": "HP", "values": {"low": 33, "mid": 38, "high": 42}, "unit": "", "weight": 6},
+    {"id": "atk", "name": "ATK", "values": {"low": 16, "mid": 19, "high": 21}, "unit": "", "weight": 6},
+    {"id": "def", "name": "DEF", "values": {"low": 16, "mid": 19, "high": 21}, "unit": "", "weight": 6},
+    {"id": "hp_pct", "name": "HP%", "values": {"low": 3.4, "mid": 3.8, "high": 4.4}, "unit": "%", "weight": 4},
+    {"id": "atk_pct", "name": "ATK%", "values": {"low": 3.4, "mid": 3.8, "high": 4.4}, "unit": "%", "weight": 4},
+    {"id": "def_pct", "name": "DEF%", "values": {"low": 4.3, "mid": 4.8, "high": 5.4}, "unit": "%", "weight": 4},
+    {"id": "crit_rate", "name": "Шанс крита", "values": {"low": 2.5, "mid": 2.9, "high": 3.2}, "unit": "%", "weight": 3},
+    {"id": "crit_dmg", "name": "Крит. урон", "values": {"low": 5.1, "mid": 5.8, "high": 6.5}, "unit": "%", "weight": 3},
+    {"id": "effect_hit", "name": "Шанс эфф.", "values": {"low": 3.4, "mid": 3.8, "high": 4.3}, "unit": "%", "weight": 4},
+    {"id": "effect_res", "name": "Сопр. эфф.", "values": {"low": 3.4, "mid": 3.8, "high": 4.3}, "unit": "%", "weight": 4},
+    {"id": "break_effect", "name": "Эфф. прорыва", "values": {"low": 5.1, "mid": 5.8, "high": 6.5}, "unit": "%", "weight": 4},
+    {"id": "speed", "name": "Скорость", "values": {"low": 2, "mid": 2.3, "high": 2.6}, "unit": "", "weight": 2}
+  ],
+  "substat_quality": {
+    "low": 0,
+    "mid": 1,
+    "high": 2
+  },
+  "drop_weights": {
+    "cavern_sets": 2,
+    "planar_sets": 6,
+    "piece_per_set_cavern": 4,
+    "piece_per_set_planar": 2
+  }
+}

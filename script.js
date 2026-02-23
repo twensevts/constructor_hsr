@@ -88,7 +88,7 @@ function confirmSetName() {
         setName: setName,
         characterName: currentCharacter.name,
         characterId: currentCharacter.id,
-        pieces: []
+        pieces: typeof getAllPiecesForSave === 'function' ? getAllPiecesForSave() : []
     };
 
     sets.push(newSet);
@@ -108,12 +108,16 @@ function closeArtifactModal() {
     artifactModal.classList.remove('show');
 }
 
-loadCharacters().then(() => {
+Promise.all([
+    loadCharacters(),
+    loadRelicData()
+]).then(() => {
     initCharacterOptions();
+    initArtifactCards();
     renderSets();
 }).catch(err => {
-    console.error('Failed to load characters:', err);
-    setsList.innerHTML = '<p class="empty-message">Ошибка загрузки персонажей</p>';
+    console.error('Failed to load:', err);
+    setsList.innerHTML = '<p class="empty-message">Ошибка загрузки</p>';
 });
 
 function addSet() {
