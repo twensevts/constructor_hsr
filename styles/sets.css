@@ -63,8 +63,39 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.remove-set-btn {
+.set-item-photo {
+    cursor: pointer;
+}
+
+.set-item-photo:hover {
+    opacity: 0.9;
+}
+
+.set-item-actions {
+    display: flex;
+    gap: 10px;
     margin-top: auto;
+}
+
+.open-set-btn {
+    flex: 1;
+    background: rgba(0, 212, 255, 0.2);
+    color: #00d4ff;
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.open-set-btn:hover {
+    background: rgba(0, 212, 255, 0.3);
+}
+
+.remove-set-btn {
+    flex: 1;
     background: linear-gradient(135deg, #8b2020 0%, #5c1010 100%);
     color: #fff;
     border: 1px solid rgba(255, 100, 100, 0.3);

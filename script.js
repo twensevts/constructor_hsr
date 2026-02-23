@@ -1,5 +1,6 @@
 let sets = [];
 let currentCharacter = null;
+let currentEditingSetId = null;
 
 const addSetBtn = document.getElementById('addSetBtn');
 const setsList = document.getElementById('sets-list');
@@ -55,11 +56,18 @@ function initCharacterOptions() {
     });
 }
 
-function openArtifactModal(character) {
+function openArtifactModal(character, setData) {
     currentCharacter = character;
+    currentEditingSetId = setData?.id ?? null;
     const artifactModal = document.getElementById('artifactModal');
     document.getElementById('selectedCharacterName').textContent = character.name;
     document.getElementById('selectedCharacterImg').src = character.photo;
+    if (setData?.pieces && typeof loadSetIntoPieceData === 'function') {
+        loadSetIntoPieceData(setData.pieces);
+    } else if (typeof initPieceData === 'function' && typeof updateCardDisplay === 'function') {
+        initPieceData();
+        ['head', 'hands', 'body', 'feet', 'sphere', 'rope'].forEach(slot => updateCardDisplay(slot));
+    }
     artifactModal.classList.add('show');
 }
 
@@ -68,11 +76,20 @@ function saveSet() {
         alert('Выберите персонажа');
         return;
     }
-
     const nameSetModal = document.getElementById('nameSetModal');
+    const input = document.getElementById('setNameInput');
+    const existing = currentEditingSetId ? sets.find(s => s.id === currentEditingSetId) : null;
+    input.value = existing ? existing.setName : '';
     nameSetModal.classList.add('show');
-    document.getElementById('setNameInput').value = '';
-    document.getElementById('setNameInput').focus();
+    input.focus();
+}
+
+function openSet(id) {
+    const set = sets.find(s => s.id === id);
+    if (!set) return;
+    const character = getCharacterById(set.characterId);
+    if (!character) return;
+    openArtifactModal(character, set);
 }
 
 function confirmSetName() {
@@ -83,19 +100,29 @@ function confirmSetName() {
         return;
     }
 
-    const newSet = {
-        id: Date.now(),
-        setName: setName,
-        characterName: currentCharacter.name,
-        characterId: currentCharacter.id,
-        pieces: typeof getAllPiecesForSave === 'function' ? getAllPiecesForSave() : []
-    };
-
-    sets.push(newSet);
+    const pieces = typeof getAllPiecesForSave === 'function' ? getAllPiecesForSave() : [];
+    if (currentEditingSetId !== null) {
+        const existing = sets.find(s => s.id === currentEditingSetId);
+        if (existing) {
+            existing.setName = setName;
+            existing.characterName = currentCharacter.name;
+            existing.characterId = currentCharacter.id;
+            existing.pieces = pieces;
+        }
+    } else {
+        sets.push({
+            id: Date.now(),
+            setName,
+            characterName: currentCharacter.name,
+            characterId: currentCharacter.id,
+            pieces
+        });
+    }
     renderSets();
     closeNameModal();
     closeArtifactModal();
     currentCharacter = null;
+    currentEditingSetId = null;
 }
 
 function closeNameModal() {
@@ -106,6 +133,7 @@ function closeNameModal() {
 function closeArtifactModal() {
     const artifactModal = document.getElementById('artifactModal');
     artifactModal.classList.remove('show');
+    currentEditingSetId = null;
 }
 
 Promise.all([
@@ -147,8 +175,11 @@ function renderSets() {
         setItem.className = 'set-item';
         setItem.innerHTML = `
             <span class="set-item-name">${set.setName}</span>
-            <img src="${photoSrc}" alt="${set.characterName}">
-            <button class="remove-set-btn" onclick="removeSet(${set.id})">Удалить</button>
+            <img src="${photoSrc}" alt="${set.characterName}" class="set-item-photo" onclick="openSet(${set.id})">
+            <div class="set-item-actions">
+                <button class="open-set-btn" onclick="openSet(${set.id})">Открыть</button>
+                <button class="remove-set-btn" onclick="removeSet(${set.id}); event.stopPropagation()">Удалить</button>
+            </div>
         `;
         setsList.appendChild(setItem);
     });

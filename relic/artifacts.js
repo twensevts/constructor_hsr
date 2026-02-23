@@ -286,6 +286,26 @@ function getAllPiecesForSave() {
     return result;
 }
 
+function loadSetIntoPieceData(pieces) {
+    initPieceData();
+    if (!pieces || !Array.isArray(pieces)) return;
+    pieces.forEach(p => {
+        const slot = p.slot;
+        if (!SLOTS.includes(slot)) return;
+        const relicSet = getSetById(p.setId);
+        if (!relicSet) return;
+        pieceData[slot].set = relicSet;
+        pieceData[slot].item = getItemForSlot(relicSet, slot);
+        pieceData[slot].mainStat = p.mainStat ? { ...p.mainStat } : null;
+        const subs = p.substats || [];
+        pieceData[slot].substats = [null, null, null, null].map((_, i) => {
+            const s = subs[i];
+            return s ? { id: s.id, name: s.name, upgrades: s.upgrades || 0, quality: s.quality || 'mid', value: s.value } : null;
+        });
+        updateCardDisplay(slot);
+    });
+}
+
 function initArtifactCards() {
     initPieceData();
     document.querySelectorAll('.artifact-card').forEach(card => {
