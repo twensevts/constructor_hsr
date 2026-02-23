@@ -1,0 +1,77 @@
+digraph SoftwareFlow {
+    rankdir=TB;
+    node [fontname="Arial", fontsize=11];
+    edge [fontname="Arial", fontsize=10];
+
+    start [label="Начало", shape=ellipse];
+    end [label="Конец", shape=ellipse];
+
+    p1 [label="Загрузка приложения", shape=box];
+    p2 [label="Promise.all([\n  loadCharacters(),\n  loadRelicData()\n])", shape=box];
+    p2a [label="fetch characters.json\nfetch relic_sets.json\nfetch relic_stats.json", shape=box];
+    p3 [label="CHARACTERS = data.map(c =>\n  new Character(...))\nRELIC_SETS, RELIC_STATS", shape=box];
+    d1 [label="Загрузка\nуспешна?", shape=diamond];
+    p4 [label="setsList: «Ошибка загрузки»", shape=parallelogram];
+    p5 [label="initCharacterOptions()\ninitArtifactCards()\nrenderSets()", shape=box];
+    p6 [label="Ожидание действий\nпользователя", shape=box];
+    d2 [label="Событие?", shape=diamond];
+
+    p8 [label="addSetBtn.click\ncreateSetModal.show\naddCharacterBtn видим", shape=box];
+    p9 [label="addCharacterBtn.click\ncharacterDropdown.show", shape=box];
+    p10 [label="character-option.click\ngetCharacterById(id)", shape=box];
+    d3 [label="character\nнайден?", shape=diamond];
+    p11 [label="createSetModal.close\nopenArtifactModal(char)", shape=box];
+    p12 [label="artifactModal.show\ncurrentCharacter = char\ninitArtifactCards: setBtn,\nmainStat, subStat handlers", shape=box];
+
+    p13 [label="artifact-set-btn.click\nopenSetSelectionModal(card)\ngetSetsBySlot(slot)", shape=box];
+    p14 [label="setSelectionModal.show\nВыбор сета → selectSet()\nupdateCardDisplay()", shape=box];
+    p15 [label="main-stat.click\nopenMainStatModal(card)\ngetMainStatsForSlot(slot)", shape=box];
+    p16 [label="mainStatModal.show\nВыбор стата → updateCardDisplay()", shape=box];
+    p17 [label="sub-stat.click\nopenSubstatModal(card, i)\nВыбор подстата, проков, качества\nconfirmSubstat() → updateCardDisplay()\ncalculateDropChance()", shape=box];
+
+    p18 [label="saveSetBtn.click", shape=box];
+    d4 [label="currentCharacter?", shape=diamond];
+    p19 [label="alert(«Выберите персонажа»)", shape=parallelogram];
+    p20 [label="nameSetModal.show\nsetNameInput.focus()", shape=box];
+    p21 [label="confirmSetName()\ngetAllPiecesForSave()\nnewSet.pieces = pieces", shape=box];
+    d5 [label="setName\nне пусто?", shape=diamond];
+    p22 [label="alert(«Введите название»)", shape=parallelogram];
+    p23 [label="sets.push(newSet)\nrenderSets()\ncloseNameModal()\ncloseArtifactModal()", shape=box];
+
+    p24 [label="removeSet(id)\nsets = sets.filter(...)\nrenderSets()", shape=box];
+
+    start -> p1 -> p2 -> p2a -> p3 -> d1;
+    d1 -> p4 -> end [label="Нет"];
+    d1 -> p5 [label="Да"];
+    p5 -> p6 -> d2;
+
+    d2 -> p8 [label="addSet"];
+    d2 -> p9 [label="showChars"];
+    d2 -> p10 [label="selectChar"];
+    d2 -> p13 [label="setSelect"];
+    d2 -> p15 [label="mainStatSelect"];
+    d2 -> p17 [label="substatSelect"];
+    d2 -> p18 [label="saveSet"];
+    d2 -> p24 [label="removeSet"];
+
+    p8 -> p6;
+    p9 -> p6;
+    p10 -> d3;
+    d3 -> p6 [label="Нет"];
+    d3 -> p11 [label="Да"];
+    p11 -> p12 -> p6;
+
+    p13 -> p14 -> p6;
+    p15 -> p16 -> p6;
+    p17 -> p6;
+
+    p18 -> d4;
+    d4 -> p19 -> p6 [label="Нет"];
+    d4 -> p20 [label="Да"];
+    p20 -> p21 -> d5;
+    d5 -> p22 -> p21 [label="Нет"];
+    d5 -> p23 [label="Да"];
+    p23 -> p6;
+
+    p24 -> p6;
+}

@@ -1,0 +1,50 @@
+digraph UserFlow {
+    rankdir=TB;
+    node [fontname="Arial", fontsize=11];
+    edge [fontname="Arial", fontsize=10];
+
+    start [label="Начало", shape=ellipse];
+    end [label="Конец", shape=ellipse];
+
+    v1 [label="Открытие приложения\n«Калькулятор реликвий»", shape=box];
+    v2 [label="Главный экран\nСекция «Ваши сеты»\nСписок сохранённых сетов\nили «Нет добавленных сетов»\nКнопка «+ Добавить сет»", shape=box];
+    v3 [label="Нажатие «Добавить сет»", shape=box];
+    v4 [label="Модалка «Создание сета»\nКнопка «Выбрать персонажа»", shape=parallelogram];
+    v5 [label="Нажатие «Выбрать персонажа»", shape=box];
+    v6 [label="Список персонажей\nс иконками и именами", shape=parallelogram];
+    v7 [label="Клик по персонажу", shape=box];
+    v8 [label="Модалка артефактов\nsplash-art персонажа\n6 карточек: Голова, Перчатки,\nТело, Ботинки, Сфера, Веревка", shape=parallelogram];
+    v9 [label="Настройка артефактов\n(для каждой карточки):\nКлик «+» → выбор Cavern/Planar сета\nКлик «Главный стат» → выбор стата\nКлик «—» подстата → выбор подстата,\nпроков (0–5), качества", shape=box];
+    v10 [label="Отображение шанса\nвыпадения на карточке", shape=parallelogram];
+    v11 [label="Нажатие «Сохранить сет»", shape=box];
+    d1 [label="Персонаж\nвыбран?", shape=diamond];
+    v12 [label="Оповещение:\n«Выберите персонажа»", shape=parallelogram];
+    v13 [label="Модалка «Название сета»\nПоле ввода", shape=parallelogram];
+    v14 [label="Ввод названия\nНажатие «Сохранить»", shape=box];
+    d2 [label="Название\nвведено?", shape=diamond];
+    v15 [label="Оповещение:\n«Введите название сета»", shape=parallelogram];
+    v16 [label="Сохранение сета\n(в т.ч. pieces)\nЗакрытие модалок\nВозврат на главный экран", shape=box];
+    v17 [label="Сет в списке\nс именем, фото персонажа,\nкнопкой «Удалить»", shape=parallelogram];
+    v18 [label="Нажатие «Удалить»\nна карточке сета", shape=box];
+    v19 [label="Удаление сета\nиз списка", shape=box];
+    d3 [label="Действие\nпользователя?", shape=diamond];
+
+    start -> v1 -> v2;
+    v2 -> d3;
+    d3 -> v3 [label="Добавить сет"];
+    d3 -> v18 [label="Удалить"];
+    d3 -> v2 [label="Просмотр"];
+    v3 -> v4 -> v5 -> v6;
+    v6 -> v7 -> v8;
+    v8 -> v9 -> v10;
+    v9 -> v10 [style=dashed];
+    v10 -> v11 -> d1;
+    d1 -> v12 -> v8 [label="Нет"];
+    d1 -> v13 [label="Да"];
+    v13 -> v14 -> d2;
+    d2 -> v15 -> v14 [label="Нет"];
+    d2 -> v16 [label="Да"];
+    v16 -> v17 -> v2;
+    v18 -> v19 -> v2;
+    v2 -> end [label="Закрыть вкладку"];
+}
