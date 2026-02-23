@@ -1,0 +1,1082 @@
+[
+  {
+    "id": "band_of_sizzling_thunder",
+    "name": "Band of Sizzling Thunder",
+    "icon": "assets/images/sets/band_of_sizzling_thunder.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Lightning DMG by 10%.",
+      "4_piece": "When the wearer\n                uses their Skill , increases the wearer's ATK by 20% for 1 turn(s)."
+    },
+    "items": [
+      {
+        "id": "band_s_polarized_sunglasses",
+        "name": "Band's Polarized Sunglasses",
+        "slot": "head",
+        "icon": "assets/images/items/head/band_s_polarized_sunglasses.png"
+      },
+      {
+        "id": "band_s_touring_bracelet",
+        "name": "Band's Touring Bracelet",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/band_s_touring_bracelet.png"
+      },
+      {
+        "id": "band_s_leather_jacket_with_studs",
+        "name": "Band's Leather Jacket With Studs",
+        "slot": "body",
+        "icon": "assets/images/items/body/band_s_leather_jacket_with_studs.png"
+      },
+      {
+        "id": "band_s_ankle_boots_with_rivets",
+        "name": "Band's Ankle Boots With Rivets",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/band_s_ankle_boots_with_rivets.png"
+      }
+    ]
+  },
+  {
+    "id": "champion_of_streetwise_boxing",
+    "name": "Champion of Streetwise Boxing",
+    "icon": "assets/images/sets/champion_of_streetwise_boxing.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Physical DMG by 10%.",
+      "4_piece": "After the wearer\n                attacks or is hit, their ATK increases by 5% for the rest of the\n                battle. This effect can stack up to 5 time(s)."
+    },
+    "items": [
+      {
+        "id": "champion_s_headgear",
+        "name": "Champion's Headgear",
+        "slot": "head",
+        "icon": "assets/images/items/head/champion_s_headgear.png"
+      },
+      {
+        "id": "champion_s_heavy_gloves",
+        "name": "Champion's Heavy Gloves",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/champion_s_heavy_gloves.png"
+      },
+      {
+        "id": "champion_s_chest_guard",
+        "name": "Champion's Chest Guard",
+        "slot": "body",
+        "icon": "assets/images/items/body/champion_s_chest_guard.png"
+      },
+      {
+        "id": "champion_s_fleetfoot_boots",
+        "name": "Champion's Fleetfoot Boots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/champion_s_fleetfoot_boots.png"
+      }
+    ]
+  },
+  {
+    "id": "diviner_of_distant_reach",
+    "name": "Diviner of Distant Reach",
+    "icon": "assets/images/sets/diviner_of_distant_reach.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases SPD by 6%.",
+      "4_piece": "Before\n                entering combat, if the wearer's SPD is greater than or equal to 120/160, increases the wearer's CRIT Rate by 10%/18%. When the wearer uses Elation Skill for the first time in each\n                battle, enhances all allies' Elation by 10%.\n                This effect cannot stack."
+    },
+    "items": [
+      {
+        "id": "diviner_s_extrapolation_jade_abacus",
+        "name": "Diviner's Extrapolation Jade Abacus",
+        "slot": "head",
+        "icon": "assets/images/items/head/diviner_s_extrapolation_jade_abacus.png"
+      },
+      {
+        "id": "diviner_s_ingenium_prosthetic_hand",
+        "name": "Diviner's Ingenium Prosthetic Hand",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/diviner_s_ingenium_prosthetic_hand.png"
+      },
+      {
+        "id": "diviner_s_astral_robe",
+        "name": "Diviner's Astral Robe",
+        "slot": "body",
+        "icon": "assets/images/items/body/diviner_s_astral_robe.png"
+      },
+      {
+        "id": "diviner_s_cloud_soaring_boots",
+        "name": "Diviner's Cloud-Soaring Boots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/diviner_s_cloud_soaring_boots.png"
+      }
+    ]
+  },
+  {
+    "id": "eagle_of_twilight_line",
+    "name": "Eagle of Twilight Line",
+    "icon": "assets/images/sets/eagle_of_twilight_line.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Wind DMG by\n                10%.",
+      "4_piece": "After the wearer uses their Ultimate , their action is Advanced\n                    Forward by 25%."
+    },
+    "items": [
+      {
+        "id": "eagle_s_beaked_helmet",
+        "name": "Eagle's Beaked Helmet",
+        "slot": "head",
+        "icon": "assets/images/items/head/eagle_s_beaked_helmet.png"
+      },
+      {
+        "id": "eagle_s_soaring_ring",
+        "name": "Eagle's Soaring Ring",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/eagle_s_soaring_ring.png"
+      },
+      {
+        "id": "eagle_s_winged_suit_harness",
+        "name": "Eagle's Winged Suit Harness",
+        "slot": "body",
+        "icon": "assets/images/items/body/eagle_s_winged_suit_harness.png"
+      },
+      {
+        "id": "eagle_s_quilted_puttees",
+        "name": "Eagle's Quilted Puttees",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/eagle_s_quilted_puttees.png"
+      }
+    ]
+  },
+  {
+    "id": "ever_glorious_magical_girl",
+    "name": "Ever-Glorious Magical Girl",
+    "icon": "assets/images/sets/ever_glorious_magical_girl.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases CRIT DMG by 16%.",
+      "4_piece": "The Elation DMG dealt by the wearer and their memosprites ignores 10% of targets' DEF . For every 5 accumulated Punchline allies gain, the Elation DMG dealt additionally ignores 1% of\n                targets' DEF, stacking up to 10 time(s)."
+    },
+    "items": [
+      {
+        "id": "magical_girl_s_shining_medal",
+        "name": "Magical Girl's Shining Medal",
+        "slot": "head",
+        "icon": "assets/images/items/head/magical_girl_s_shining_medal.png"
+      },
+      {
+        "id": "magical_girl_s_protective_gloves",
+        "name": "Magical Girl's Protective Gloves",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/magical_girl_s_protective_gloves.png"
+      },
+      {
+        "id": "magical_girl_s_everdance_battle_skirt",
+        "name": "Magical Girl's Everdance Battle Skirt",
+        "slot": "body",
+        "icon": "assets/images/items/body/magical_girl_s_everdance_battle_skirt.png"
+      },
+      {
+        "id": "magical_girl_s_contract_boots",
+        "name": "Magical Girl's Contract Boots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/magical_girl_s_contract_boots.png"
+      }
+    ]
+  },
+  {
+    "id": "firesmith_of_lava_forging",
+    "name": "Firesmith of Lava-Forging",
+    "icon": "assets/images/sets/firesmith_of_lava_forging.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Fire DMG by\n                10%.",
+      "4_piece": "Increases the wearer's Skill DMG by 12%.\n                After unleashing Ultimate , increases the wearer's Fire DMG by 12% for the next\n                attack."
+    },
+    "items": [
+      {
+        "id": "firesmith_s_obsidian_goggles",
+        "name": "Firesmith's Obsidian Goggles",
+        "slot": "head",
+        "icon": "assets/images/items/head/firesmith_s_obsidian_goggles.png"
+      },
+      {
+        "id": "firesmith_s_ring_of_flame_mastery",
+        "name": "Firesmith's Ring of Flame-Mastery",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/firesmith_s_ring_of_flame_mastery.png"
+      },
+      {
+        "id": "firesmith_s_fireproof_apron",
+        "name": "Firesmith's Fireproof Apron",
+        "slot": "body",
+        "icon": "assets/images/items/body/firesmith_s_fireproof_apron.png"
+      },
+      {
+        "id": "firesmith_s_alloy_leg",
+        "name": "Firesmith's Alloy Leg",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/firesmith_s_alloy_leg.png"
+      }
+    ]
+  },
+  {
+    "id": "genius_of_brilliant_stars",
+    "name": "Genius of Brilliant Stars",
+    "icon": "assets/images/sets/genius_of_brilliant_stars.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Quantum DMG by 10%.",
+      "4_piece": "When the wearer deals DMG to the target enemy, ignores 10% DEF . If the target enemy has Quantum Weakness , the wearer additionally ignores 10% DEF."
+    },
+    "items": [
+      {
+        "id": "genius_s_ultraremote_sensing_visor",
+        "name": "Genius's Ultraremote Sensing Visor",
+        "slot": "head",
+        "icon": "assets/images/items/head/genius_s_ultraremote_sensing_visor.png"
+      },
+      {
+        "id": "genius_s_frequency_catcher",
+        "name": "Genius's Frequency Catcher",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/genius_s_frequency_catcher.png"
+      },
+      {
+        "id": "genius_s_metafield_suit",
+        "name": "Genius's Metafield Suit",
+        "slot": "body",
+        "icon": "assets/images/items/body/genius_s_metafield_suit.png"
+      },
+      {
+        "id": "genius_s_gravity_walker",
+        "name": "Genius's Gravity Walker",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/genius_s_gravity_walker.png"
+      }
+    ]
+  },
+  {
+    "id": "guard_of_wuthering_snow",
+    "name": "Guard of Wuthering Snow",
+    "icon": "assets/images/sets/guard_of_wuthering_snow.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Reduces DMG taken by 8%.",
+      "4_piece": "At the beginning of the turn, if the wearer's HP is equal to or less\n                than 50%, restores HP equal to 8% of their Max HP and\n                regenerates 5 Energy ."
+    },
+    "items": [
+      {
+        "id": "guard_s_cast_iron_helmet",
+        "name": "Guard's Cast Iron Helmet",
+        "slot": "head",
+        "icon": "assets/images/items/head/guard_s_cast_iron_helmet.png"
+      },
+      {
+        "id": "guard_s_shining_gauntlets",
+        "name": "Guard's Shining Gauntlets",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/guard_s_shining_gauntlets.png"
+      },
+      {
+        "id": "guard_s_uniform_of_old",
+        "name": "Guard's Uniform of Old",
+        "slot": "body",
+        "icon": "assets/images/items/body/guard_s_uniform_of_old.png"
+      },
+      {
+        "id": "guard_s_silver_greaves",
+        "name": "Guard's Silver Greaves",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/guard_s_silver_greaves.png"
+      }
+    ]
+  },
+  {
+    "id": "hero_of_triumphant_song",
+    "name": "Hero of Triumphant Song",
+    "icon": "assets/images/sets/hero_of_triumphant_song.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases ATK by 12%.",
+      "4_piece": "While the wearer's memosprite is on the field, increases the wearer's SPD by 6%. When the wearer's memosprite\n                attacks, increases the wearer's and memosprite's CRIT DMG by 30%, lasting for 2 turn(s)."
+    },
+    "items": [
+      {
+        "id": "hero_s_wreath_of_championship",
+        "name": "Hero's Wreath of Championship",
+        "slot": "head",
+        "icon": "assets/images/items/head/hero_s_wreath_of_championship.png"
+      },
+      {
+        "id": "hero_s_gilded_bracers",
+        "name": "Hero's Gilded Bracers",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/hero_s_gilded_bracers.png"
+      },
+      {
+        "id": "hero_s_gallant_golden_armor",
+        "name": "Hero's Gallant Golden Armor",
+        "slot": "body",
+        "icon": "assets/images/items/body/hero_s_gallant_golden_armor.png"
+      },
+      {
+        "id": "hero_s_firechasing_shinguard",
+        "name": "Hero's Firechasing Shinguard",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/hero_s_firechasing_shinguard.png"
+      }
+    ]
+  },
+  {
+    "id": "hunter_of_glacial_forest",
+    "name": "Hunter of Glacial Forest",
+    "icon": "assets/images/sets/hunter_of_glacial_forest.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Ice DMG by\n                10%.",
+      "4_piece": "After the wearer uses their Ultimate , their CRIT DMG increases by 25% for 2 turn(s)."
+    },
+    "items": [
+      {
+        "id": "hunter_s_artaius_hood",
+        "name": "Hunter's Artaius Hood",
+        "slot": "head",
+        "icon": "assets/images/items/head/hunter_s_artaius_hood.png"
+      },
+      {
+        "id": "hunter_s_lizard_gloves",
+        "name": "Hunter's Lizard Gloves",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/hunter_s_lizard_gloves.png"
+      },
+      {
+        "id": "hunter_s_ice_dragon_cloak",
+        "name": "Hunter's Ice Dragon Cloak",
+        "slot": "body",
+        "icon": "assets/images/items/body/hunter_s_ice_dragon_cloak.png"
+      },
+      {
+        "id": "hunter_s_soft_elkskin_boots",
+        "name": "Hunter's Soft Elkskin Boots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/hunter_s_soft_elkskin_boots.png"
+      }
+    ]
+  },
+  {
+    "id": "iron_cavalry_against_the_scourge",
+    "name": "Iron Cavalry Against the Scourge",
+    "icon": "assets/images/sets/iron_cavalry_against_the_scourge.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Break Effect by 16%.",
+      "4_piece": "If the wearer's Break Effect is 150% or higher, the Break DMG dealt to the enemy target ignores 10% of their DEF . If the wearer's Break Effect is 250% or higher, the Super Break DMG dealt\n                to the enemy target additionally ignores 15% of their DEF."
+    },
+    "items": [
+      {
+        "id": "iron_cavalry_s_homing_helm",
+        "name": "Iron Cavalry's Homing Helm",
+        "slot": "head",
+        "icon": "assets/images/items/head/iron_cavalry_s_homing_helm.png"
+      },
+      {
+        "id": "iron_cavalry_s_crushing_wristguard",
+        "name": "Iron Cavalry's Crushing Wristguard",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/iron_cavalry_s_crushing_wristguard.png"
+      },
+      {
+        "id": "iron_cavalry_s_silvery_armor",
+        "name": "Iron Cavalry's Silvery Armor",
+        "slot": "body",
+        "icon": "assets/images/items/body/iron_cavalry_s_silvery_armor.png"
+      },
+      {
+        "id": "iron_cavalry_s_skywalk_greaves",
+        "name": "Iron Cavalry's Skywalk Greaves",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/iron_cavalry_s_skywalk_greaves.png"
+      }
+    ]
+  },
+  {
+    "id": "knight_of_purity_palace",
+    "name": "Knight of Purity Palace",
+    "icon": "assets/images/sets/knight_of_purity_palace.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases DEF by 15%.",
+      "4_piece": "Increases the max DMG that\n                can be absorbed by the Shield created by the wearer by 20%."
+    },
+    "items": [
+      {
+        "id": "knight_s_forgiving_casque",
+        "name": "Knight's Forgiving Casque",
+        "slot": "head",
+        "icon": "assets/images/items/head/knight_s_forgiving_casque.png"
+      },
+      {
+        "id": "knight_s_silent_oath_ring",
+        "name": "Knight's Silent Oath Ring",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/knight_s_silent_oath_ring.png"
+      },
+      {
+        "id": "knight_s_solemn_breastplate",
+        "name": "Knight's Solemn Breastplate",
+        "slot": "body",
+        "icon": "assets/images/items/body/knight_s_solemn_breastplate.png"
+      },
+      {
+        "id": "knight_s_iron_boots_of_order",
+        "name": "Knight's Iron Boots of Order",
+        "slot": "feet",
+        "icon": "https://static.wikia.nocookie.net/houkai-star-rail/images/e/ea/Item_Knight%27s_Iron_Boots_of_Order.png/revision/latest/scale-to-width-down/256?cb=20240314012628"
+      }
+    ]
+  },
+  {
+    "id": "longevous_disciple",
+    "name": "Longevous Disciple",
+    "icon": "assets/images/sets/longevous_disciple.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Max HP by 12%.",
+      "4_piece": "When the wearer is hit or\n                has their HP consumed by an ally or themselves, their CRIT\n                    Rate increases by 8% for 2 turn(s) and up to 2 stacks."
+    },
+    "items": [
+      {
+        "id": "disciple_s_prosthetic_eye",
+        "name": "Disciple's Prosthetic Eye",
+        "slot": "head",
+        "icon": "assets/images/items/head/disciple_s_prosthetic_eye.png"
+      },
+      {
+        "id": "disciple_s_ingenium_hand",
+        "name": "Disciple's Ingenium Hand",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/disciple_s_ingenium_hand.png"
+      },
+      {
+        "id": "disciple_s_dewy_feather_garb",
+        "name": "Disciple's Dewy Feather Garb",
+        "slot": "body",
+        "icon": "assets/images/items/body/disciple_s_dewy_feather_garb.png"
+      },
+      {
+        "id": "disciple_s_celestial_silk_sandals",
+        "name": "Disciple's Celestial Silk Sandals",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/disciple_s_celestial_silk_sandals.png"
+      }
+    ]
+  },
+  {
+    "id": "messenger_traversing_hackerspace",
+    "name": "Messenger Traversing Hackerspace",
+    "icon": "assets/images/sets/messenger_traversing_hackerspace.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases SPD by 6%.",
+      "4_piece": "When the\n                wearer uses their Ultimate on an ally, SPD for all allies\n                increases by 12% for 1 turn(s). This effect cannot be stacked."
+    },
+    "items": [
+      {
+        "id": "messenger_s_holovisor",
+        "name": "Messenger's Holovisor",
+        "slot": "head",
+        "icon": "assets/images/items/head/messenger_s_holovisor.png"
+      },
+      {
+        "id": "messenger_s_transformative_arm",
+        "name": "Messenger's Transformative Arm",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/messenger_s_transformative_arm.png"
+      },
+      {
+        "id": "messenger_s_secret_satchel",
+        "name": "Messenger's Secret Satchel",
+        "slot": "body",
+        "icon": "assets/images/items/body/messenger_s_secret_satchel.png"
+      },
+      {
+        "id": "messenger_s_par_kool_sneakers",
+        "name": "Messenger's Par-kool Sneakers",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/messenger_s_par_kool_sneakers.png"
+      }
+    ]
+  },
+  {
+    "id": "musketeer_of_wild_wheat",
+    "name": "Musketeer of Wild Wheat",
+    "icon": "assets/images/sets/musketeer_of_wild_wheat.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "ATK increases by 12%.",
+      "4_piece": "The wearer's SPD increases by 6% and Basic ATK DMG increases by 10%."
+    },
+    "items": [
+      {
+        "id": "musketeer_s_wild_wheat_felt_hat",
+        "name": "Musketeer's Wild Wheat Felt Hat",
+        "slot": "head",
+        "icon": "assets/images/items/head/musketeer_s_wild_wheat_felt_hat.png"
+      },
+      {
+        "id": "musketeer_s_coarse_leather_gloves",
+        "name": "Musketeer's Coarse Leather Gloves",
+        "slot": "hands",
+        "icon": "https://static.wikia.nocookie.net/houkai-star-rail/images/8/83/Item_Musketeer%27s_Coarse_Leather_Gloves.png/revision/latest/scale-to-width-down/256?cb=20240314012716"
+      },
+      {
+        "id": "musketeer_s_wind_hunting_shawl",
+        "name": "Musketeer's Wind-Hunting Shawl",
+        "slot": "body",
+        "icon": "assets/images/items/body/musketeer_s_wind_hunting_shawl.png"
+      },
+      {
+        "id": "musketeer_s_rivets_riding_boots",
+        "name": "Musketeer's Rivets Riding Boots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/musketeer_s_rivets_riding_boots.png"
+      }
+    ]
+  },
+  {
+    "id": "passerby_of_wandering_cloud",
+    "name": "Passerby of Wandering Cloud",
+    "icon": "assets/images/sets/passerby_of_wandering_cloud.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Outgoing\n                    Healing by 10%.",
+      "4_piece": "At the start of the battle, immediately regenerates 1 Skill Point ."
+    },
+    "items": [
+      {
+        "id": "passerby_s_rejuvenated_wooden_hairstick",
+        "name": "Passerby's Rejuvenated Wooden Hairstick",
+        "slot": "head",
+        "icon": "assets/images/items/head/passerby_s_rejuvenated_wooden_hairstick.png"
+      },
+      {
+        "id": "passerby_s_roaming_dragon_bracer",
+        "name": "Passerby's Roaming Dragon Bracer",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/passerby_s_roaming_dragon_bracer.png"
+      },
+      {
+        "id": "passerby_s_ragged_embroided_coat",
+        "name": "Passerby's Ragged Embroided Coat",
+        "slot": "body",
+        "icon": "assets/images/items/body/passerby_s_ragged_embroided_coat.png"
+      },
+      {
+        "id": "passerby_s_stygian_hiking_boots",
+        "name": "Passerby's Stygian Hiking Boots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/passerby_s_stygian_hiking_boots.png"
+      }
+    ]
+  },
+  {
+    "id": "pioneer_diver_of_dead_waters",
+    "name": "Pioneer Diver of Dead Waters",
+    "icon": "assets/images/sets/pioneer_diver_of_dead_waters.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases DMG dealt to enemies with debuffs by 12%.",
+      "4_piece": "Increases CRIT Rate by 4%. The wearer deals 8%/12% increased CRIT DMG to enemies with at least 2/3 debuffs. After the wearer inflicts a\n                debuff on enemy targets, the aforementioned effects increase by 100%, lasting for 1 turn(s)."
+    },
+    "items": [
+      {
+        "id": "pioneer_s_heatproof_shell",
+        "name": "Pioneer's Heatproof Shell",
+        "slot": "head",
+        "icon": "assets/images/items/head/pioneer_s_heatproof_shell.png"
+      },
+      {
+        "id": "pioneer_s_lacuna_compass",
+        "name": "Pioneer's Lacuna Compass",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/pioneer_s_lacuna_compass.png"
+      },
+      {
+        "id": "pioneer_s_sealed_lead_apron",
+        "name": "Pioneer's Sealed Lead Apron",
+        "slot": "body",
+        "icon": "assets/images/items/body/pioneer_s_sealed_lead_apron.png"
+      },
+      {
+        "id": "pioneer_s_starfaring_anchor",
+        "name": "Pioneer's Starfaring Anchor",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/pioneer_s_starfaring_anchor.png"
+      }
+    ]
+  },
+  {
+    "id": "poet_of_mourning_collapse",
+    "name": "Poet of Mourning Collapse",
+    "icon": "assets/images/sets/poet_of_mourning_collapse.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Quantum DMG by 10%.",
+      "4_piece": "Decreases the wearer's SPD by 8%. Before entering battle, if the wearer's SPD is lower than 110/95,\n                increases the wearer's CRIT Rate by 20%/32%. This effect\n                applies to the wearer's memosprite at the same time."
+    },
+    "items": [
+      {
+        "id": "poet_s_dill_wreath",
+        "name": "Poet's Dill Wreath",
+        "slot": "head",
+        "icon": "assets/images/items/head/poet_s_dill_wreath.png"
+      },
+      {
+        "id": "poet_s_gilded_bracelet",
+        "name": "Poet's Gilded Bracelet",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/poet_s_gilded_bracelet.png"
+      },
+      {
+        "id": "poet_s_star_studded_skirt",
+        "name": "Poet's Star-Studded Skirt",
+        "slot": "body",
+        "icon": "assets/images/items/body/poet_s_star_studded_skirt.png"
+      },
+      {
+        "id": "poet_s_silver_studded_shoes",
+        "name": "Poet's Silver-Studded Shoes",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/poet_s_silver_studded_shoes.png"
+      }
+    ]
+  },
+  {
+    "id": "prisoner_in_deep_confinement",
+    "name": "Prisoner in Deep Confinement",
+    "icon": "assets/images/sets/prisoner_in_deep_confinement.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "ATK increases by 12%.",
+      "4_piece": "For every DoT the target enemy is afflicted with, the wearer will ignore 6%\n                of its DEF when dealing DMG to it. This effect is valid for a max of\n                3 DoTs."
+    },
+    "items": [
+      {
+        "id": "prisoner_s_sealed_muzzle",
+        "name": "Prisoner's Sealed Muzzle",
+        "slot": "head",
+        "icon": "assets/images/items/head/prisoner_s_sealed_muzzle.png"
+      },
+      {
+        "id": "prisoner_s_leadstone_shackles",
+        "name": "Prisoner's Leadstone Shackles",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/prisoner_s_leadstone_shackles.png"
+      },
+      {
+        "id": "prisoner_s_repressive_straitjacket",
+        "name": "Prisoner's Repressive Straitjacket",
+        "slot": "body",
+        "icon": "assets/images/items/body/prisoner_s_repressive_straitjacket.png"
+      },
+      {
+        "id": "prisoner_s_restrictive_fetters",
+        "name": "Prisoner's Restrictive Fetters",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/prisoner_s_restrictive_fetters.png"
+      }
+    ]
+  },
+  {
+    "id": "sacerdos_relived_ordeal",
+    "name": "Sacerdos' Relived Ordeal",
+    "icon": "assets/images/sets/sacerdos_relived_ordeal.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases SPD by 6%.",
+      "4_piece": "When\n                using Skill or Ultimate on one ally target, increases the ability target's CRIT DMG by 18%, lasting for 2 turn(s). This effect can\n                stack up to 2 time(s)."
+    },
+    "items": [
+      {
+        "id": "sacerdos_melodic_earrings",
+        "name": "Sacerdos' Melodic Earrings",
+        "slot": "head",
+        "icon": "assets/images/items/head/sacerdos_melodic_earrings.png"
+      },
+      {
+        "id": "sacerdos_welcoming_gloves",
+        "name": "Sacerdos' Welcoming Gloves",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/sacerdos_welcoming_gloves.png"
+      },
+      {
+        "id": "sacerdos_ceremonial_garb",
+        "name": "Sacerdos' Ceremonial Garb",
+        "slot": "body",
+        "icon": "assets/images/items/body/sacerdos_ceremonial_garb.png"
+      },
+      {
+        "id": "sacerdos_arduous_boots",
+        "name": "Sacerdos' Arduous Boots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/sacerdos_arduous_boots.png"
+      }
+    ]
+  },
+  {
+    "id": "scholar_lost_in_erudition",
+    "name": "Scholar Lost in Erudition",
+    "icon": "assets/images/sets/scholar_lost_in_erudition.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases CRIT Rate by 8%.",
+      "4_piece": "Increases DMG dealt by Skill and Ultimate by 20%. After\n                using Ultimate, additionally increases the DMG dealt by the next Skill by 25%."
+    },
+    "items": [
+      {
+        "id": "scholar_s_silver_rimmed_monocle",
+        "name": "Scholar's Silver-Rimmed Monocle",
+        "slot": "head",
+        "icon": "assets/images/items/head/scholar_s_silver_rimmed_monocle.png"
+      },
+      {
+        "id": "scholar_s_auxiliary_knuckle",
+        "name": "Scholar's Auxiliary Knuckle",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/scholar_s_auxiliary_knuckle.png"
+      },
+      {
+        "id": "scholar_s_tweed_jacket",
+        "name": "Scholar's Tweed Jacket",
+        "slot": "body",
+        "icon": "assets/images/items/body/scholar_s_tweed_jacket.png"
+      },
+      {
+        "id": "scholar_s_felt_snowboots",
+        "name": "Scholar's Felt Snowboots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/scholar_s_felt_snowboots.png"
+      }
+    ]
+  },
+  {
+    "id": "self_enshrouded_recluse",
+    "name": "Self-Enshrouded Recluse",
+    "icon": "assets/images/sets/self_enshrouded_recluse.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Shield Effect by 10%.",
+      "4_piece": "Increases\n                Shield Effect provided by the wearer by 12%. When an ally target has a Shield provided by the wearer,\n                the ally target's CRIT DMG increases by 15%."
+    },
+    "items": [
+      {
+        "id": "recluse_s_wide_brimmed_fedora",
+        "name": "Recluse's Wide-Brimmed Fedora",
+        "slot": "head",
+        "icon": "assets/images/items/head/recluse_s_wide_brimmed_fedora.png"
+      },
+      {
+        "id": "recluse_s_refined_timepiece",
+        "name": "Recluse's Refined Timepiece",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/recluse_s_refined_timepiece.png"
+      },
+      {
+        "id": "recluse_s_camel_colored_coat",
+        "name": "Recluse's Camel-Colored Coat",
+        "slot": "body",
+        "icon": "assets/images/items/body/recluse_s_camel_colored_coat.png"
+      },
+      {
+        "id": "recluse_s_soft_suede_boots",
+        "name": "Recluse's Soft Suede Boots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/recluse_s_soft_suede_boots.png"
+      }
+    ]
+  },
+  {
+    "id": "the_ashblazing_grand_duke",
+    "name": "The Ashblazing Grand Duke",
+    "icon": "assets/images/sets/the_ashblazing_grand_duke.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases the DMG dealt by follow-up\n                    attacks by 20%.",
+      "4_piece": "When the wearer uses follow-up attacks, increases the\n                wearer's ATK by 6% for every time the follow-up attack deals DMG.\n                This effect can stack up to 8 time(s) and lasts for 3 turn(s). This effect is removed the next time the\n                wearer uses a follow-up attack."
+    },
+    "items": [
+      {
+        "id": "grand_duke_s_crown_of_netherflame",
+        "name": "Grand Duke's Crown of Netherflame",
+        "slot": "head",
+        "icon": "assets/images/items/head/grand_duke_s_crown_of_netherflame.png"
+      },
+      {
+        "id": "grand_duke_s_gloves_of_fieryfur",
+        "name": "Grand Duke's Gloves of Fieryfur",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/grand_duke_s_gloves_of_fieryfur.png"
+      },
+      {
+        "id": "grand_duke_s_robe_of_grace",
+        "name": "Grand Duke's Robe of Grace",
+        "slot": "body",
+        "icon": "assets/images/items/body/grand_duke_s_robe_of_grace.png"
+      },
+      {
+        "id": "grand_duke_s_ceremonial_boots",
+        "name": "Grand Duke's Ceremonial Boots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/grand_duke_s_ceremonial_boots.png"
+      }
+    ]
+  },
+  {
+    "id": "the_wind_soaring_valorous",
+    "name": "The Wind-Soaring Valorous",
+    "icon": "assets/images/sets/the_wind_soaring_valorous.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases ATK by 12%.",
+      "4_piece": "Increases the wearer's CRIT Rate by 6%. When the wearer uses a follow-up attack , increases the DMG dealt\n                by Ultimate by 36%, lasting for 1 turn(s)."
+    },
+    "items": [
+      {
+        "id": "valorous_mask_of_northern_skies",
+        "name": "Valorous Mask of Northern Skies",
+        "slot": "head",
+        "icon": "assets/images/items/head/valorous_mask_of_northern_skies.png"
+      },
+      {
+        "id": "valorous_bracelet_of_grappling_hooks",
+        "name": "Valorous Bracelet of Grappling Hooks",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/valorous_bracelet_of_grappling_hooks.png"
+      },
+      {
+        "id": "valorous_plate_of_soaring_flight",
+        "name": "Valorous Plate of Soaring Flight",
+        "slot": "body",
+        "icon": "assets/images/items/body/valorous_plate_of_soaring_flight.png"
+      },
+      {
+        "id": "valorous_greaves_of_pursuing_hunt",
+        "name": "Valorous Greaves of Pursuing Hunt",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/valorous_greaves_of_pursuing_hunt.png"
+      }
+    ]
+  },
+  {
+    "id": "thief_of_shooting_meteor",
+    "name": "Thief of Shooting Meteor",
+    "icon": "assets/images/sets/thief_of_shooting_meteor.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Break Effect by 16%.",
+      "4_piece": "Increases the wearer's Break Effect by 16%. After the wearer inflicts Weakness Break on an enemy, regenerates 3 Energy ."
+    },
+    "items": [
+      {
+        "id": "thief_s_myriad_faced_mask",
+        "name": "Thief's Myriad-Faced Mask",
+        "slot": "head",
+        "icon": "assets/images/items/head/thief_s_myriad_faced_mask.png"
+      },
+      {
+        "id": "thief_s_gloves_with_prints",
+        "name": "Thief's Gloves With Prints",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/thief_s_gloves_with_prints.png"
+      },
+      {
+        "id": "thief_s_steel_grappling_hook",
+        "name": "Thief's Steel Grappling Hook",
+        "slot": "body",
+        "icon": "assets/images/items/body/thief_s_steel_grappling_hook.png"
+      },
+      {
+        "id": "thief_s_meteor_boots",
+        "name": "Thief's Meteor Boots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/thief_s_meteor_boots.png"
+      }
+    ]
+  },
+  {
+    "id": "warrior_goddess_of_sun_and_thunder",
+    "name": "Warrior Goddess of Sun and Thunder",
+    "icon": "assets/images/sets/warrior_goddess_of_sun_and_thunder.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases SPD by 6%.",
+      "4_piece": "When the\n                wearer or their memosprite provides healing to ally targets other than themselves, the wearer\n                gains \"Gentle Rain,\" which lasts for 2 turn(s) and can only trigger once per turn. While the wearer has\n                \"Gentle Rain,\" SPD increases by 6% and all allies' CRIT\n                    DMG increases by 15%. This effect cannot stack."
+    },
+    "items": [
+      {
+        "id": "warrior_goddess_s_winged_helm",
+        "name": "Warrior Goddess's Winged Helm",
+        "slot": "head",
+        "icon": "assets/images/items/head/warrior_goddess_s_winged_helm.png"
+      },
+      {
+        "id": "warrior_goddess_s_cavalry_gauntlets",
+        "name": "Warrior Goddess's Cavalry Gauntlets",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/warrior_goddess_s_cavalry_gauntlets.png"
+      },
+      {
+        "id": "warrior_goddess_s_dawn_cape",
+        "name": "Warrior Goddess's Dawn Cape",
+        "slot": "body",
+        "icon": "assets/images/items/body/warrior_goddess_s_dawn_cape.png"
+      },
+      {
+        "id": "warrior_goddess_s_honor_spurs",
+        "name": "Warrior Goddess's Honor Spurs",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/warrior_goddess_s_honor_spurs.png"
+      }
+    ]
+  },
+  {
+    "id": "wastelander_of_banditry_desert",
+    "name": "Wastelander of Banditry Desert",
+    "icon": "assets/images/sets/wastelander_of_banditry_desert.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Imaginary DMG by 10%.",
+      "4_piece": "When attacking debuffed enemies, the wearer's CRIT Rate increases by 10%, and their CRIT DMG increases by 20% against Imprisoned enemies."
+    },
+    "items": [
+      {
+        "id": "wastelander_s_breathing_mask",
+        "name": "Wastelander's Breathing Mask",
+        "slot": "head",
+        "icon": "assets/images/items/head/wastelander_s_breathing_mask.png"
+      },
+      {
+        "id": "wastelander_s_desert_terminal",
+        "name": "Wastelander's Desert Terminal",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/wastelander_s_desert_terminal.png"
+      },
+      {
+        "id": "wastelander_s_friar_robe",
+        "name": "Wastelander's Friar Robe",
+        "slot": "body",
+        "icon": "assets/images/items/body/wastelander_s_friar_robe.png"
+      },
+      {
+        "id": "wastelander_s_powered_greaves",
+        "name": "Wastelander's Powered Greaves",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/wastelander_s_powered_greaves.png"
+      }
+    ]
+  },
+  {
+    "id": "watchmaker_master_of_dream_machinations",
+    "name": "Watchmaker, Master of Dream Machinations",
+    "icon": "assets/images/sets/watchmaker_master_of_dream_machinations.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases Break Effect by 16%.",
+      "4_piece": "When the wearer uses their Ultimate on an ally, all\n                allies' Break Effect increases by 30% for 2 turn(s). This effect cannot be stacked."
+    },
+    "items": [
+      {
+        "id": "watchmaker_s_telescoping_lens",
+        "name": "Watchmaker's Telescoping Lens",
+        "slot": "head",
+        "icon": "assets/images/items/head/watchmaker_s_telescoping_lens.png"
+      },
+      {
+        "id": "watchmaker_s_fortuitous_wristwatch",
+        "name": "Watchmaker's Fortuitous Wristwatch",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/watchmaker_s_fortuitous_wristwatch.png"
+      },
+      {
+        "id": "watchmaker_s_illusory_formal_suit",
+        "name": "Watchmaker's Illusory Formal Suit",
+        "slot": "body",
+        "icon": "assets/images/items/body/watchmaker_s_illusory_formal_suit.png"
+      },
+      {
+        "id": "watchmaker_s_dream_concealing_dress_shoes",
+        "name": "Watchmaker's Dream-Concealing Dress Shoes",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/watchmaker_s_dream_concealing_dress_shoes.png"
+      }
+    ]
+  },
+  {
+    "id": "wavestrider_captain",
+    "name": "Wavestrider Captain",
+    "icon": "assets/images/sets/wavestrider_captain.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases CRIT DMG by 16%.",
+      "4_piece": "When the\n                wearer becomes the target of another ally target's ability, gains 1 stack of \"Help,\" stacking up to 2\n                time(s). If there are 2 stack(s) of \"Help\" when the wearer uses their Ultimate , consumes all \"Help\" to increase the wearer's ATK by 48% for 1 turn(s)."
+    },
+    "items": [
+      {
+        "id": "captain_s_navigator_hat",
+        "name": "Captain's Navigator Hat",
+        "slot": "head",
+        "icon": "assets/images/items/head/captain_s_navigator_hat.png"
+      },
+      {
+        "id": "captain_s_lightcatcher_astrolabe",
+        "name": "Captain's Lightcatcher Astrolabe",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/captain_s_lightcatcher_astrolabe.png"
+      },
+      {
+        "id": "captain_s_wind_mantle",
+        "name": "Captain's Wind Mantle",
+        "slot": "body",
+        "icon": "assets/images/items/body/captain_s_wind_mantle.png"
+      },
+      {
+        "id": "captain_s_tidal_boots",
+        "name": "Captain's Tidal Boots",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/captain_s_tidal_boots.png"
+      }
+    ]
+  },
+  {
+    "id": "world_remaking_deliverer",
+    "name": "World-Remaking Deliverer",
+    "icon": "assets/images/sets/world_remaking_deliverer.png",
+    "type": "cavern",
+    "bonuses": {
+      "2_piece": "Increases CRIT Rate by 8%.",
+      "4_piece": "After the\n                wearer uses Basic ATK or Skill , if the wearer's memosprite is on the field, increases Max HP of the wearer and their memosprite by 24%, and increases all allies' DMG by 15%\n                until the wearer's next Basic ATK or Skill."
+    },
+    "items": [
+      {
+        "id": "deliverer_s_hood",
+        "name": "Deliverer's Hood",
+        "slot": "head",
+        "icon": "assets/images/items/head/deliverer_s_hood.png"
+      },
+      {
+        "id": "deliverer_s_sword_gauntlet",
+        "name": "Deliverer's Sword Gauntlet",
+        "slot": "hands",
+        "icon": "assets/images/items/hands/deliverer_s_sword_gauntlet.png"
+      },
+      {
+        "id": "deliverer_s_robe_of_legacy",
+        "name": "Deliverer's Robe of Legacy",
+        "slot": "body",
+        "icon": "assets/images/items/body/deliverer_s_robe_of_legacy.png"
+      },
+      {
+        "id": "deliverer_s_boots_of_pioneering",
+        "name": "Deliverer's Boots of Pioneering",
+        "slot": "feet",
+        "icon": "assets/images/items/feet/deliverer_s_boots_of_pioneering.png"
+      }
+    ]
+  }
+]
