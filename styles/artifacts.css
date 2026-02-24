@@ -105,6 +105,21 @@
 .artifact-card-footer {
     min-height: 60px;
     border-top: 1px solid rgba(0, 212, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+}
+
+.obtained-artifact-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: #00d4ff;
+    cursor: pointer;
+}
+
+.obtained-artifact-checkbox.hidden {
+    display: none;
 }
 
 .character-display {

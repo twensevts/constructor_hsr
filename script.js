@@ -2,6 +2,8 @@ let sets = [];
 let currentCharacter = null;
 let currentEditingSetId = null;
 
+const SETS_STORAGE_KEY = 'constructor_hsr_sets_v1';
+
 const addSetBtn = document.getElementById('addSetBtn');
 const setsList = document.getElementById('sets-list');
 const createSetModal = document.getElementById('createSetModal');
@@ -71,6 +73,51 @@ function openArtifactModal(character, setData) {
     artifactModal.classList.add('show');
 }
 
+window.updateObtainedForCurrentSet = function updateObtainedForCurrentSet(slot, obtained) {
+    if (!slot || typeof obtained !== 'boolean') return;
+    if (currentEditingSetId == null) return;
+    const set = sets.find(s => s.id === currentEditingSetId);
+    if (!set || !Array.isArray(set.pieces)) return;
+    const piece = set.pieces.find(p => p.slot === slot);
+    if (!piece) return;
+    piece.obtained = obtained;
+    saveSetsToStorage();
+};
+
+function normalizeSetsForUi(nextSets) {
+    if (!Array.isArray(nextSets)) return [];
+    return nextSets
+        .filter(s => s && typeof s === 'object')
+        .map(s => {
+            const pieces = Array.isArray(s.pieces) ? s.pieces : [];
+            pieces.forEach(p => {
+                if (p && typeof p === 'object' && typeof p.obtained !== 'boolean') {
+                    p.obtained = false;
+                }
+            });
+            return { ...s, pieces };
+        });
+}
+
+function saveSetsToStorage() {
+    try {
+        localStorage.setItem(SETS_STORAGE_KEY, JSON.stringify(sets));
+    } catch {
+        // ignore
+    }
+}
+
+function loadSetsFromStorage() {
+    try {
+        const raw = localStorage.getItem(SETS_STORAGE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        sets = normalizeSetsForUi(parsed);
+    } catch {
+        // ignore
+    }
+}
+
 function saveSet() {
     if (!currentCharacter) {
         alert('Выберите персонажа');
@@ -104,12 +151,23 @@ function confirmSetName() {
     if (currentEditingSetId !== null) {
         const existing = sets.find(s => s.id === currentEditingSetId);
         if (existing) {
+            const obtainedBySlot = new Map(
+                (Array.isArray(existing.pieces) ? existing.pieces : []).map(p => [p.slot, !!p.obtained])
+            );
+            pieces.forEach(p => {
+                if (typeof p.obtained !== 'boolean') {
+                    p.obtained = obtainedBySlot.get(p.slot) ?? false;
+                }
+            });
             existing.setName = setName;
             existing.characterName = currentCharacter.name;
             existing.characterId = currentCharacter.id;
             existing.pieces = pieces;
         }
     } else {
+        pieces.forEach(p => {
+            if (typeof p.obtained !== 'boolean') p.obtained = false;
+        });
         sets.push({
             id: Date.now(),
             setName,
@@ -118,6 +176,8 @@ function confirmSetName() {
             pieces
         });
     }
+    sets = normalizeSetsForUi(sets);
+    saveSetsToStorage();
     renderSets();
     closeNameModal();
     closeArtifactModal();
@@ -142,6 +202,7 @@ Promise.all([
 ]).then(() => {
     initCharacterOptions();
     initArtifactCards();
+    loadSetsFromStorage();
     renderSets();
 }).catch(err => {
     console.error('Failed to load:', err);
@@ -187,5 +248,6 @@ function renderSets() {
 
 function removeSet(id) {
     sets = sets.filter(set => set.id !== id);
+    saveSetsToStorage();
     renderSets();
 }

@@ -16,7 +16,7 @@ digraph SoftwareFlow {
     p6 [label="Ожидание действий\nпользователя", shape=box];
     d2 [label="Событие?", shape=diamond];
 
-    p8 [label="addSetBtn.click\ncreateSetModal.show\naddCharacterBtn видим", shape=box];
+    p8 [label="addSetBtn.click\ncreateSetModal.show\naddCharacterBtn", shape=box];
     p9 [label="addCharacterBtn.click\ncharacterDropdown.show", shape=box];
     p10 [label="character-option.click\ngetCharacterById(id)", shape=box];
     d3 [label="character\nнайден?", shape=diamond];
@@ -30,8 +30,6 @@ digraph SoftwareFlow {
     p17 [label="sub-stat.click\nopenSubstatModal(card, i)\nВыбор подстата, проков, качества\nconfirmSubstat() → updateCardDisplay()\ncalculateDropChance()", shape=box];
 
     p18 [label="saveSetBtn.click", shape=box];
-    d4 [label="currentCharacter?", shape=diamond];
-    p19 [label="alert(«Выберите персонажа»)", shape=parallelogram];
     p20 [label="nameSetModal.show\nsetNameInput.focus()", shape=box];
     p21 [label="confirmSetName()\ngetAllPiecesForSave()\nnewSet.pieces = pieces", shape=box];
     d5 [label="setName\nне пусто?", shape=diamond];
@@ -65,9 +63,7 @@ digraph SoftwareFlow {
     p15 -> p16 -> p6;
     p17 -> p6;
 
-    p18 -> d4;
-    d4 -> p19 -> p6 [label="Нет"];
-    d4 -> p20 [label="Да"];
+    p18 -> p20;
     p20 -> p21 -> d5;
     d5 -> p22 -> p21 [label="Нет"];
     d5 -> p23 [label="Да"];

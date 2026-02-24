@@ -16,7 +16,8 @@ function initPieceData() {
             set: null,
             item: null,
             mainStat: null,
-            substats: [null, null, null, null]
+            substats: [null, null, null, null],
+            obtained: false
         };
     });
 }
@@ -205,12 +206,34 @@ function updateCardDisplay(slot) {
     data.substats.forEach((s, i) => {
         subStatEls[i].textContent = s ? `${s.name} +${s.value}` : '—';
     });
-    const footer = card.querySelector('.artifact-card-footer .drop-chance');
-    footer.textContent = '';
+    const footerWrap = card.querySelector('.artifact-card-footer');
+    const footer = footerWrap?.querySelector('.drop-chance');
+    if (footer) footer.textContent = '';
     const chance = calculateDropChance(slot);
-    if (chance !== null) {
+    if (footer && chance !== null) {
         const str = chance < 0.0001 ? chance.toExponential(2) : chance.toFixed(4);
         footer.textContent = `Шанс: ${str}%`;
+    }
+
+    if (footerWrap) {
+        let obtainedCb = footerWrap.querySelector('.obtained-artifact-checkbox');
+        if (!obtainedCb) {
+            obtainedCb = document.createElement('input');
+            obtainedCb.type = 'checkbox';
+            obtainedCb.className = 'obtained-artifact-checkbox';
+            obtainedCb.title = 'Отметить артефакт как полученный';
+            obtainedCb.addEventListener('change', () => {
+                data.obtained = obtainedCb.checked;
+                if (typeof window.updateObtainedForCurrentSet === 'function') {
+                    window.updateObtainedForCurrentSet(slot, obtainedCb.checked);
+                }
+            });
+            footerWrap.appendChild(obtainedCb);
+        }
+
+        const shouldShow = chance !== null;
+        obtainedCb.checked = !!data.obtained;
+        obtainedCb.classList.toggle('hidden', !shouldShow);
     }
 }
 
@@ -273,6 +296,7 @@ function getAllPiecesForSave() {
         result.push({
             slot,
             setId: d.set.id,
+            obtained: !!d.obtained,
             mainStat: { id: d.mainStat.id, name: d.mainStat.name, value: d.mainStat.value },
             substats: d.substats.filter(Boolean).map(s => ({
                 id: s.id,
@@ -297,6 +321,7 @@ function loadSetIntoPieceData(pieces) {
         pieceData[slot].set = relicSet;
         pieceData[slot].item = getItemForSlot(relicSet, slot);
         pieceData[slot].mainStat = p.mainStat ? { ...p.mainStat } : null;
+        pieceData[slot].obtained = !!p.obtained;
         const subs = p.substats || [];
         pieceData[slot].substats = [null, null, null, null].map((_, i) => {
             const s = subs[i];
