@@ -103,12 +103,23 @@
 }
 
 .artifact-card-footer {
-    min-height: 60px;
+    min-height: 64px;
     border-top: 1px solid rgba(0, 212, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 8px 10px;
+}
+
+.artifact-footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.artifact-card-footer .resin-count {
+    font-size: 0.75rem;
+    color: rgba(0, 212, 255, 0.85);
 }
 
 .obtained-artifact-checkbox {
@@ -120,6 +131,33 @@
 
 .obtained-artifact-checkbox.hidden {
     display: none;
+}
+
+.artifact-summary {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(21, 28, 46, 0.6);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.artifact-summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: rgba(232, 230, 227, 0.9);
+}
+
+.artifact-summary-row + .artifact-summary-row {
+    margin-top: 6px;
+}
+
+.artifact-summary-value {
+    color: #d4af37;
 }
 
 .character-display {

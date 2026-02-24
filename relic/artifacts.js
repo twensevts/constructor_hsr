@@ -208,11 +208,16 @@ function updateCardDisplay(slot) {
     });
     const footerWrap = card.querySelector('.artifact-card-footer');
     const footer = footerWrap?.querySelector('.drop-chance');
+    const resinEl = footerWrap?.querySelector('.resin-count');
     if (footer) footer.textContent = '';
+    if (resinEl) resinEl.textContent = '';
     const chance = calculateDropChance(slot);
     if (footer && chance !== null) {
         const str = chance < 0.0001 ? chance.toExponential(2) : chance.toFixed(4);
         footer.textContent = `Шанс: ${str}%`;
+    }
+    if (resinEl && chance !== null) {
+        resinEl.textContent = 'Кол-во смолы: 1';
     }
 
     if (footerWrap) {
