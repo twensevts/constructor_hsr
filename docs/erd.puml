@@ -1,0 +1,112 @@
+@startuml erd
+top to bottom direction
+skinparam linetype ortho
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam backgroundColor white
+skinparam ArrowColor #333333
+skinparam nodesep 40
+skinparam ranksep 60
+
+skinparam class {
+  BackgroundColor #EEF4FA
+  BorderColor #4A7FA5
+  FontColor #1A1A1A
+}
+
+hide methods
+hide circle
+
+title ERD — Калькулятор реликвий
+
+entity "Character" as Character {
+  *id : string <<PK>>
+  --
+  name : string
+  icon : string
+  photo : string
+}
+
+entity "RelicSet" as RelicSet {
+  *id : string <<PK>>
+  --
+  name : string
+  type : enum(cavern, planar)
+  icon : string
+}
+
+entity "RelicItem" as RelicItem {
+  *setId : string <<PK,FK>>
+  *slot : enum(head, hands, body, feet, sphere, rope) <<PK>>
+  --
+  icon : string
+  name : string
+}
+
+entity "MainStatOption" as MainStatOption {
+  *id : string <<PK>>
+  --
+  slot : enum(head, hands, body, feet, sphere, rope)
+  name : string
+  value : string
+  weight : number
+}
+
+entity "SubstatOption" as SubstatOption {
+  *id : string <<PK>>
+  --
+  name : string
+  weight : number
+  unit : string
+  lowValue : number
+  midValue : number
+  highValue : number
+}
+
+entity "SavedSet" as SavedSet {
+  *id : number <<PK>>
+  --
+  characterId : string <<FK>>
+  setName : string
+}
+
+entity "SavedPiece" as SavedPiece {
+  *savedSetId : number <<PK,FK>>
+  *slot : enum(head, hands, body, feet, sphere, rope) <<PK>>
+  --
+  setId : string <<FK>>
+  mainStatId : string <<FK>>
+  obtained : boolean
+}
+
+entity "SavedSubstat" as SavedSubstat {
+  *savedSetId : number <<PK,FK>>
+  *slot : enum(head, hands, body, feet, sphere, rope) <<PK,FK>>
+  *substatIndex : number <<PK>>
+  --
+  substatId : string <<FK>>
+  upgrades : number
+  quality : enum(low, mid, high)
+  value : string
+}
+
+Character ||--o{ SavedSet : has
+SavedSet ||--|{ SavedPiece : contains
+SavedPiece ||--o{ SavedSubstat : has
+
+RelicSet ||--|{ RelicItem : contains
+RelicSet ||--o{ SavedPiece
+
+MainStatOption ||--o{ SavedPiece
+SubstatOption ||--o{ SavedSubstat
+
+note bottom of SavedPiece
+  setId -> RelicSet.id (uses set)
+  mainStatId -> MainStatOption.id (uses main stat)
+end note
+
+note bottom of SavedSubstat
+  substatId -> SubstatOption.id (uses substat)
+end note
+
+@enduml

@@ -1,0 +1,87 @@
+@startuml use_case
+top to bottom direction
+skinparam linetype ortho
+skinparam nodesep 70
+skinparam ranksep 80
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam backgroundColor white
+skinparam ArrowColor #333333
+
+skinparam usecase {
+  BackgroundColor #EEF4FA
+  BorderColor #4A7FA5
+  FontColor #1A1A1A
+}
+
+skinparam actor {
+  BorderColor #333333
+  FontColor #1A1A1A
+}
+
+title Use Case диаграмма — Калькулятор реликвий
+
+actor "Пользователь" as User
+
+rectangle "Система: Калькулятор реликвий" {
+  usecase "Просмотреть\nсписок сетов" as UC_ViewSets
+  usecase "Создать\nновый сет" as UC_CreateSet
+  usecase "Открыть\nсуществующий сет" as UC_OpenSet
+  usecase "Удалить\nсуществующий сет" as UC_DeleteSet
+
+  usecase "Выбрать\nперсонажа" as UC_SelectCharacter
+  usecase "Настроить\nартефакты" as UC_ConfigArtifacts
+  usecase "Выбрать\nсет реликвий" as UC_SelectRelicSet
+  usecase "Выбрать\nглавный стат" as UC_SelectMainStat
+  usecase "Выбрать\nподстаты" as UC_SelectSubstats
+  usecase "Рассчитать шанс\nвыпадения" as UC_CalcDropChance
+
+  usecase "Сохранить сет" as UC_SaveSet
+  usecase "Задать\nназвание сета" as UC_SetName
+  usecase "Редактировать\nсуществующий сет" as UC_EditSet
+}
+
+User --> UC_ViewSets
+User --> UC_CreateSet
+
+' Layout anchors to keep labels readable.
+User -[hidden]down-> UC_ViewSets
+UC_ViewSets -[hidden]right-> UC_CreateSet
+UC_CreateSet -[hidden]right-> UC_OpenSet
+UC_OpenSet -[hidden]right-> UC_DeleteSet
+
+UC_SelectCharacter -[hidden]right-> UC_ConfigArtifacts
+UC_ConfigArtifacts -[hidden]right-> UC_SaveSet
+UC_SaveSet -[hidden]right-> UC_EditSet
+
+UC_SelectRelicSet -[hidden]right-> UC_SelectMainStat
+UC_SelectMainStat -[hidden]right-> UC_SelectSubstats
+UC_SelectSubstats -[hidden]right-> UC_CalcDropChance
+
+UC_CreateSet -[hidden]down-> UC_ConfigArtifacts
+UC_ConfigArtifacts -[hidden]down-> UC_SelectMainStat
+UC_SaveSet -[hidden]down-> UC_SetName
+UC_OpenSet -[hidden]down-> UC_EditSet
+
+UC_CreateSet .down.> UC_SelectCharacter : <<include>>
+UC_CreateSet .down.> UC_ConfigArtifacts : <<include>>
+UC_CreateSet .right.> UC_SaveSet : <<include>>
+
+UC_ConfigArtifacts .down.> UC_SelectRelicSet : <<include>>
+UC_ConfigArtifacts .down.> UC_SelectMainStat : <<include>>
+UC_ConfigArtifacts .down.> UC_SelectSubstats : <<include>>
+
+UC_SaveSet .down.> UC_SetName : <<include>>
+UC_EditSet .left.> UC_ConfigArtifacts : <<include>>
+UC_EditSet .left.> UC_SaveSet : <<include>>
+
+UC_OpenSet .left.> UC_ViewSets : <<extend>>
+UC_DeleteSet .left.> UC_ViewSets : <<extend>>
+UC_EditSet .up.> UC_OpenSet : <<extend>>
+UC_CalcDropChance .up.> UC_ConfigArtifacts : <<extend>>
+note right of UC_CalcDropChance
+  Условие расширения:
+  выбраны сет и главный стат
+end note
+
+@enduml

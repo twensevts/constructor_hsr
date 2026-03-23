@@ -1,0 +1,53 @@
+digraph ERD {
+    rankdir=TB;
+    splines=ortho;
+    graph [fontname="Arial", fontsize=12, label="ERD — Калькулятор реликвий", labelloc=t];
+    node [shape=record, fontname="Arial", fontsize=10, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+    edge [fontname="Arial", fontsize=9, color="#333333"];
+
+    Character [label="{Character|id (PK): string|name: string|icon: string|photo: string}"];
+
+    RelicSet [label="{RelicSet|id (PK): string|name: string|type: enum(cavern, planar)|icon: string}"];
+
+    RelicItem [label="{RelicItem|setId (PK, FK): string|slot (PK): enum(head,hands,body,feet,sphere,rope)|icon: string|name: string}"];
+
+    MainStatOption [label="{MainStatOption|id (PK): string|slot: enum(head,hands,body,feet,sphere,rope)|name: string|value: string|weight: number}"];
+
+    SubstatOption [label="{SubstatOption|id (PK): string|name: string|weight: number|unit: string|lowValue: number|midValue: number|highValue: number}"];
+
+    SavedSet [label="{SavedSet|id (PK): number|characterId (FK): string|setName: string}"];
+
+    SavedPiece [label="{SavedPiece|savedSetId (PK, FK): number|slot (PK): enum(head,hands,body,feet,sphere,rope)|setId (FK): string|mainStatId (FK): string|obtained: boolean}"];
+
+    SavedSubstat [label="{SavedSubstat|savedSetId (PK, FK): number|slot (PK, FK): enum(head,hands,body,feet,sphere,rope)|substatIndex (PK): number|substatId (FK): string|upgrades: number|quality: enum(low,mid,high)|value: string}"];
+
+    Character -> SavedSet [label="1..N"];
+    SavedSet -> SavedPiece [label="1..N"];
+    SavedPiece -> SavedSubstat [label="1..N"];
+
+    RelicSet -> RelicItem [label="1..N"];
+    RelicSet -> SavedPiece;
+    MainStatOption -> SavedPiece;
+    SubstatOption -> SavedSubstat;
+
+    NoteSavedPiece [
+        shape=note,
+        label="setId -> RelicSet.id (uses set)\nmainStatId -> MainStatOption.id (uses main stat)",
+        style="filled",
+        fillcolor="#FFF8C6",
+        color="#C7B96B",
+        fontcolor="#1A1A1A"
+    ];
+
+    NoteSavedSubstat [
+        shape=note,
+        label="substatId -> SubstatOption.id (uses substat)",
+        style="filled",
+        fillcolor="#FFF8C6",
+        color="#C7B96B",
+        fontcolor="#1A1A1A"
+    ];
+
+    NoteSavedPiece -> SavedPiece [style=dashed, arrowhead=none, color="#999999"];
+    NoteSavedSubstat -> SavedSubstat [style=dashed, arrowhead=none, color="#999999"];
+}

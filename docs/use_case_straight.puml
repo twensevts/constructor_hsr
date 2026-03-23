@@ -1,0 +1,67 @@
+@startuml use_case_straight
+left to right direction
+skinparam linetype polyline
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam backgroundColor white
+skinparam ArrowColor #333333
+
+skinparam usecase {
+  BackgroundColor #EEF4FA
+  BorderColor #4A7FA5
+  FontColor #1A1A1A
+}
+
+skinparam actor {
+  BorderColor #333333
+  FontColor #1A1A1A
+}
+
+title Use Case диаграмма — Калькулятор реликвий (прямые связи)
+
+actor "Пользователь" as User
+
+rectangle "Система: Калькулятор реликвий" {
+  usecase "Просмотреть\nсписок сетов" as UC_ViewSets
+  usecase "Создать\nновый сет" as UC_CreateSet
+  usecase "Открыть\nсуществующий сет" as UC_OpenSet
+  usecase "Удалить\nсуществующий сет" as UC_DeleteSet
+
+  usecase "Выбрать\nперсонажа" as UC_SelectCharacter
+  usecase "Настроить\nартефакты" as UC_ConfigArtifacts
+  usecase "Выбрать\nсет реликвий" as UC_SelectRelicSet
+  usecase "Выбрать\nглавный стат" as UC_SelectMainStat
+  usecase "Выбрать\nподстаты" as UC_SelectSubstats
+  usecase "Рассчитать шанс\nвыпадения" as UC_CalcDropChance
+
+  usecase "Сохранить сет" as UC_SaveSet
+  usecase "Задать\nназвание сета" as UC_SetName
+  usecase "Редактировать\nсуществующий сет" as UC_EditSet
+}
+
+User --> UC_ViewSets
+User --> UC_CreateSet
+
+UC_CreateSet ..> UC_SelectCharacter : <<include>>
+UC_CreateSet ..> UC_ConfigArtifacts : <<include>>
+UC_CreateSet ..> UC_SaveSet : <<include>>
+
+UC_ConfigArtifacts ..> UC_SelectRelicSet : <<include>>
+UC_ConfigArtifacts ..> UC_SelectMainStat : <<include>>
+UC_ConfigArtifacts ..> UC_SelectSubstats : <<include>>
+
+UC_SaveSet ..> UC_SetName : <<include>>
+UC_EditSet ..> UC_ConfigArtifacts : <<include>>
+UC_EditSet ..> UC_SaveSet : <<include>>
+
+UC_OpenSet ..> UC_ViewSets : <<extend>>
+UC_DeleteSet ..> UC_ViewSets : <<extend>>
+UC_EditSet ..> UC_OpenSet : <<extend>>
+UC_CalcDropChance ..> UC_ConfigArtifacts : <<extend>>
+
+note right of UC_CalcDropChance
+  Условие расширения:
+  выбраны сет и главный стат
+end note
+
+@enduml

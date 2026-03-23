@@ -1,0 +1,109 @@
+@startuml software_flow
+skinparam linetype ortho
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam backgroundColor white
+skinparam ArrowColor #333333
+
+skinparam activity {
+    BackgroundColor #EEF4FA
+    BorderColor #4A7FA5
+    FontColor #1A1A1A
+    DiamondBackgroundColor #FFF8E1
+    DiamondBorderColor #E6A817
+    StartColor #333333
+    EndColor #333333
+}
+
+title Программный сценарий — Калькулятор реликвий
+
+start
+
+:Загрузка приложения;
+
+:Promise.all([\n  loadCharacters(),\n  loadRelicData()\n])\n────────────────────────\nfetch characters.json\nfetch relic_sets.json\nfetch relic_stats.json;
+
+if (Загрузка успешна?) then (да)
+else (нет)
+    :setsList.innerHTML =\n«Ошибка загрузки»;
+    stop
+endif
+
+:CHARACTERS = data.map(c => new Character(...))\nRELIC_SETS, RELIC_STATS — в глобальных переменных;
+
+:initCharacterOptions() — рендер списка персонажей\ninitArtifactCards() — навешивание обработчиков карточек\nrenderSets() — рендер списка сетов;
+
+:Ожидание действий пользователя\ncurrentCharacter = null\ncurrentEditingSetId = null;
+
+switch (Событие?)
+
+case ( addSetBtn.click )
+    :createSetModal.classList.add("show")\naddCharacterBtn.classList.remove("hidden")\ncharacterDropdown.classList.add("hidden");
+
+case ( addCharacterBtn.click )
+    :addCharacterBtn.classList.add("hidden")\ncharacterDropdown.classList.remove("hidden");
+
+case ( character-option.click )
+    :getCharacterById(option.dataset.character);
+    if (character найден?) then (нет)
+        :return (игнорируем клик);
+    else (да)
+        :createSetModal.classList.remove("show")\ncurrentCharacter = character\ncurrentEditingSetId = null;
+        :openArtifactModal(char)\n──────────────────────\ninitPieceData() — сброс pieceData\nupdateCardDisplay() × 6\ndocument.getElementById("selectedCharacterName")\ndocument.getElementById("selectedCharacterImg")\nartifactModal.classList.add("show");
+    endif
+
+case ( openSet(id) )
+    :sets.find(s => s.id === id)\ngetCharacterById(set.characterId);
+    :openArtifactModal(char, setData)\n──────────────────────\ncurrentEditingSetId = setData.id\nloadSetIntoPieceData(setData.pieces)\n→ initPieceData() + заполнение pieceData\n→ updateCardDisplay() × 6\nartifactModal.classList.add("show");
+
+case ( artifact-set-btn.click )
+    :openSetSelectionModal(card)\ngetSetsBySlot(slot)\nsetSelectionModal.classList.add("show");
+    :Выбор сета из списка\n→ selectSet(slot, setId)\n→ getSetById() + getItemForSlot()\n→ pieceData[slot].set = relicSet\n→ updateCardDisplay(slot)\n→ closeSetSelectionModal();
+
+case ( main-stat.click )
+    while (pieceData[slot].set?) is (нет)
+        :alert("Сначала выберите сет");
+    endwhile
+    -> да;
+    :openMainStatModal(card)\ngetMainStatsForSlot(slot)\nmainStatModal.classList.add("show");
+    :Выбор стата\n→ pieceData[slot].mainStat = { id, name, value }\n→ updateCardDisplay(slot)\n→ closeMainStatModal();
+
+case ( sub-stat.click )
+    while (pieceData[slot].set?) is (нет)
+        :alert("Сначала выберите сет");
+    endwhile
+    -> да;
+    :openSubstatModal(card, i)\n────────────────────────\nШаг 1: доступные подстаты\n(без mainStat и уже выбранных)\nsubstatStep1.show;
+    :Клик по подстату\n→ selectedSubstatForModal = id\n→ showSubstatStep2();
+    :Шаг 2:\nупгрейды (0–5) + качество (low/mid/high)\nsubstatStep2.show\npendingSubstat = { upgrades, quality };
+    :confirmSubstat()\n──────────────────────\ngetSubstatValue(id, quality, upgrades)\npieceData[slot].substats[i] = { id, name, upgrades, quality, value }\nupdateCardDisplay(slot)\ncalculateDropChance(slot)\ncloseSubstatModal();
+
+case ( saveSetBtn.click / saveSet() )
+    while (currentCharacter?) is (нет)
+        :alert("Выберите персонажа");
+    endwhile
+    -> да;
+    :nameSetModal.classList.add("show")\nsetNameInput.value = существующее имя (если редактирование)\nsetNameInput.focus();
+    while (setName не пустой?) is (нет)
+        :confirmSetName()\nsetName = setNameInput.value.trim();
+        :alert("Введите название");
+    endwhile
+    -> да;
+    :getAllPiecesForSave()\n→ pieces = слоты с set + mainStat;
+    if (currentEditingSetId?) then (да — обновление)
+        :existing.setName = setName\nexisting.characterName / characterId\nexisting.pieces = pieces;
+    else (нет — создание)
+        :sets.push({\n  id: Date.now(), setName,\n  characterName, characterId, pieces\n});
+    endif
+    :renderSets()\ncloseNameModal()\ncloseArtifactModal()\ncurrentCharacter = null\ncurrentEditingSetId = null;
+
+case ( removeSet(id) )
+    :sets = sets.filter(s => s.id !== id)\nrenderSets();
+
+endswitch
+
+:← Ожидание действий пользователя;
+
+stop
+
+@enduml

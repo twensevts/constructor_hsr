@@ -1,0 +1,62 @@
+digraph UseCaseStraight {
+    rankdir=LR;
+    splines=polyline;
+    graph [fontname="Arial", fontsize=12, label="Use Case диаграмма — Калькулятор реликвий (прямые связи)", labelloc=t];
+    node [fontname="Arial", fontsize=11];
+    edge [fontname="Arial", fontsize=10, color="#333333"];
+
+    User [label="Пользователь", shape=box, style="rounded"];
+
+    subgraph cluster_system {
+        label="Система: Калькулятор реликвий";
+        color="#4A7FA5";
+        fontname="Arial";
+        fontsize=11;
+
+        UC_ViewSets [label="Просмотреть\nсписок сетов", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+        UC_CreateSet [label="Создать\nновый сет", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+        UC_OpenSet [label="Открыть\nсуществующий сет", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+        UC_DeleteSet [label="Удалить\nсуществующий сет", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+
+        UC_SelectCharacter [label="Выбрать\nперсонажа", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+        UC_ConfigArtifacts [label="Настроить\nартефакты", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+        UC_SelectRelicSet [label="Выбрать\nсет реликвий", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+        UC_SelectMainStat [label="Выбрать\nглавный стат", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+        UC_SelectSubstats [label="Выбрать\nподстаты", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+        UC_CalcDropChance [label="Рассчитать шанс\nвыпадения", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+
+        UC_SaveSet [label="Сохранить сет", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+        UC_SetName [label="Задать\nназвание сета", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+        UC_EditSet [label="Редактировать\nсуществующий сет", shape=ellipse, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
+    }
+
+    User -> UC_ViewSets;
+    User -> UC_CreateSet;
+
+    UC_CreateSet -> UC_SelectCharacter [style=dashed, label="<<include>>"];
+    UC_CreateSet -> UC_ConfigArtifacts [style=dashed, label="<<include>>"];
+    UC_CreateSet -> UC_SaveSet [style=dashed, label="<<include>>"];
+
+    UC_ConfigArtifacts -> UC_SelectRelicSet [style=dashed, label="<<include>>"];
+    UC_ConfigArtifacts -> UC_SelectMainStat [style=dashed, label="<<include>>"];
+    UC_ConfigArtifacts -> UC_SelectSubstats [style=dashed, label="<<include>>"];
+
+    UC_SaveSet -> UC_SetName [style=dashed, label="<<include>>"];
+    UC_EditSet -> UC_ConfigArtifacts [style=dashed, label="<<include>>"];
+    UC_EditSet -> UC_SaveSet [style=dashed, label="<<include>>"];
+
+    UC_OpenSet -> UC_ViewSets [style=dashed, label="<<extend>>"];
+    UC_DeleteSet -> UC_ViewSets [style=dashed, label="<<extend>>"];
+    UC_EditSet -> UC_OpenSet [style=dashed, label="<<extend>>"];
+    UC_CalcDropChance -> UC_ConfigArtifacts [style=dashed, label="<<extend>>"];
+
+    NoteCalc [
+        shape=note,
+        label="Условие расширения:\nвыбраны сет и главный стат",
+        style="filled",
+        fillcolor="#FFF8C6",
+        color="#C7B96B",
+        fontcolor="#1A1A1A"
+    ];
+    NoteCalc -> UC_CalcDropChance [style=dashed, arrowhead=none, color="#999999"];
+}
