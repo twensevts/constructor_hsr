@@ -1,53 +1,30 @@
 digraph ERD {
     rankdir=TB;
     splines=ortho;
-    graph [fontname="Arial", fontsize=12, label="ERD — Калькулятор реликвий", labelloc=t];
+    graph [fontname="Arial", fontsize=12, label="ERD - API и авторизация", labelloc=t];
     node [shape=record, fontname="Arial", fontsize=10, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
     edge [fontname="Arial", fontsize=9, color="#333333"];
 
-    Character [label="{Character|id (PK): string|name: string|icon: string|photo: string}"];
+    users [label="{users|id (PK): uuid|email (UQ): text|password_hash: text|created_at: timestamptz}"];
+    builds [label="{builds|id (PK): uuid|user_id (FK): uuid|character_id (FK): int|title: text|notes: text|is_public: boolean|share_code (UQ): text|created_at: timestamptz|updated_at: timestamptz}"];
+    build_pieces [label="{build_pieces|id (PK): uuid|build_id (FK): uuid|slot: text|item_id (FK): int|main_stat_id (FK): int|level: int|obtained: boolean}"];
+    build_substats [label="{build_substats|id (PK): uuid|piece_id (FK): uuid|stat_id (FK): int|value: numeric|rolls: int}"];
+    tags [label="{tags|id (PK): uuid|user_id (FK): uuid|name: text}"];
+    build_tags [label="{build_tags|build_id (FK): uuid|tag_id (FK): uuid}"];
+    characters [label="{characters|id (PK): int|key (UQ): text|name: text|rarity: int|path: text|element: text}"];
+    relic_sets [label="{relic_sets|id (PK): int|key (UQ): text|name: text|rarity: int}"];
+    relic_items [label="{relic_items|id (PK): int|set_id (FK): int|slot: text|name: text}"];
+    stats [label="{stats|id (PK): int|key (UQ): text|name: text|kind: text}"];
 
-    RelicSet [label="{RelicSet|id (PK): string|name: string|type: enum(cavern, planar)|icon: string}"];
-
-    RelicItem [label="{RelicItem|setId (PK, FK): string|slot (PK): enum(head,hands,body,feet,sphere,rope)|icon: string|name: string}"];
-
-    MainStatOption [label="{MainStatOption|id (PK): string|slot: enum(head,hands,body,feet,sphere,rope)|name: string|value: string|weight: number}"];
-
-    SubstatOption [label="{SubstatOption|id (PK): string|name: string|weight: number|unit: string|lowValue: number|midValue: number|highValue: number}"];
-
-    SavedSet [label="{SavedSet|id (PK): number|characterId (FK): string|setName: string}"];
-
-    SavedPiece [label="{SavedPiece|savedSetId (PK, FK): number|slot (PK): enum(head,hands,body,feet,sphere,rope)|setId (FK): string|mainStatId (FK): string|obtained: boolean}"];
-
-    SavedSubstat [label="{SavedSubstat|savedSetId (PK, FK): number|slot (PK, FK): enum(head,hands,body,feet,sphere,rope)|substatIndex (PK): number|substatId (FK): string|upgrades: number|quality: enum(low,mid,high)|value: string}"];
-
-    Character -> SavedSet [label="1..N"];
-    SavedSet -> SavedPiece [label="1..N"];
-    SavedPiece -> SavedSubstat [label="1..N"];
-
-    RelicSet -> RelicItem [label="1..N"];
-    RelicSet -> SavedPiece;
-    MainStatOption -> SavedPiece;
-    SubstatOption -> SavedSubstat;
-
-    NoteSavedPiece [
-        shape=note,
-        label="setId -> RelicSet.id (uses set)\nmainStatId -> MainStatOption.id (uses main stat)",
-        style="filled",
-        fillcolor="#FFF8C6",
-        color="#C7B96B",
-        fontcolor="#1A1A1A"
-    ];
-
-    NoteSavedSubstat [
-        shape=note,
-        label="substatId -> SubstatOption.id (uses substat)",
-        style="filled",
-        fillcolor="#FFF8C6",
-        color="#C7B96B",
-        fontcolor="#1A1A1A"
-    ];
-
-    NoteSavedPiece -> SavedPiece [style=dashed, arrowhead=none, color="#999999"];
-    NoteSavedSubstat -> SavedSubstat [style=dashed, arrowhead=none, color="#999999"];
+    users -> builds [label="1..N"];
+    users -> tags [label="1..N"];
+    builds -> build_pieces [label="1..N"];
+    build_pieces -> build_substats [label="1..N"];
+    builds -> build_tags [label="0..N"];
+    tags -> build_tags [label="0..N"];
+    characters -> builds [label="1..N"];
+    relic_sets -> relic_items [label="1..N"];
+    relic_items -> build_pieces [label="0..N"];
+    stats -> build_pieces [label="0..N (main)"];
+    stats -> build_substats [label="0..N (sub)"];
 }

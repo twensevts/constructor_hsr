@@ -1,6 +1,6 @@
 @startuml use_case
-top to bottom direction
-skinparam linetype ortho
+left to right direction
+skinparam linetype polyline
 skinparam nodesep 70
 skinparam ranksep 80
 skinparam defaultFontName Arial
@@ -19,67 +19,72 @@ skinparam actor {
   FontColor #1A1A1A
 }
 
-title Use Case диаграмма — Калькулятор реликвий
+title Диаграмма вариантов использования - API и авторизация
 
-actor "Пользователь" as User
+actor "Гость" as Guest
+actor "Авторизованный пользователь" as User
 
-rectangle "Система: Калькулятор реликвий" {
-  usecase "Просмотреть\nсписок сетов" as UC_ViewSets
-  usecase "Создать\nновый сет" as UC_CreateSet
-  usecase "Открыть\nсуществующий сет" as UC_OpenSet
-  usecase "Удалить\nсуществующий сет" as UC_DeleteSet
+rectangle "Система: HSR Relic Calculator" {
+  usecase "Просматривать\nпубличные билды" as UC_ViewPublic
+  usecase "Открывать билд\nпо share-ссылке" as UC_OpenShare
+  usecase "Зарегистрироваться" as UC_Register
+  usecase "Войти" as UC_Login
+  usecase "Получить профиль" as UC_Profile
 
-  usecase "Выбрать\nперсонажа" as UC_SelectCharacter
+  usecase "Создать билд" as UC_CreateBuild
+  usecase "Редактировать свой билд" as UC_EditBuild
+  usecase "Удалить свой билд" as UC_DeleteBuild
+  usecase "Отметить предмет\nкак полученный" as UC_MarkObtained
+  usecase "Управлять тегами" as UC_ManageTags
+
   usecase "Настроить\nартефакты" as UC_ConfigArtifacts
-  usecase "Выбрать\nсет реликвий" as UC_SelectRelicSet
-  usecase "Выбрать\nглавный стат" as UC_SelectMainStat
-  usecase "Выбрать\nподстаты" as UC_SelectSubstats
-  usecase "Рассчитать шанс\nвыпадения" as UC_CalcDropChance
-
-  usecase "Сохранить сет" as UC_SaveSet
-  usecase "Задать\nназвание сета" as UC_SetName
-  usecase "Редактировать\nсуществующий сет" as UC_EditSet
+  usecase "Выбрать сет реликвий" as UC_SelectSet
+  usecase "Выбрать главный стат" as UC_SelectMain
+  usecase "Выбрать подстаты" as UC_SelectSub
+  usecase "Рассчитать шанс\nвыпадения" as UC_CalcChance
+  usecase "Сохранить билд\nв API" as UC_SaveApi
+  usecase "Получить share-ссылку" as UC_Share
 }
 
-User --> UC_ViewSets
-User --> UC_CreateSet
+Guest --> UC_ViewPublic
+Guest --> UC_OpenShare
+Guest --> UC_Register
+Guest --> UC_Login
+Guest --> UC_CreateBuild
 
-' Layout anchors to keep labels readable.
-User -[hidden]down-> UC_ViewSets
-UC_ViewSets -[hidden]right-> UC_CreateSet
-UC_CreateSet -[hidden]right-> UC_OpenSet
-UC_OpenSet -[hidden]right-> UC_DeleteSet
+User --> UC_Profile
+User --> UC_CreateBuild
+User --> UC_EditBuild
+User --> UC_DeleteBuild
+User --> UC_MarkObtained
+User --> UC_ViewPublic
+User --> UC_OpenShare
 
-UC_SelectCharacter -[hidden]right-> UC_ConfigArtifacts
-UC_ConfigArtifacts -[hidden]right-> UC_SaveSet
-UC_SaveSet -[hidden]right-> UC_EditSet
+UC_Login ..> UC_Profile : <<include>>
 
-UC_SelectRelicSet -[hidden]right-> UC_SelectMainStat
-UC_SelectMainStat -[hidden]right-> UC_SelectSubstats
-UC_SelectSubstats -[hidden]right-> UC_CalcDropChance
+UC_CreateBuild -[hidden]down-> UC_EditBuild
+UC_ConfigArtifacts -[hidden]down-> UC_SaveApi
+UC_SaveApi -[hidden]down-> UC_ManageTags
+UC_ManageTags -[hidden]down-> UC_Share
+UC_CreateBuild -[hidden]right-> UC_ConfigArtifacts
+UC_EditBuild -[hidden]right-> UC_SaveApi
 
-UC_CreateSet -[hidden]down-> UC_ConfigArtifacts
-UC_ConfigArtifacts -[hidden]down-> UC_SelectMainStat
-UC_SaveSet -[hidden]down-> UC_SetName
-UC_OpenSet -[hidden]down-> UC_EditSet
+UC_CreateBuild .right.> UC_ConfigArtifacts : <<include>>
+UC_CreateBuild .right.> UC_SaveApi : <<include>>
+UC_CreateBuild .right.> UC_ManageTags : <<include>>
+UC_CreateBuild .right.> UC_Share : <<extend>>
 
-UC_CreateSet .down.> UC_SelectCharacter : <<include>>
-UC_CreateSet .down.> UC_ConfigArtifacts : <<include>>
-UC_CreateSet .right.> UC_SaveSet : <<include>>
+UC_EditBuild .right.> UC_ConfigArtifacts : <<include>>
+UC_EditBuild .right.> UC_SaveApi : <<include>>
+UC_EditBuild .right.> UC_ManageTags : <<include>>
+UC_EditBuild .right.> UC_Share : <<extend>>
 
-UC_ConfigArtifacts .down.> UC_SelectRelicSet : <<include>>
-UC_ConfigArtifacts .down.> UC_SelectMainStat : <<include>>
-UC_ConfigArtifacts .down.> UC_SelectSubstats : <<include>>
+UC_ConfigArtifacts ..> UC_SelectSet : <<include>>
+UC_ConfigArtifacts ..> UC_SelectMain : <<include>>
+UC_ConfigArtifacts ..> UC_SelectSub : <<include>>
+UC_CalcChance ..> UC_ConfigArtifacts : <<extend>>
 
-UC_SaveSet .down.> UC_SetName : <<include>>
-UC_EditSet .left.> UC_ConfigArtifacts : <<include>>
-UC_EditSet .left.> UC_SaveSet : <<include>>
-
-UC_OpenSet .left.> UC_ViewSets : <<extend>>
-UC_DeleteSet .left.> UC_ViewSets : <<extend>>
-UC_EditSet .up.> UC_OpenSet : <<extend>>
-UC_CalcDropChance .up.> UC_ConfigArtifacts : <<extend>>
-note right of UC_CalcDropChance
+note right of UC_CalcChance
   Условие расширения:
   выбраны сет и главный стат
 end note

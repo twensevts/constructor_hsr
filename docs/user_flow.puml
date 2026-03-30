@@ -1,108 +1,75 @@
 @startuml user_flow
-skinparam linetype ortho
 skinparam defaultFontName Arial
-skinparam defaultFontSize 11
-skinparam backgroundColor white
+skinparam defaultFontSize 12
+skinparam dpi 150
+skinparam shadowing false
 skinparam ArrowColor #333333
 
 skinparam activity {
-    BackgroundColor #EEF4FA
-    BorderColor #4A7FA5
-    FontColor #1A1A1A
-    DiamondBackgroundColor #FFF8E1
-    DiamondBorderColor #E6A817
-    StartColor #333333
-    EndColor #333333
+  BorderColor #444444
+  BackgroundColor #F9FBFF
+  FontColor #1A1A1A
+  DiamondBackgroundColor #FFF3D9
+  DiamondBorderColor #C89A2B
+  StartColor #76C893
+  EndColor #F28482
 }
 
-title Пользовательский сценарий — Калькулятор реликвий
+title Диаграмма пользовательского потока (API + авторизация)
 
 start
 
-:Открытие приложения\n«Калькулятор реликвий»;
+:Открыть приложение;
+:Выбрать персонажа;
 
-:Главный экран\n──────────────────────\nСекция «Ваши сеты»\nСписок сохранённых сетов\n(или «Нет добавленных сетов»)\nКнопка «+ Добавить сет»;
-
-switch (Действие пользователя?)
-
-case ( Добавить сет )
-    :Модалка «Создание сета»\nКнопка «Выбрать персонажа»;
-    :Нажатие «Выбрать персонажа»\n→ появляется список персонажей;
-    :Список персонажей\nс иконками и именами;
-    :Клик по персонажу\n→ модалка «Создание сета» закрыта;
-    :Инициализация пустых\nданных для 6 слотов;
-
-case ( Открыть сет )
-    :Поиск сета и персонажа по ID;
-    :Загрузка сохранённых\nданных артефактов (loadSetIntoPieceData);
-
-case ( Удалить сет )
-    :sets.filter() → renderSets()\nСет удалён из списка;
+if (Есть аккаунт?) then (Да)
+  :Нажать "Войти";
+  :Ввести email и пароль;
+  :POST /api/auth/login;
+  if (Успешно?) then (Да)
+    :Сохранить JWT access token;
+    :GET /api/auth/me (профиль);
+  else (Нет)
+    :Показать ошибку логина;
     stop
-
-case ( Закрыть вкладку )
-    stop
-
-endswitch
-
-:Модалка артефактов\n──────────────────────\nSplash-art и имя персонажа\n6 карточек: Голова, Перчатки, Тело,\nБотинки, Сфера, Верёвка;
-
-switch (Действие в модалке артефактов?)
-
-case ( Клик «+» на карточке\n— выбор сета )
-    :Список Cavern / Planar сетов\nдля данного слота;
-    :Выбор сета\n→ selectSet() → updateCardDisplay();
-
-case ( Клик «Главный стат» )
-    while (Сет выбран?) is (нет)
-        :Предупреждение:\n«Сначала выберите сет»;
-    endwhile
-    -> да;
-    :Список главных статов для слота;
-    :Выбор стата\n→ updateCardDisplay();
-
-case ( Клик «—» на подстате )
-    while (Сет выбран?) is (нет)
-        :Предупреждение:\n«Сначала выберите сет»;
-    endwhile
-    -> да;
-    :Шаг 1 — список доступных подстатов\n(без главного стата и уже выбранных);
-    :Шаг 2 — выбор проков (0–5)\nи качества (Низкий / Средний / Высокий);
-    :Подтверждение\n→ updateCardDisplay();
-
-endswitch
-
-:Шанс выпадения пересчитан\nи отображён на карточке;
-note right
-    Пересчитывается при каждом
-    изменении сета, стата или подстата
-end note
-
-:Нажатие «Сохранить сет»;
-
-while (Персонаж выбран?) is (нет)
-    :Предупреждение:\n«Выберите персонажа»;
-endwhile
--> да;
-
-:Модалка «Название сета»\nПоле ввода\n(для редактирования — текущее имя предзаполнено);
-
-while (Название введено?) is (нет)
-    :Ввод названия → нажатие «Сохранить»;
-    :Предупреждение:\n«Введите название сета»;
-endwhile
--> да;
-
-if (Редактирование\nсуществующего сета?) then (да)
-    :Обновление существующего сета\n(setName, characterId, pieces);
-else (нет)
-    :Добавление нового сета в массив\n(id: Date.now(), setName, characterId, pieces);
+  endif
+else (Нет)
+  :Продолжить как гость;
+  :POST /api/auth/register;
 endif
 
-:renderSets()\nМодалки закрыты\nВозврат на главный экран;
+:Выбрать сет реликвий;
+:Выбрать главный стат;
+:Добавить подстаты;
+:Рассчитать шанс выпадения;
 
-:Сет в списке:\nимя, фото персонажа\nКнопки «Открыть» и «Удалить»;
+if (Сохранить билд?) then (Да)
+  if (Авторизован?) then (Да)
+    :POST /api/builds;
+    :Получить id и share-код;
+    :Сгенерировать share-ссылку;
+    if (Редактировать позже?) then (Да)
+      :PUT /api/builds/:id;
+      :Обновить теги и куски;
+    endif
+    if (Удалить билд?) then (Да)
+      :DELETE /api/builds/:id;
+    endif
+    if (Отметить как полученный?) then (Да)
+      :PATCH /api/builds/:id/pieces/:slot/obtained;
+    endif
+  else (Нет)
+    :Показать запрос на вход;
+  endif
+endif
+
+if (Открыть по share-ссылке?) then (Да)
+  :GET /api/builds/share/:code;
+  :Просмотр публичной сборки;
+endif
+
+:Просмотр публичных билдов;
+:GET /api/builds/public;
 
 stop
-
 @enduml

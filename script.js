@@ -29,13 +29,13 @@ const ELEMENT_COLORS = {
 };
 
 const ELEMENT_NAMES = {
-    Lightning: 'Молния',
-    Fire:      'Огонь',
-    Ice:       'Лёд',
-    Wind:      'Ветер',
-    Quantum:   'Квантум',
-    Imaginary: 'Воображение',
-    Physical:  'Физика'
+    Lightning: 'Электрический',
+    Fire:      'Огненный',
+    Ice:       'Ледяной',
+    Wind:      'Ветряной',
+    Quantum:   'Квантовый',
+    Imaginary: 'Мнимый',
+    Physical:  'Физический'
 };
 
 // ── DOM-ссылки ─────────────────────────────────────────────
@@ -683,7 +683,7 @@ function escapeHtml(str) {
 
 window.updateModalSummary = updateModalSummary;
 
-const API_BASE = '/api';
+const API_BASE = 'http://localhost:3001/api';
 
 async function postBuildToApi(characterId, name, tags, pieces) {
     const res = await fetch(`${API_BASE}/builds`, {

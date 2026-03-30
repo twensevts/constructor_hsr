@@ -1,112 +1,110 @@
 @startuml erd
-top to bottom direction
-skinparam linetype ortho
-skinparam defaultFontName Arial
-skinparam defaultFontSize 11
-skinparam backgroundColor white
-skinparam ArrowColor #333333
-skinparam nodesep 40
-skinparam ranksep 60
-
-skinparam class {
-  BackgroundColor #EEF4FA
-  BorderColor #4A7FA5
-  FontColor #1A1A1A
-}
-
-hide methods
 hide circle
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
 
-title ERD — Калькулятор реликвий
-
-entity "Character" as Character {
-  *id : string <<PK>>
+entity "users" as users {
+  *id : uuid <<PK>>
   --
-  name : string
-  icon : string
-  photo : string
+  email : text <<UQ>>
+  password_hash : text
+  created_at : timestamptz
 }
 
-entity "RelicSet" as RelicSet {
-  *id : string <<PK>>
+entity "builds" as builds {
+  *id : uuid <<PK>>
   --
-  name : string
-  type : enum(cavern, planar)
-  icon : string
+  user_id : uuid <<FK users.id>>
+  character_id : int <<FK characters.id>>
+  title : text
+  notes : text
+  is_public : boolean
+  share_code : text <<UQ>>
+  created_at : timestamptz
+  updated_at : timestamptz
 }
 
-entity "RelicItem" as RelicItem {
-  *setId : string <<PK,FK>>
-  *slot : enum(head, hands, body, feet, sphere, rope) <<PK>>
+entity "build_pieces" as build_pieces {
+  *id : uuid <<PK>>
   --
-  icon : string
-  name : string
-}
-
-entity "MainStatOption" as MainStatOption {
-  *id : string <<PK>>
-  --
-  slot : enum(head, hands, body, feet, sphere, rope)
-  name : string
-  value : string
-  weight : number
-}
-
-entity "SubstatOption" as SubstatOption {
-  *id : string <<PK>>
-  --
-  name : string
-  weight : number
-  unit : string
-  lowValue : number
-  midValue : number
-  highValue : number
-}
-
-entity "SavedSet" as SavedSet {
-  *id : number <<PK>>
-  --
-  characterId : string <<FK>>
-  setName : string
-}
-
-entity "SavedPiece" as SavedPiece {
-  *savedSetId : number <<PK,FK>>
-  *slot : enum(head, hands, body, feet, sphere, rope) <<PK>>
-  --
-  setId : string <<FK>>
-  mainStatId : string <<FK>>
+  build_id : uuid <<FK builds.id>>
+  slot : text
+  item_id : int <<FK relic_items.id>>
+  main_stat_id : int <<FK stats.id>>
+  level : int
   obtained : boolean
 }
 
-entity "SavedSubstat" as SavedSubstat {
-  *savedSetId : number <<PK,FK>>
-  *slot : enum(head, hands, body, feet, sphere, rope) <<PK,FK>>
-  *substatIndex : number <<PK>>
+entity "build_substats" as build_substats {
+  *id : uuid <<PK>>
   --
-  substatId : string <<FK>>
-  upgrades : number
-  quality : enum(low, mid, high)
-  value : string
+  piece_id : uuid <<FK build_pieces.id>>
+  stat_id : int <<FK stats.id>>
+  value : numeric
+  rolls : int
 }
 
-Character ||--o{ SavedSet : has
-SavedSet ||--|{ SavedPiece : contains
-SavedPiece ||--o{ SavedSubstat : has
+entity "tags" as tags {
+  *id : uuid <<PK>>
+  --
+  user_id : uuid <<FK users.id>>
+  name : text
+}
 
-RelicSet ||--|{ RelicItem : contains
-RelicSet ||--o{ SavedPiece
+entity "build_tags" as build_tags {
+  *build_id : uuid <<FK builds.id>>
+  *tag_id : uuid <<FK tags.id>>
+}
 
-MainStatOption ||--o{ SavedPiece
-SubstatOption ||--o{ SavedSubstat
+entity "characters" as characters {
+  *id : int <<PK>>
+  --
+  key : text <<UQ>>
+  name : text
+  rarity : int
+  path : text
+  element : text
+}
 
-note bottom of SavedPiece
-  setId -> RelicSet.id (uses set)
-  mainStatId -> MainStatOption.id (uses main stat)
-end note
+entity "relic_sets" as relic_sets {
+  *id : int <<PK>>
+  --
+  key : text <<UQ>>
+  name : text
+  rarity : int
+}
 
-note bottom of SavedSubstat
-  substatId -> SubstatOption.id (uses substat)
+entity "relic_items" as relic_items {
+  *id : int <<PK>>
+  --
+  set_id : int <<FK relic_sets.id>>
+  slot : text
+  name : text
+}
+
+entity "stats" as stats {
+  *id : int <<PK>>
+  --
+  key : text <<UQ>>
+  name : text
+  kind : text
+}
+
+users |o--o{ builds : "owns"
+users ||--o{ tags : "creates"
+builds ||--|{ build_pieces : "contains"
+build_pieces ||--o{ build_substats : "has"
+builds ||--o{ build_tags : "tagged"
+tags ||--o{ build_tags : "mapping"
+characters ||--o{ builds : "for character"
+relic_sets ||--|{ relic_items : "includes"
+relic_items |o--o{ build_pieces : "selected"
+stats |o--o{ build_pieces : "main stat"
+stats ||--o{ build_substats : "sub stat"
+
+note right of builds
+is_public=true -> виден в /public
+share_code -> доступ по /share/:code
 end note
 
 @enduml
