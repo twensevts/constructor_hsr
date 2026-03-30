@@ -7,25 +7,45 @@
     <title>Калькулятор реликвий — HSR</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/enhancements.css">
 </head>
 
 <body>
-<div class="container">
+    <div class="container">
         <header>
             <div class="header-top">
                 <h1>Калькулятор реликвий</h1>
                 <div class="header-actions">
                     <button class="toolbar-btn export-btn" id="exportBtn" title="Экспорт всех сетов в JSON">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
                         Экспорт
                     </button>
                     <button class="toolbar-btn import-btn" id="importBtn" title="Импорт сетов из JSON">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3" transform="rotate(180 12 9)"/></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" transform="rotate(180 12 9)" />
+                        </svg>
                         Импорт
                     </button>
+                    <div class="auth-buttons" id="authButtons">
+                        <button class="toolbar-btn" id="openLoginBtn">Вход</button>
+                        <button class="toolbar-btn" id="openRegisterBtn">Регистрация</button>
+                    </div>
+                    <div class="auth-profile hidden" id="authProfile">
+                        <span id="userUsername"></span>
+                        <button class="toolbar-btn" id="logoutBtn">Выход</button>
+                    </div>
                     <input type="file" id="importFileInput" accept=".json" class="hidden">
                 </div>
             </div>
@@ -35,10 +55,19 @@
             <!-- Панель фильтров и сортировки -->
             <div class="sets-toolbar">
                 <div class="toolbar-search-wrap">
-                    <svg class="toolbar-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                    <input type="text" id="setsSearchInput" placeholder="Поиск по сетам, персонажам, тегам..." class="toolbar-search">
+                    <svg class="toolbar-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input type="text" id="setsSearchInput" placeholder="Поиск по сетам, персонажам, тегам..."
+                        class="toolbar-search">
                 </div>
                 <div class="toolbar-right">
+                    <select id="viewModeSelect" class="sort-select" title="Режим просмотра билдов">
+                        <option value="local">Мои (локальные)</option>
+                        <option value="public">Публичные</option>
+                    </select>
                     <select id="sortSelect" class="sort-select">
                         <option value="date-desc">Сначала новые</option>
                         <option value="date-asc">Сначала старые</option>
@@ -57,7 +86,7 @@
             </div>
 
             <div class="sets-window">
-                <h2>Ваши сеты</h2>
+                <h2 id="setsWindowTitle">Ваши сеты</h2>
                 <div id="sets-list" class="sets-list">
                     <p class="empty-message">Нет добавленных сетов</p>
                 </div>
@@ -79,8 +108,13 @@
                 <button class="add-character-btn" id="addCharacterBtn">Выбрать персонажа</button>
                 <div id="characterDropdown" class="character-dropdown hidden">
                     <div class="char-search-bar">
-                        <svg class="char-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                        <input type="text" id="charSearchInput" placeholder="Поиск персонажа..." class="char-search-input" autocomplete="off">
+                        <svg class="char-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <input type="text" id="charSearchInput" placeholder="Поиск персонажа..."
+                            class="char-search-input" autocomplete="off">
                     </div>
                     <div class="char-element-filters" id="charElementFilters"></div>
                     <div class="char-options-list" id="charOptionsList"></div>
@@ -317,6 +351,55 @@
         </div>
     </div>
 
+    <div id="loginModal" class="modal">
+        <div class="modal-content auth-modal">
+            <span class="close-modal" onclick="closeAuthModal()">&times;</span>
+            <h2>Вход</h2>
+            <div class="auth-form">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" placeholder="Введите email" autocomplete="email">
+
+                <label for="loginPassword">Пароль</label>
+                <input type="password" id="loginPassword" placeholder="Введите пароль" autocomplete="current-password">
+
+                <div class="auth-error" id="loginError"></div>
+                <button class="save-set-btn" id="loginSubmitBtn" onclick="submitLogin()">Вход</button>
+
+                <p class="auth-toggle-text">
+                    Нет аккаунта? <button class="link-btn" onclick="switchToRegister()">Зарегистрируйтесь</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content auth-modal">
+            <span class="close-modal" onclick="closeAuthModal()">&times;</span>
+            <h2>Регистрация</h2>
+            <div class="auth-form">
+                <label for="registerUsername">Ник</label>
+                <input type="text" id="registerUsername" placeholder="Введите ник (3+ символа)" autocomplete="username" minlength="3" maxlength="30">
+
+                <label for="registerEmail">Email</label>
+                <input type="email" id="registerEmail" placeholder="Введите email" autocomplete="email">
+
+                <label for="registerPassword">Пароль</label>
+                <input type="password" id="registerPassword" placeholder="Введите пароль (8+ символов)" autocomplete="new-password" minlength="8">
+
+                <label for="registerPasswordConfirm">Подтверждение</label>
+                <input type="password" id="registerPasswordConfirm" placeholder="Повторите пароль" autocomplete="new-password" minlength="8">
+
+                <div class="auth-error" id="registerError"></div>
+                <button class="save-set-btn" id="registerSubmitBtn" onclick="submitRegister()">Зарегистрироваться</button>
+
+                <p class="auth-toggle-text">
+                    Уже есть аккаунт? <button class="link-btn" onclick="switchToLogin()">Войдите</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
     <script src="characters/Character.js"></script>
     <script src="characters/charactersData.js"></script>
     <script src="relic/relicData.js"></script>

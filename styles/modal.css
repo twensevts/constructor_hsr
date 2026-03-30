@@ -47,3 +47,64 @@
     margin-bottom: 20px;
     letter-spacing: 0.05em;
 }
+
+.auth-modal {
+    max-width: 420px;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.auth-form label {
+    font-family: 'Rajdhani', sans-serif;
+    color: #c8d2dc;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.auth-form input {
+    background: rgba(13, 19, 33, 0.8);
+    border: 1px solid rgba(0, 212, 255, 0.25);
+    border-radius: 6px;
+    color: #e8e6e3;
+    padding: 9px 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: rgba(0, 212, 255, 0.65);
+    box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.12);
+}
+
+.auth-error {
+    min-height: 20px;
+    color: #ff9b9b;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+}
+
+.auth-toggle-text {
+    margin-top: 4px;
+    color: rgba(200, 210, 220, 0.8);
+    font-size: 0.9rem;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.link-btn {
+    border: none;
+    background: transparent;
+    color: #00d4ff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    padding: 0;
+}
+
+.link-btn:hover {
+    text-decoration: underline;
+}

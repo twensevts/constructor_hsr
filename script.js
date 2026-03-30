@@ -13,6 +13,7 @@ let setsSearchQuery   = '';
 let setsActiveElement = '';
 let setsActiveTag     = '';
 let setsSortBy        = 'date-desc';
+let setsViewMode      = 'local';
 
 const SETS_STORAGE_KEY = 'constructor_hsr_sets_v1';
 
@@ -42,6 +43,7 @@ const ELEMENT_NAMES = {
 
 const addSetBtn        = document.getElementById('addSetBtn');
 const setsList         = document.getElementById('sets-list');
+const setsWindowTitle  = document.getElementById('setsWindowTitle');
 const createSetModal   = document.getElementById('createSetModal');
 const closeModalBtn    = document.querySelector('#createSetModal .close-modal');
 const addCharacterBtn  = document.getElementById('addCharacterBtn');
@@ -274,6 +276,15 @@ function normalizeSetsForUi(nextSets) {
     return nextSets
         .filter(s => s && typeof s === 'object')
         .map(s => {
+            const normalized = {
+                ...s,
+                id: s.id,
+                setName: s.setName || s.name || '',
+                characterName: s.characterName || s.character_name || '',
+                characterId: s.characterId || s.character_id || null,
+                createdAt: s.createdAt || s.created_at || s.id || Date.now(),
+                tags: Array.isArray(s.tags) ? s.tags : []
+            };
             const pieces = Array.isArray(s.pieces) ? s.pieces : [];
             pieces.forEach(p => {
                 if (p && typeof p === 'object' && typeof p.obtained !== 'boolean') {
@@ -281,10 +292,9 @@ function normalizeSetsForUi(nextSets) {
                 }
             });
             return {
-                ...s,
+                ...normalized,
                 pieces,
-                tags: Array.isArray(s.tags) ? s.tags : [],
-                createdAt: s.createdAt || s.id || Date.now()
+                source: s.source || (setsViewMode === 'public' ? 'public' : 'local')
             };
         });
 }
@@ -301,6 +311,39 @@ function loadSetsFromStorage() {
         if (!raw) return;
         sets = normalizeSetsForUi(JSON.parse(raw));
     } catch { /* ignore */ }
+}
+
+function mapBuildRowToUi(row) {
+    const piecesCount = Number(row.pieces_count || 0);
+    const obtainedCount = Number(row.obtained_count || 0);
+    const pieces = Array.from({ length: piecesCount }).map((_, i) => ({
+        slot: `slot_${i}`,
+        obtained: i < obtainedCount
+    }));
+
+    return {
+        id: row.id,
+        setName: row.name,
+        characterName: row.character_name,
+        characterId: row.character_id,
+        tags: Array.isArray(row.tags) ? row.tags : [],
+        createdAt: row.created_at || Date.now(),
+        pieces,
+        source: 'owned',
+        is_public: !!row.is_public
+    };
+}
+
+async function loadOwnedBuilds() {
+    const res = await fetch(`${API_BASE}/builds?limit=100`);
+    if (res.status === 401) {
+        sets = [];
+        return;
+    }
+    if (!res.ok) throw new Error(`API error ${res.status}`);
+    const payload = await res.json();
+    const builds = Array.isArray(payload?.builds) ? payload.builds : [];
+    sets = normalizeSetsForUi(builds.map(mapBuildRowToUi));
 }
 
 // ── Сохранение сета ───────────────────────────────────────
@@ -323,9 +366,23 @@ function saveSet() {
     input.focus();
 }
 
-function openSet(id) {
+async function openSet(id) {
     const set       = sets.find(s => s.id === id);
     if (!set) return;
+
+    if (set.source === 'public' || set.source === 'owned') {
+        try {
+            const res = await fetch(`${API_BASE}/builds/${set.id}`);
+            if (!res.ok) throw new Error(`API error ${res.status}`);
+            const build = await res.json();
+            openSharedBuild(build);
+        } catch (err) {
+            console.error('Не удалось открыть билд:', err);
+            alert('Не удалось открыть билд');
+        }
+        return;
+    }
+
     const character = getCharacterById(set.characterId);
     if (!character) return;
     openArtifactModal(character, set);
@@ -515,12 +572,20 @@ function refreshTagFilter() {
 function renderSets() {
     refreshTagFilter();
     const filtered = getFilteredSortedSets();
+    const isPublicMode = setsViewMode === 'public';
+    const isLoggedIn = !!(window.Auth && window.Auth.isLoggedIn && window.Auth.isLoggedIn());
+
+    if (setsWindowTitle) {
+        setsWindowTitle.textContent = isPublicMode
+            ? 'Публичные билды'
+            : (isLoggedIn ? 'Ваши сеты (аккаунт)' : 'Ваши сеты (локально)');
+    }
 
     if (sets.length === 0) {
         setsList.innerHTML = `
             <div class="empty-state">
-                <p class="empty-message">Нет добавленных сетов</p>
-                <p class="empty-hint">Нажмите «Добавить сет», чтобы создать первый билд</p>
+                <p class="empty-message">${isPublicMode ? 'Публичные билды не найдены' : 'Нет добавленных сетов'}</p>
+                <p class="empty-hint">${isPublicMode ? 'Попробуйте позже или смените фильтры.' : 'Нажмите «Добавить сет», чтобы создать первый билд'}</p>
             </div>`;
         return;
     }
@@ -560,6 +625,11 @@ function renderSets() {
             `<span class="set-tag">${escapeHtml(tag)}</span>`
         ).join('');
 
+        const safeId = JSON.stringify(set.id);
+        const authorHtml = (set.source === 'public' && set.username)
+            ? `<div class="set-card-char"><span class="set-card-charname">Автор: ${escapeHtml(set.username)}</span></div>`
+            : '';
+
         const item = document.createElement('div');
         item.className = 'set-item';
         item.style.setProperty('--i', idx);
@@ -569,7 +639,7 @@ function renderSets() {
                         onerror="this.style.display='none'">`
                 : ''}
             <div class="set-card-glow"></div>
-            <div class="set-card-top" onclick="openSet(${set.id})">
+            <div class="set-card-top" onclick='openSet(${safeId})'>
                 <div class="set-card-info">
                     <div class="set-card-name">${escapeHtml(set.setName || '')}</div>
                     <div class="set-card-char">
@@ -578,6 +648,7 @@ function renderSets() {
                             : ''}
                         <span class="set-card-charname">${escapeHtml(set.characterName || '')}</span>
                     </div>
+                    ${authorHtml}
                     ${tagsHtml ? `<div class="set-card-tags">${tagsHtml}</div>` : ''}
                 </div>
                 <div class="set-card-progress-wrap">
@@ -591,11 +662,13 @@ function renderSets() {
                 </div>
             </div>
             ${relicIconsHtml
-                ? `<div class="set-card-relics-row" onclick="openSet(${set.id})">${relicIconsHtml}</div>`
+                ? `<div class="set-card-relics-row" onclick='openSet(${safeId})'>${relicIconsHtml}</div>`
                 : ''}
             <div class="set-item-actions">
-                <button class="open-set-btn"   onclick="openSet(${set.id})">Открыть</button>
-                <button class="remove-set-btn" onclick="removeSet(${set.id}); event.stopPropagation()">Удалить</button>
+                <button class="open-set-btn"   onclick='openSet(${safeId})'>Открыть</button>
+                ${set.source === 'public'
+                    ? ''
+                    : `<button class="remove-set-btn" onclick='removeSet(${safeId}); event.stopPropagation()'>Удалить</button>`}
             </div>
         `;
         setsList.appendChild(item);
@@ -604,8 +677,23 @@ function renderSets() {
 
 function removeSet(id) {
     if (!confirm('Удалить сет?')) return;
+
+    const target = sets.find(s => s.id === id);
+    if (target?.source === 'owned') {
+        fetch(`${API_BASE}/builds/${id}`, { method: 'DELETE' })
+            .then(res => {
+                if (!res.ok) throw new Error(`API error ${res.status}`);
+                return loadCurrentViewData();
+            })
+            .then(() => renderSets())
+            .catch(err => {
+                console.error('Не удалось удалить билд:', err);
+                alert('Не удалось удалить билд');
+            });
+        return;
+    }
+
     sets = sets.filter(s => s.id !== id);
-    // Если активный тег больше не существует — сбросить
     const stillExists = sets.some(s => (s.tags || []).includes(setsActiveTag));
     if (!stillExists) setsActiveTag = '';
     saveSetsToStorage();
@@ -615,6 +703,20 @@ function removeSet(id) {
 // ── Инициализация тулбара ────────────────────────────────
 
 function initToolbar() {
+    const viewModeSelect = document.getElementById('viewModeSelect');
+    if (viewModeSelect) {
+        viewModeSelect.value = setsViewMode;
+        viewModeSelect.dataset.mode = setsViewMode;
+        viewModeSelect.addEventListener('change', async e => {
+            setsViewMode = e.target.value === 'public' ? 'public' : 'local';
+            e.target.dataset.mode = setsViewMode;
+            setsActiveTag = '';
+            await loadCurrentViewData();
+            renderSets();
+            updateViewUiControls();
+        });
+    }
+
     // Сортировка
     const sortSelect = document.getElementById('sortSelect');
     if (sortSelect) {
@@ -684,6 +786,44 @@ function escapeHtml(str) {
 window.updateModalSummary = updateModalSummary;
 
 const API_BASE = 'http://localhost:3001/api';
+
+function updateViewUiControls() {
+    const isPublicMode = setsViewMode === 'public';
+    const exportBtn = document.getElementById('exportBtn');
+    const importBtn = document.getElementById('importBtn');
+
+    if (addSetBtn) addSetBtn.style.display = isPublicMode ? 'none' : '';
+    if (exportBtn) exportBtn.style.display = isPublicMode ? 'none' : '';
+    if (importBtn) importBtn.style.display = isPublicMode ? 'none' : '';
+}
+
+async function loadPublicBuilds() {
+    const res = await fetch(`${API_BASE}/builds/public?limit=100`);
+    if (!res.ok) throw new Error(`API error ${res.status}`);
+    const data = await res.json();
+    const builds = Array.isArray(data?.builds) ? data.builds : [];
+    sets = normalizeSetsForUi(builds.map(b => ({ ...b, source: 'public' })));
+}
+
+async function loadCurrentViewData() {
+    if (setsViewMode === 'public') {
+        await loadPublicBuilds();
+        return;
+    }
+    if (window.Auth && window.Auth.isLoggedIn && window.Auth.isLoggedIn()) {
+        await loadOwnedBuilds();
+        return;
+    }
+    loadSetsFromStorage();
+}
+
+window.onAuthStateChanged = async function() {
+    if (setsViewMode === 'public') return;
+    setsActiveTag = '';
+    await loadCurrentViewData();
+    renderSets();
+    updateViewUiControls();
+};
 
 async function postBuildToApi(characterId, name, tags, pieces) {
     const res = await fetch(`${API_BASE}/builds`, {
@@ -800,13 +940,19 @@ Promise.all([loadCharacters(), loadRelicData()])
     .then(() => {
         initCharacterOptions();
         initArtifactCards();
+        updateViewUiControls();
 
         const shareId = new URLSearchParams(location.search).get('share');
         if (shareId) {
             loadSharedBuild(shareId);
         } else {
-            loadSetsFromStorage();
-            renderSets();
+            loadCurrentViewData()
+                .then(() => renderSets())
+                .catch(err => {
+                    console.error('Failed to load sets:', err);
+                    sets = [];
+                    renderSets();
+                });
         }
         initToolbar();
     })

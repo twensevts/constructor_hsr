@@ -57,6 +57,26 @@
     box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
 }
 
+.auth-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.auth-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 12px;
+    border-left: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+#userUsername {
+    color: #e8e6e3;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
 /* ── Sets Toolbar ────────────────────────────────────────── */
 
 .sets-toolbar {
@@ -130,6 +150,11 @@
 .sort-select option {
     background: #0d1321;
     color: #e8e6e3;
+}
+
+#viewModeSelect[data-mode="public"] {
+    border-color: rgba(80, 208, 128, 0.6);
+    box-shadow: 0 0 0 2px rgba(80, 208, 128, 0.12);
 }
 
 /* ── Element filter row ──────────────────────────────────── */
