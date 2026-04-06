@@ -116,6 +116,16 @@ CREATE TABLE build_tags (
 CREATE INDEX idx_build_tags_build ON build_tags(build_id);
 CREATE INDEX idx_build_tags_tag   ON build_tags(tag_id);
 
+-- Лайки билдов (многие-ко-многим)
+CREATE TABLE build_likes (
+    build_id   UUID NOT NULL REFERENCES builds(id) ON DELETE CASCADE,
+    user_id    UUID NOT NULL REFERENCES users(id)  ON DELETE CASCADE,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    PRIMARY KEY (build_id, user_id)
+);
+
+CREATE INDEX idx_build_likes_build ON build_likes(build_id);
+
 -- ────────────────────────────────────────────────────────────
 -- ПРЕДМЕТЫ БИЛДА  (один слот = одна строка)
 -- ────────────────────────────────────────────────────────────

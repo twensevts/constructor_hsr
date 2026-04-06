@@ -91,7 +91,7 @@ function notifyAuthStateChanged() {
 async function fetchUserProfile() {
     if (!isLoggedIn()) return null;
     try {
-        const res = await fetch('http://localhost:3001/api/auth/me');
+        const res = await fetch('/api/auth/me');
         if (!res.ok) {
             if (res.status === 401) {
                 clearToken();
@@ -149,7 +149,7 @@ async function submitLogin() {
     }
 
     try {
-        const res = await fetch('http://localhost:3001/api/auth/login', {
+        const res = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -195,7 +195,7 @@ async function submitRegister() {
     }
 
     try {
-        const res = await fetch('http://localhost:3001/api/auth/register', {
+        const res = await fetch('/api/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, email, password })

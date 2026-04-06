@@ -94,28 +94,39 @@ router.get('/', requireAuth, async (req, res, next) => {
 });
 
 router.get('/public', optionalAuth, async (req, res, next) => {
-    const { element, tag, limit = 30 } = req.query;
+    const { element, username, sort = 'created_at_desc', limit = 30 } = req.query;
+    const currentUserId = req.user?.sub || null;
     try {
         const params = [];
-        let where = 'WHERE b.is_public = TRUE';
         let i = 1;
-        if (element) { where += ` AND c.element = $${i++}`; params.push(element); }
+        let where = 'WHERE b.is_public = TRUE';
+        if (element)  { where += ` AND c.element = $${i++}`;  params.push(element); }
+        if (username) { where += ` AND u.username = $${i++}`; params.push(username); }
+
+        const limitIdx = i++;
         params.push(parseInt(limit));
+        const userIdx = i;
+        params.push(currentUserId);
+
+        const orderBy = sort === 'likes' ? 'likes_count DESC, b.created_at DESC' : 'b.created_at DESC';
 
         const { rows } = await req.db.query(
             `SELECT b.id, b.name, b.character_id, b.created_at,
                     c.name AS character_name, c.element, c.rarity,
                     u.username,
+                    COUNT(DISTINCT l.user_id)::int              AS likes_count,
+                    BOOL_OR(l.user_id = $${userIdx}::uuid)      AS user_has_liked,
                     ARRAY_AGG(DISTINCT t.name ORDER BY t.name) FILTER (WHERE t.name IS NOT NULL) AS tags
              FROM builds b
-             LEFT JOIN characters c  ON c.id = b.character_id
-             LEFT JOIN users      u  ON u.id = b.user_id
-             LEFT JOIN build_tags bt ON bt.build_id = b.id
-             LEFT JOIN tags       t  ON t.id = bt.tag_id
+             LEFT JOIN characters  c  ON c.id = b.character_id
+             LEFT JOIN users       u  ON u.id = b.user_id
+             LEFT JOIN build_likes l  ON l.build_id = b.id
+             LEFT JOIN build_tags  bt ON bt.build_id = b.id
+             LEFT JOIN tags        t  ON t.id = bt.tag_id
              ${where}
              GROUP BY b.id, c.name, c.element, c.rarity, u.username
-             ORDER BY b.created_at DESC
-             LIMIT $${i}`,
+             ORDER BY ${orderBy}
+             LIMIT $${limitIdx}`,
             params
         );
         res.json({ builds: rows });
@@ -137,11 +148,13 @@ router.get('/:id', optionalAuth, async (req, res, next) => {
     }
 });
 
-router.post('/', async (req, res, next) => {
-    const { name, character_id, notes, tags = [], pieces = [] } = req.body;
+router.post('/', optionalAuth, async (req, res, next) => {
+    const { name, character_id, notes, is_public, tags = [], pieces = [] } = req.body;
     if (!name || !character_id) {
         return res.status(422).json({ error: 'name и character_id обязательны' });
     }
+    const userId = req.user?.sub || null;
+    const isPublic = userId ? (is_public !== false) : true;
     const client = await req.db.connect();
     try {
         await client.query('BEGIN');
@@ -149,7 +162,7 @@ router.post('/', async (req, res, next) => {
         const { rows } = await client.query(
             `INSERT INTO builds (user_id, name, character_id, notes, is_public)
              VALUES ($1,$2,$3,$4,$5) RETURNING *`,
-            [null, name, character_id, notes || null, true]
+            [userId, name, character_id, notes || null, isPublic]
         );
         const build = rows[0];
 
@@ -304,6 +317,23 @@ router.patch('/:id/pieces/:slot/obtained', requireAuth, async (req, res, next) =
     }
 });
 
+router.patch('/:id/visibility', requireAuth, async (req, res, next) => {
+    const { is_public } = req.body;
+    if (typeof is_public !== 'boolean') {
+        return res.status(422).json({ error: 'is_public must be boolean' });
+    }
+    try {
+        const { rows } = await req.db.query(
+            'UPDATE builds SET is_public=$1, updated_at=NOW() WHERE id=$2 AND user_id=$3 RETURNING id, is_public',
+            [is_public, req.params.id, req.user.sub]
+        );
+        if (!rows[0]) return res.status(404).json({ error: 'Not found or forbidden' });
+        res.json({ ok: true, id: rows[0].id, is_public: rows[0].is_public });
+    } catch (err) {
+        next(err);
+    }
+});
+
 router.delete('/:id', requireAuth, async (req, res, next) => {
     try {
         const { rows } = await req.db.query(
@@ -312,6 +342,38 @@ router.delete('/:id', requireAuth, async (req, res, next) => {
         );
         if (!rows[0]) return res.status(404).json({ error: 'Not found or forbidden' });
         res.json({ ok: true, deleted: rows[0].id });
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.post('/:id/like', requireAuth, async (req, res, next) => {
+    try {
+        await req.db.query(
+            'INSERT INTO build_likes (build_id, user_id) VALUES ($1,$2) ON CONFLICT DO NOTHING',
+            [req.params.id, req.user.sub]
+        );
+        const { rows } = await req.db.query(
+            'SELECT COUNT(*)::int AS likes_count FROM build_likes WHERE build_id=$1',
+            [req.params.id]
+        );
+        res.json({ ok: true, likes_count: rows[0].likes_count, user_has_liked: true });
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.delete('/:id/like', requireAuth, async (req, res, next) => {
+    try {
+        await req.db.query(
+            'DELETE FROM build_likes WHERE build_id=$1 AND user_id=$2',
+            [req.params.id, req.user.sub]
+        );
+        const { rows } = await req.db.query(
+            'SELECT COUNT(*)::int AS likes_count FROM build_likes WHERE build_id=$1',
+            [req.params.id]
+        );
+        res.json({ ok: true, likes_count: rows[0].likes_count, user_has_liked: false });
     } catch (err) {
         next(err);
     }

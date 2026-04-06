@@ -20,33 +20,14 @@
             <div class="header-top">
                 <h1>Калькулятор реликвий</h1>
                 <div class="header-actions">
-                    <button class="toolbar-btn export-btn" id="exportBtn" title="Экспорт всех сетов в JSON">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                            <polyline points="7 10 12 15 17 10" />
-                            <line x1="12" y1="15" x2="12" y2="3" />
-                        </svg>
-                        Экспорт
-                    </button>
-                    <button class="toolbar-btn import-btn" id="importBtn" title="Импорт сетов из JSON">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                            <polyline points="7 10 12 15 17 10" />
-                            <line x1="12" y1="15" x2="12" y2="3" transform="rotate(180 12 9)" />
-                        </svg>
-                        Импорт
-                    </button>
                     <div class="auth-buttons" id="authButtons">
                         <button class="toolbar-btn" id="openLoginBtn">Вход</button>
                         <button class="toolbar-btn" id="openRegisterBtn">Регистрация</button>
                     </div>
                     <div class="auth-profile hidden" id="authProfile">
-                        <span id="userUsername"></span>
+                        <button class="link-btn" id="userUsername" onclick="goToMyProfile()"></button>
                         <button class="toolbar-btn" id="logoutBtn">Выход</button>
                     </div>
-                    <input type="file" id="importFileInput" accept=".json" class="hidden">
                 </div>
             </div>
         </header>
@@ -74,6 +55,7 @@
                         <option value="name-asc">По названию A–Z</option>
                         <option value="name-desc">По названию Z–A</option>
                         <option value="progress-desc">По прогрессу ↓</option>
+                        <option value="likes">По лайкам</option>
                     </select>
                 </div>
             </div>
@@ -83,6 +65,11 @@
             <div class="tag-filter-row hidden" id="setsTagFilter">
                 <span class="filter-label">Теги:</span>
                 <div class="tag-filter-chips" id="setsTagChips"></div>
+            </div>
+
+            <div id="profileBanner" class="profile-banner hidden">
+                <span id="profileBannerText"></span>
+                <button class="link-btn" onclick="clearProfileFilter()">← Все публичные сеты</button>
             </div>
 
             <div class="sets-window">
@@ -280,6 +267,13 @@
                     </div>
                 </div>
             </div>
+            <div id="buildVisibilityRow" class="build-visibility-row hidden">
+                <span id="buildVisibilityBadge" class="visibility-badge"></span>
+                <button id="buildVisibilityToggle" class="toolbar-btn visibility-toggle-btn"
+                        onclick="toggleCurrentBuildVisibility()"></button>
+                <button id="buildCopyLink" class="toolbar-btn copy-link-btn"
+                        onclick="copyCurrentBuildLink()">Ссылка</button>
+            </div>
             <button class="save-set-btn" id="saveSetBtn" onclick="saveSet()">Сохранить сет</button>
         </div>
     </div>
@@ -293,6 +287,10 @@
             <input type="text" id="setNameInput" placeholder="Введите название сета" maxlength="50">
             <label class="modal-field-label">Теги <span class="label-hint">(через запятую)</span></label>
             <input type="text" id="setTagsInput" placeholder="carry, f2p, endgame, pf..." maxlength="150">
+            <label class="modal-field-label public-toggle-label">
+                <input type="checkbox" id="setIsPublic" checked>
+                Публичный сет
+            </label>
             <button class="save-set-btn" onclick="confirmSetName()">Сохранить</button>
         </div>
     </div>

@@ -1,7 +1,7 @@
 let CHARACTERS = [];
 
 async function loadCharacters() {
-    const response = await fetch('http://localhost:3001/api/characters');
+    const response = await fetch('/api/characters');
     const data = await response.json();
     const list = Array.isArray(data) ? data : (data.characters || []);
 
