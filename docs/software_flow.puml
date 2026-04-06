@@ -1,93 +1,109 @@
 @startuml software_flow
+skinparam linetype ortho
 skinparam defaultFontName Arial
-skinparam defaultFontSize 12
-skinparam dpi 150
+skinparam defaultFontSize 11
+skinparam backgroundColor white
+skinparam ArrowColor #333333
 
-skinparam rectangle {
-  BorderColor #333333
-  BackgroundColor #F8F8F8
+skinparam activity {
+    BackgroundColor #EEF4FA
+    BorderColor #4A7FA5
+    FontColor #1A1A1A
+    DiamondBackgroundColor #FFF8E1
+    DiamondBorderColor #E6A817
+    StartColor #333333
+    EndColor #333333
 }
 
-skinparam database {
-  BorderColor #333333
-  BackgroundColor #FFF8DC
-}
+title Программный сценарий — Калькулятор реликвий
 
-skinparam cloud {
-  BorderColor #333333
-  BackgroundColor #EEF5FF
-}
+start
 
-skinparam component {
-  BorderColor #333333
-  BackgroundColor #EFFAF0
-}
+:Загрузка приложения;
 
-title Диаграмма программного потока (API + JWT)
+:Promise.all([\n  loadCharacters(),\n  loadRelicData()\n])\n────────────────────────\nfetch characters.json\nfetch relic_sets.json\nfetch relic_stats.json;
 
-actor "Пользователь" as U
+if (Загрузка успешна?) then (да)
+else (нет)
+    :setsList.innerHTML =\n«Ошибка загрузки»;
+    stop
+endif
 
-rectangle "Фронтенд (браузер)" as FE {
-  component "UI / index.html\n(модальные окна)" as UI
-  component "script.js\n(логика калькулятора,\nFetch API)" as APP
-  component "charactersData.js\n(загрузка персонажей)" as CHARS_JS
-  component "artifacts.js\n(редактор реликвий)" as ARTIFACTS_JS
-}
+:CHARACTERS = data.map(c => new Character(...))\nRELIC_SETS, RELIC_STATS — в глобальных переменных;
 
-cloud "Express API" as BE {
-  component "auth routes\n/api/auth/*\n(register, login, me)" as R_AUTH
-  component "builds routes\n/api/builds/*\n(CRUD + tags)" as R_BUILDS
-  component "characters routes\n/api/characters/*" as R_CHARS
-  component "relics routes\n/api/relics/*\n(sets, items, stats)" as R_RELICS
-  component "JWT middleware\n(requireAuth/optionalAuth)" as MW
-}
+:initCharacterOptions() — рендер списка персонажей\ninitArtifactCards() — навешивание обработчиков карточек\nrenderSets() — рендер списка сетов;
 
-database "PostgreSQL" as DB {
-  rectangle "users" as T_USERS
-  rectangle "builds" as T_BUILDS
-  rectangle "build_pieces" as T_PIECES
-  rectangle "build_substats" as T_SUBS
-  rectangle "tags + build_tags" as T_TAGS
-  rectangle "characters, relic_sets, relic_items, stats" as T_DICT
-}
+:Ожидание действий пользователя\ncurrentCharacter = null\ncurrentEditingSetId = null;
 
-U --> UI : выбирает персонажа/реликвии
-UI --> APP : события интерфейса (клики, форм)
-APP --> APP : локальный расчет шансов выпадения
-APP --> CHARS_JS : загрузить данные
-CHARS_JS --> API : GET /api/characters
-ARTIFACTS_JS --> API : GET /api/relics, /api/relics/stats
-APP --> API : POST /api/builds (сохранение)
-APP --> API : PUT /api/builds/:id (редактирование)
-APP --> API : DELETE /api/builds/:id (удаление)
-APP --> API : GET /api/builds/public (просмотр)
+switch (Событие?)
 
-API --> R_AUTH : /api/auth/register, /api/auth/login, /api/auth/me
-API --> R_BUILDS : /api/builds/* (CRUD операции)
-API --> R_CHARS : /api/characters/*
-API --> R_RELICS : /api/relics/*
+case ( addSetBtn.click )
+    :createSetModal.classList.add("show")\naddCharacterBtn.classList.remove("hidden")\ncharacterDropdown.classList.add("hidden");
 
-R_AUTH --> MW : проверка JWT
-R_BUILDS --> MW : проверка JWT (для защищенных endpoint-ов)
+case ( addCharacterBtn.click )
+    :addCharacterBtn.classList.add("hidden")\ncharacterDropdown.classList.remove("hidden");
 
-R_BUILDS --> DB : INSERT/UPDATE/DELETE билдов
-R_AUTH --> DB : SELECT/INSERT users
-R_CHARS --> DB : SELECT characters
-R_RELICS --> DB : SELECT relic_sets, relic_items, stats
+case ( character-option.click )
+    :getCharacterById(option.dataset.character);
+    if (character найден?) then (нет)
+        :return (игнорируем клик);
+    else (да)
+        :createSetModal.classList.remove("show")\ncurrentCharacter = character\ncurrentEditingSetId = null;
+        :openArtifactModal(char)\n──────────────────────\ninitPieceData() — сброс pieceData\nupdateCardDisplay() × 6\ndocument.getElementById("selectedCharacterName")\ndocument.getElementById("selectedCharacterImg")\nartifactModal.classList.add("show");
+    endif
 
-DB --> R_BUILDS : данные билдов + tags
-DB --> R_AUTH : user данные
-DB --> R_CHARS : characters
-DB --> R_RELICS : sets/items/stats
+case ( openSet(id) )
+    :sets.find(s => s.id === id)\ngetCharacterById(set.characterId);
+    :openArtifactModal(char, setData)\n──────────────────────\ncurrentEditingSetId = setData.id\nloadSetIntoPieceData(setData.pieces)\n→ initPieceData() + заполнение pieceData\n→ updateCardDisplay() × 6\nartifactModal.classList.add("show");
 
-R_BUILDS --> API : JSON (build с share_code, pieces, tags)
-R_AUTH --> API : JWT token, user data
-R_CHARS --> API : characters array
-R_RELICS --> API : sets/items/stats
+case ( artifact-set-btn.click )
+    :openSetSelectionModal(card)\ngetSetsBySlot(slot)\nsetSelectionModal.classList.add("show");
+    :Выбор сета из списка\n→ selectSet(slot, setId)\n→ getSetById() + getItemForSlot()\n→ pieceData[slot].set = relicSet\n→ updateCardDisplay(slot)\n→ closeSetSelectionModal();
 
-API --> APP : JSON (в script.js)
-API --> CHARS_JS : characters
-API --> ARTIFACTS_JS : relics data
-APP --> UI : обновление интерфейса
+case ( main-stat.click )
+    while (pieceData[slot].set?) is (нет)
+        :alert("Сначала выберите сет");
+    endwhile
+    -> да;
+    :openMainStatModal(card)\ngetMainStatsForSlot(slot)\nmainStatModal.classList.add("show");
+    :Выбор стата\n→ pieceData[slot].mainStat = { id, name, value }\n→ updateCardDisplay(slot)\n→ closeMainStatModal();
+
+case ( sub-stat.click )
+    while (pieceData[slot].set?) is (нет)
+        :alert("Сначала выберите сет");
+    endwhile
+    -> да;
+    :openSubstatModal(card, i)\n────────────────────────\nШаг 1: доступные подстаты\n(без mainStat и уже выбранных)\nsubstatStep1.show;
+    :Клик по подстату\n→ selectedSubstatForModal = id\n→ showSubstatStep2();
+    :Шаг 2:\nупгрейды (0–5) + качество (low/mid/high)\nsubstatStep2.show\npendingSubstat = { upgrades, quality };
+    :confirmSubstat()\n──────────────────────\ngetSubstatValue(id, quality, upgrades)\npieceData[slot].substats[i] = { id, name, upgrades, quality, value }\nupdateCardDisplay(slot)\ncalculateDropChance(slot)\ncloseSubstatModal();
+
+case ( saveSetBtn.click / saveSet() )
+    while (currentCharacter?) is (нет)
+        :alert("Выберите персонажа");
+    endwhile
+    -> да;
+    :nameSetModal.classList.add("show")\nsetNameInput.value = существующее имя (если редактирование)\nsetNameInput.focus();
+    while (setName не пустой?) is (нет)
+        :confirmSetName()\nsetName = setNameInput.value.trim();
+        :alert("Введите название");
+    endwhile
+    -> да;
+    :getAllPiecesForSave()\n→ pieces = слоты с set + mainStat;
+    if (currentEditingSetId?) then (да — обновление)
+        :existing.setName = setName\nexisting.characterName / characterId\nexisting.pieces = pieces;
+    else (нет — создание)
+        :sets.push({\n  id: Date.now(), setName,\n  characterName, characterId, pieces\n});
+    endif
+    :renderSets()\ncloseNameModal()\ncloseArtifactModal()\ncurrentCharacter = null\ncurrentEditingSetId = null;
+
+case ( removeSet(id) )
+    :sets = sets.filter(s => s.id !== id)\nrenderSets();
+
+endswitch
+
+:← Ожидание действий пользователя;
+
+stop
 
 @enduml

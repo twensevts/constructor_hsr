@@ -1,92 +1,81 @@
 @startuml use_case
 left to right direction
-skinparam linetype polyline
-skinparam nodesep 70
-skinparam ranksep 80
-skinparam defaultFontName Arial
-skinparam defaultFontSize 11
-skinparam backgroundColor white
-skinparam ArrowColor #333333
-
-skinparam usecase {
-  BackgroundColor #EEF4FA
-  BorderColor #4A7FA5
-  FontColor #1A1A1A
-}
-
-skinparam actor {
-  BorderColor #333333
-  FontColor #1A1A1A
-}
-
-title Диаграмма вариантов использования - API и авторизация
+skinparam linetype ortho
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam ranksep 130
+skinparam nodesep 80
 
 actor "Гость" as Guest
 actor "Авторизованный пользователь" as User
 
-rectangle "Система: HSR Relic Calculator" {
-  usecase "Просматривать\nпубличные билды" as UC_ViewPublic
-  usecase "Открывать билд\nпо share-ссылке" as UC_OpenShare
-  usecase "Зарегистрироваться" as UC_Register
-  usecase "Войти" as UC_Login
-  usecase "Получить профиль" as UC_Profile
+rectangle "HSR Relic Calculator" {
+  rectangle "Старт и навигация" {
+    usecase "Главный экран:\nсписок сетов\n(по умолчанию Мои)" as UC_Home
+    usecase "Публичный режим:\nпросмотр каталога" as UC_ViewPublic
+    usecase "Открытие share-ссылки\n(read-only)" as UC_OpenShare
+    usecase "Регистрация/вход/выход" as UC_Auth
+  }
 
-  usecase "Создать билд" as UC_CreateBuild
-  usecase "Редактировать свой билд" as UC_EditBuild
-  usecase "Удалить свой билд" as UC_DeleteBuild
-  usecase "Отметить предмет\nкак полученный" as UC_MarkObtained
-  usecase "Управлять тегами" as UC_ManageTags
+  rectangle "Работа с сетами" {
+    usecase "Создание/редактирование\nличного сета" as UC_EditPersonalBuild
+    usecase "Выбор персонажа\nдля нового сета" as UC_ChooseCharacter
+    usecase "Управление\nпубличностью сета" as UC_ChangeVisibility
+    usecase "Удаление\nличного сета" as UC_DeleteBuild
+    usecase "Импорт публичного\nсета в личные" as UC_ImportPublic
+    usecase "Лайк/снятие лайка\nпубличного сета" as UC_Like
+  }
 
-  usecase "Настроить\nартефакты" as UC_ConfigArtifacts
-  usecase "Выбрать сет реликвий" as UC_SelectSet
-  usecase "Выбрать главный стат" as UC_SelectMain
-  usecase "Выбрать подстаты" as UC_SelectSub
-  usecase "Рассчитать шанс\nвыпадения" as UC_CalcChance
-  usecase "Сохранить билд\nв API" as UC_SaveApi
-  usecase "Получить share-ссылку" as UC_Share
+  rectangle "Системные зависимости" {
+    usecase "Локальное хранение\n(localStorage)" as UC_LocalStorage
+    usecase "Серверное хранение\n(API + PostgreSQL)" as UC_ServerStorage
+    usecase "Проверка владельца\n(user token или creator key)" as UC_OwnershipCheck
+    usecase "Нормализация setId\nчерез relic_items" as UC_SetIdNormalize
+  }
 }
 
-Guest --> UC_ViewPublic
-Guest --> UC_OpenShare
-Guest --> UC_Register
-Guest --> UC_Login
-Guest --> UC_CreateBuild
+Guest --> UC_Home
+User --> UC_Home
 
-User --> UC_Profile
-User --> UC_CreateBuild
-User --> UC_EditBuild
-User --> UC_DeleteBuild
-User --> UC_MarkObtained
-User --> UC_ViewPublic
-User --> UC_OpenShare
+UC_EditPersonalBuild .> UC_Home : <<extend>>
+UC_ViewPublic .> UC_Home : <<extend>>
+UC_OpenShare .> UC_Home : <<extend>>
+UC_Auth .> UC_Home : <<extend>>
 
-UC_Login ..> UC_Profile : <<include>>
+UC_EditPersonalBuild .> UC_ChooseCharacter : <<include>>
+UC_ChangeVisibility .> UC_EditPersonalBuild : <<extend>>
+UC_DeleteBuild .> UC_EditPersonalBuild : <<extend>>
+UC_ImportPublic .> UC_ViewPublic : <<extend>>
+UC_Like .> UC_ViewPublic : <<extend>>
+User --> UC_Like
 
-UC_CreateBuild -[hidden]down-> UC_EditBuild
-UC_ConfigArtifacts -[hidden]down-> UC_SaveApi
-UC_SaveApi -[hidden]down-> UC_ManageTags
-UC_ManageTags -[hidden]down-> UC_Share
-UC_CreateBuild -[hidden]right-> UC_ConfigArtifacts
-UC_EditBuild -[hidden]right-> UC_SaveApi
+UC_Home -[hidden]down-> UC_EditPersonalBuild
+UC_EditPersonalBuild -[hidden]down-> UC_ImportPublic
+UC_LocalStorage -[hidden]down-> UC_ServerStorage
+UC_ServerStorage -[hidden]down-> UC_OwnershipCheck
+UC_OwnershipCheck -[hidden]down-> UC_SetIdNormalize
 
-UC_CreateBuild .right.> UC_ConfigArtifacts : <<include>>
-UC_CreateBuild .right.> UC_SaveApi : <<include>>
-UC_CreateBuild .right.> UC_ManageTags : <<include>>
-UC_CreateBuild .right.> UC_Share : <<extend>>
+UC_LocalStorage .> UC_EditPersonalBuild : <<extend>>
+UC_ServerStorage .> UC_EditPersonalBuild : <<extend>>
+UC_DeleteBuild .> UC_OwnershipCheck : <<include>>
+UC_EditPersonalBuild .> UC_SetIdNormalize : <<include>>
+UC_ServerStorage .> UC_ImportPublic : <<extend>> [если авторизован]
+UC_LocalStorage .> UC_ImportPublic : <<extend>> [если гость]
+UC_Like .> UC_ServerStorage : <<include>>
+UC_ViewPublic .> UC_ServerStorage : <<include>>
 
-UC_EditBuild .right.> UC_ConfigArtifacts : <<include>>
-UC_EditBuild .right.> UC_SaveApi : <<include>>
-UC_EditBuild .right.> UC_ManageTags : <<include>>
-UC_EditBuild .right.> UC_Share : <<extend>>
+note right of UC_LocalStorage
+  Гостевой режим:
+  сохранение/чтение/удаление
+  без авторизации.
+end note
 
-UC_ConfigArtifacts ..> UC_SelectSet : <<include>>
-UC_ConfigArtifacts ..> UC_SelectMain : <<include>>
-UC_ConfigArtifacts ..> UC_SelectSub : <<include>>
-UC_CalcChance ..> UC_ConfigArtifacts : <<extend>>
-
-note right of UC_CalcChance
-  Условие расширения:
-  выбраны сет и главный стат
+note right of UC_ServerStorage
+  Аккаунтный режим:
+  REST API -> PostgreSQL.
+  Для анонимных серверных записей
+  используется creator key.
 end note
 
 @enduml
+
