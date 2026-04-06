@@ -178,6 +178,7 @@ function initCharacterOptions() {
 function openArtifactModal(character, setData) {
     currentCharacter = character;
     currentEditingSetId = setData?.id ?? null;
+    currentBuildIsPublic = null;
 
     const artifactModal = document.getElementById('artifactModal');
     document.getElementById('selectedCharacterName').textContent = character.name;
@@ -204,6 +205,12 @@ function openArtifactModal(character, setData) {
         });
     }
 
+    if (setData && typeof setData.is_public === 'boolean' && setData.id != null) {
+        updateVisibilityRow(setData.id, setData.is_public);
+    } else {
+        updateVisibilityRow(null, null);
+    }
+
     updateModalSummary();
     artifactModal.classList.add('show');
 }
@@ -215,13 +222,17 @@ function updateModalSummary() {
     let combinedChance = 1;
     let hasAnyChance = false;
     let obtainedCount = 0;
+    let selectedCount = 0;
     let configuredCount = 0;
 
     if (typeof pieceData !== 'undefined') {
         slots.forEach(slot => {
             const d = pieceData[slot];
             if (!d) return;
-            if (d.obtained) obtainedCount++;
+            if (d.set) {
+                selectedCount++;
+                if (d.obtained) obtainedCount++;
+            }
             if (!d.set || !d.mainStat) return;
             configuredCount++;
             const chance = typeof calculateDropChance === 'function'
@@ -252,7 +263,7 @@ function updateModalSummary() {
         chanceEl.textContent = '—';
     }
     if (obtainedEl) {
-        obtainedEl.textContent = `${obtainedCount} / ${slots.length}`;
+        obtainedEl.textContent = `${obtainedCount} / ${selectedCount}`;
     }
 }
 
@@ -276,6 +287,10 @@ function normalizeSetsForUi(nextSets) {
     return nextSets
         .filter(s => s && typeof s === 'object')
         .map(s => {
+            const incomingSource = s.source || (setsViewMode === 'public' ? 'public' : 'local');
+            const normalizedSource = (setsViewMode !== 'public' && incomingSource === 'public')
+                ? 'local'
+                : incomingSource;
             const normalized = {
                 ...s,
                 id: s.id,
@@ -294,7 +309,9 @@ function normalizeSetsForUi(nextSets) {
             return {
                 ...normalized,
                 pieces,
-                source: s.source || (setsViewMode === 'public' ? 'public' : 'local')
+                source: normalizedSource,
+                serverId: normalizedSource === 'local' ? null : (s.serverId || s.id || null),
+                is_public: normalizedSource === 'local' ? false : !!s.is_public
             };
         });
 }
@@ -303,6 +320,16 @@ function saveSetsToStorage() {
     try {
         localStorage.setItem(SETS_STORAGE_KEY, JSON.stringify(sets));
     } catch { /* ignore */ }
+}
+
+function removeSetLocally(id) {
+    sets = sets.filter(s => s.id !== id);
+    const stillExists = sets.some(s => (s.tags || []).includes(setsActiveTag));
+    if (!stillExists) setsActiveTag = '';
+    if (!window.Auth?.isLoggedIn()) {
+        saveSetsToStorage();
+    }
+    renderSets();
 }
 
 function loadSetsFromStorage() {
@@ -323,6 +350,7 @@ function mapBuildRowToUi(row) {
 
     return {
         id: row.id,
+        serverId: row.id,
         setName: row.name,
         characterName: row.character_name,
         characterId: row.character_id,
@@ -335,7 +363,7 @@ function mapBuildRowToUi(row) {
 }
 
 async function loadOwnedBuilds() {
-    const res = await fetch(`${API_BASE}/builds?limit=100`);
+    const res = await fetch(`${API_BASE}/builds?limit=100`, { cache: 'no-store' });
     if (res.status === 401) {
         sets = [];
         return;
@@ -356,11 +384,13 @@ function saveSet() {
     const nameSetModal = document.getElementById('nameSetModal');
     const input        = document.getElementById('setNameInput');
     const tagsInput    = document.getElementById('setTagsInput');
+    const publicToggle = document.getElementById('setIsPublic');
     const existing     = currentEditingSetId
         ? sets.find(s => s.id === currentEditingSetId) : null;
 
     input.value = existing ? existing.setName : '';
     if (tagsInput) tagsInput.value = existing?.tags?.join(', ') || '';
+    if (publicToggle) publicToggle.checked = existing?.is_public ?? true;
 
     nameSetModal.classList.add('show');
     input.focus();
@@ -373,6 +403,11 @@ async function openSet(id) {
     if (set.source === 'public' || set.source === 'owned') {
         try {
             const res = await fetch(`${API_BASE}/builds/${set.id}`);
+            if (res.status === 404 && set.source === 'owned') {
+                removeSetLocally(set.id);
+                alert('Этот сет уже удалён из базы и был убран из ваших сетов');
+                return;
+            }
             if (!res.ok) throw new Error(`API error ${res.status}`);
             const build = await res.json();
 
@@ -387,8 +422,7 @@ async function openSet(id) {
                     mainStat: p.main_stat_id ? { id: p.main_stat_id, name: p.main_stat_name || p.main_stat_id, value: p.main_stat_value || '' } : null,
                     substats: (p.substats || []).map(s => ({ id: s.stat_id, name: s.name || s.stat_id, upgrades: s.upgrades || 0, quality: s.quality || 'mid', value: s.value || '' }))
                 }));
-                openArtifactModal(character, { id: build.id, pieces });
-                updateVisibilityRow(build.id, !!build.is_public);
+                openArtifactModal(character, { id: build.id, pieces, is_public: !!build.is_public });
             } else {
                 openSharedBuild(build);
             }
@@ -414,6 +448,8 @@ function confirmSetName() {
         : [];
 
     const pieces = typeof getAllPiecesForSave === 'function' ? getAllPiecesForSave() : [];
+    const isPublic = document.getElementById('setIsPublic')?.checked !== false;
+    const isLoggedIn = !!window.Auth?.isLoggedIn?.();
 
     if (currentEditingSetId !== null) {
         const existing = sets.find(s => s.id === currentEditingSetId);
@@ -431,27 +467,31 @@ function confirmSetName() {
             existing.characterId   = currentCharacter.id;
             existing.pieces        = pieces;
             existing.tags          = tags;
+            existing.is_public     = isPublic;
         }
-    } else {
+    } else if (!isLoggedIn) {
+        const localId = Date.now();
         pieces.forEach(p => { if (typeof p.obtained !== 'boolean') p.obtained = false; });
         sets.push({
-            id:            Date.now(),
+            id:            localId,
             createdAt:     Date.now(),
             setName,
             characterName: currentCharacter.name,
             characterId:   currentCharacter.id,
             pieces,
-            tags
+            tags,
+            is_public:     isPublic,
+            serverId:      null,
+            creatorKey:    window.Auth?.getCreatorKey ? window.Auth.getCreatorKey() : null
         });
     }
 
     const editingId      = currentEditingSetId;
     const savedCharacter = currentCharacter;
-    const savedIsPublic  = currentBuildIsPublic;
-    const isPublic       = document.getElementById('setIsPublic')?.checked !== false;
+    const createdLocalId = (!isLoggedIn && editingId === null) ? sets[sets.length - 1]?.id : null;
 
     sets = normalizeSetsForUi(sets);
-    if (!window.Auth?.isLoggedIn()) {
+    if (!isLoggedIn) {
         saveSetsToStorage();
     }
     renderSets();
@@ -459,9 +499,35 @@ function confirmSetName() {
     closeArtifactModal();
 
     if (editingId === null) {
+        if (!isLoggedIn && !isPublic) {
+            return;
+        }
         postBuildToApi(savedCharacter.id, setName, tags, pieces, isPublic)
-            .then(build => { if (isPublic) showShareModal(build.id); })
-            .catch(err => console.warn('API save failed:', err));
+            .then(async build => {
+                if (isLoggedIn) {
+                    await loadCurrentViewData();
+                    renderSets();
+                } else {
+                    const created = sets.find(s => s.id === createdLocalId);
+                    if (created) {
+                        created.serverId = build.id;
+                        created.is_public = !!build.is_public;
+                        created.creatorKey = window.Auth?.getCreatorKey ? window.Auth.getCreatorKey() : null;
+                        saveSetsToStorage();
+                    }
+                }
+                if (isPublic) {
+                    showShareModal(build.id);
+                }
+            })
+            .catch(async err => {
+                console.warn('API save failed:', err);
+                if (isLoggedIn) {
+                    alert('Не удалось сохранить сет в аккаунт');
+                    await loadCurrentViewData();
+                    renderSets();
+                }
+            });
     } else if (typeof editingId === 'string') {
         fetch(`${API_BASE}/builds/${editingId}`, {
             method: 'PUT',
@@ -471,9 +537,20 @@ function confirmSetName() {
                 character_id: savedCharacter.id,
                 tags,
                 pieces,
-                is_public: savedIsPublic ?? true
+                is_public: isPublic
             })
-        }).catch(err => console.warn('API update failed:', err));
+        })
+            .then(res => {
+                if (!res.ok) throw new Error(`API error ${res.status}`);
+                return loadCurrentViewData();
+            })
+            .then(() => renderSets())
+            .catch(async err => {
+                console.warn('API update failed:', err);
+                alert('Не удалось обновить сет в аккаунте');
+                await loadCurrentViewData();
+                renderSets();
+            });
     }
 }
 
@@ -592,10 +669,13 @@ function renderSets() {
         const elColor        = ELEMENT_COLORS[element] || '#aaa';
         const elName         = ELEMENT_NAMES[element] || element;
 
-        const obtainedCount  = (set.pieces || []).filter(p => p.obtained).length;
-        const totalPieces    = (set.pieces || []).length || 6;
-        const progressPct    = Math.round((obtainedCount / totalPieces) * 100);
-        const isComplete     = obtainedCount >= 6;
+        const configuredPieces = (set.pieces || []).filter(p => p && (p.setId || p.set_id));
+        const totalPieces    = configuredPieces.length;
+        const obtainedCount  = configuredPieces.filter(p => p.obtained).length;
+        const progressPct    = totalPieces > 0
+            ? Math.round((obtainedCount / totalPieces) * 100)
+            : 0;
+        const isComplete     = totalPieces > 0 && obtainedCount >= totalPieces;
 
         // Иконки предметов (индивидуальные piece-иконки)
         const relicIconsHtml = (set.pieces || []).map(p => {
@@ -628,6 +708,12 @@ function renderSets() {
                  ♥ <span class="like-count">${set.likes_count || 0}</span>
                </button>`
             : '';
+                const importHtml = set.source === 'public'
+                        ? `<button class="open-set-btn import-set-btn"
+                                             onclick='event.stopPropagation(); importPublicSet(${safeId})'>
+                                 В мои
+                             </button>`
+                        : '';
 
 
         const item = document.createElement('div');
@@ -653,7 +739,7 @@ function renderSets() {
                     ${tagsHtml ? `<div class="set-card-tags">${tagsHtml}</div>` : ''}
                 </div>
                 <div class="set-card-progress-wrap">
-                    <div class="set-card-progress-label">${obtainedCount}/6</div>
+                    <div class="set-card-progress-label">${obtainedCount}/${totalPieces}</div>
                     <div class="set-card-progress-bar">
                         <div class="set-card-progress-fill"
                              style="width:${progressPct}%;
@@ -667,6 +753,7 @@ function renderSets() {
                 : ''}
             <div class="set-item-actions">
                 <button class="open-set-btn" onclick='openSet(${safeId})'>Открыть</button>
+                ${importHtml}
                 ${likeHtml}
                 ${set.source !== 'public'
                     ? `<button class="remove-set-btn" onclick='removeSet(${safeId}); event.stopPropagation()'>Удалить</button>`
@@ -681,25 +768,28 @@ function removeSet(id) {
     if (!confirm('Удалить сет?')) return;
 
     const target = sets.find(s => s.id === id);
-    if (target?.source === 'owned') {
-        fetch(`${API_BASE}/builds/${id}`, { method: 'DELETE' })
+    const serverId = target?.serverId || (target?.source === 'owned' ? id : null);
+    const shouldDeleteFromApi = !!serverId && (target?.source === 'owned' || target?.creatorKey);
+    if (shouldDeleteFromApi) {
+        fetch(`${API_BASE}/builds/${serverId}`, { method: 'DELETE' })
             .then(res => {
+                if (res.status === 404) {
+                    removeSetLocally(id);
+                    return null;
+                }
                 if (!res.ok) throw new Error(`API error ${res.status}`);
+                removeSetLocally(id);
                 return loadCurrentViewData();
             })
             .then(() => renderSets())
             .catch(err => {
                 console.error('Не удалось удалить билд:', err);
-                alert('Не удалось удалить билд');
+                removeSetLocally(id);
             });
         return;
     }
 
-    sets = sets.filter(s => s.id !== id);
-    const stillExists = sets.some(s => (s.tags || []).includes(setsActiveTag));
-    if (!stillExists) setsActiveTag = '';
-    saveSetsToStorage();
-    renderSets();
+    removeSetLocally(id);
 }
 
 // ── Инициализация тулбара ────────────────────────────────
@@ -796,7 +886,8 @@ async function loadPublicBuilds(username = null) {
     const params = new URLSearchParams({ limit: 100 });
     if (username) params.set('username', username);
     if (setsSortBy === 'likes') params.set('sort', 'likes');
-    const res = await fetch(`${API_BASE}/builds/public?${params}`);
+    params.set('_', String(Date.now()));
+    const res = await fetch(`${API_BASE}/builds/public?${params}`, { cache: 'no-store' });
     if (!res.ok) throw new Error(`API error ${res.status}`);
     const data = await res.json();
     const builds = Array.isArray(data?.builds) ? data.builds : [];
@@ -872,7 +963,7 @@ async function loadSharedBuild(shareId) {
     }
 }
 
-function openSharedBuild(build) {
+function mapBuildDetailsToEditor(build) {
     const character = getCharacterById(build.character_id) || {
         id:      build.character_id,
         name:    build.character_name || build.character_id,
@@ -898,6 +989,31 @@ function openSharedBuild(build) {
             value:    s.value || ''
         }))
     }));
+
+    return { character, pieces };
+}
+
+function mapImportedBuildToUi(build, source = 'owned') {
+    const { character, pieces } = mapBuildDetailsToEditor(build);
+    return {
+        id: build.id,
+        serverId: source === 'owned' ? build.id : null,
+        setName: build.name,
+        characterName: character.name,
+        characterId: character.id,
+        tags: Array.isArray(build.tags) ? build.tags : [],
+        createdAt: build.created_at || Date.now(),
+        pieces,
+        source,
+        is_public: !!build.is_public,
+        likes_count: Number(build.likes_count || 0),
+        user_has_liked: !!build.user_has_liked,
+        creatorKey: window.Auth?.getCreatorKey ? window.Auth.getCreatorKey() : null
+    };
+}
+
+function openSharedBuild(build) {
+    const { character, pieces } = mapBuildDetailsToEditor(build);
 
     isReadOnly = true;
     openArtifactModal(character, { id: null, pieces });
@@ -993,6 +1109,49 @@ function copyCurrentBuildLink() {
 
 window.toggleCurrentBuildVisibility = toggleCurrentBuildVisibility;
 window.copyCurrentBuildLink = copyCurrentBuildLink;
+
+async function importPublicSet(buildId) {
+    try {
+        const res = await fetch(`${API_BASE}/builds/${buildId}`);
+        if (!res.ok) throw new Error(`API error ${res.status}`);
+        const build = await res.json();
+        const tags = Array.isArray(build.tags) ? build.tags : [];
+
+        if (window.Auth?.isLoggedIn()) {
+            const created = await postBuildToApi(build.character_id, build.name, tags, mapBuildDetailsToEditor(build).pieces, false);
+            setsViewMode = 'local';
+            const viewModeSelect = document.getElementById('viewModeSelect');
+            if (viewModeSelect) viewModeSelect.value = 'local';
+            activeProfileUsername = null;
+            setsActiveTag = '';
+            await loadCurrentViewData();
+            renderSets();
+            updateViewUiControls();
+            openSet(created.id);
+            return;
+        }
+
+        const imported = mapImportedBuildToUi(build, 'local');
+        imported.id = Date.now();
+        imported.serverId = null;
+        imported.is_public = false;
+        setsViewMode = 'local';
+        const viewModeSelect = document.getElementById('viewModeSelect');
+        if (viewModeSelect) viewModeSelect.value = 'local';
+        activeProfileUsername = null;
+        setsActiveTag = '';
+
+        // Import into existing local list only; do not copy the current public list to local storage.
+        loadSetsFromStorage();
+        sets = normalizeSetsForUi([imported, ...sets.filter(s => s.id !== imported.id)]);
+        saveSetsToStorage();
+        renderSets();
+        updateViewUiControls();
+    } catch (err) {
+        console.error('Не удалось импортировать билд:', err);
+        alert('Не удалось добавить сет в личные');
+    }
+}
 
 // ── Лайки ─────────────────────────────────────────────────
 

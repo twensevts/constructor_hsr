@@ -5,6 +5,23 @@ const { requireAuth, optionalAuth } = require('../middleware/auth');
 
 const VALID_SLOTS = ['head', 'hands', 'body', 'feet', 'sphere', 'rope'];
 
+async function resolveSetId(dbOrClient, rawSetId, cache = new Map()) {
+    if (!rawSetId) return null;
+    const key = String(rawSetId);
+    if (cache.has(key)) return cache.get(key);
+
+    const direct = await dbOrClient.query('SELECT id FROM relic_sets WHERE id = $1', [key]);
+    if (direct.rows[0]?.id) {
+        cache.set(key, direct.rows[0].id);
+        return direct.rows[0].id;
+    }
+
+    const viaItem = await dbOrClient.query('SELECT set_id FROM relic_items WHERE id = $1', [key]);
+    const resolved = viaItem.rows[0]?.set_id || null;
+    cache.set(key, resolved);
+    return resolved;
+}
+
 async function getBuildWithDetails(db, buildId) {
     const buildQ = await db.query(
         `SELECT b.*, c.name AS character_name, c.element, c.rarity, c.icon_url,
@@ -116,11 +133,20 @@ router.get('/public', optionalAuth, async (req, res, next) => {
                     u.username,
                     COUNT(DISTINCT l.user_id)::int              AS likes_count,
                     BOOL_OR(l.user_id = $${userIdx}::uuid)      AS user_has_liked,
+                    COALESCE(
+                        JSONB_AGG(DISTINCT JSONB_BUILD_OBJECT(
+                            'slot', bp.slot,
+                            'setId', bp.set_id,
+                            'obtained', bp.obtained
+                        )) FILTER (WHERE bp.set_id IS NOT NULL),
+                        '[]'::jsonb
+                    ) AS pieces,
                     ARRAY_AGG(DISTINCT t.name ORDER BY t.name) FILTER (WHERE t.name IS NOT NULL) AS tags
              FROM builds b
              LEFT JOIN characters  c  ON c.id = b.character_id
              LEFT JOIN users       u  ON u.id = b.user_id
              LEFT JOIN build_likes l  ON l.build_id = b.id
+             LEFT JOIN build_pieces bp ON bp.build_id = b.id
              LEFT JOIN build_tags  bt ON bt.build_id = b.id
              LEFT JOIN tags        t  ON t.id = bt.tag_id
              ${where}
@@ -154,15 +180,17 @@ router.post('/', optionalAuth, async (req, res, next) => {
         return res.status(422).json({ error: 'name и character_id обязательны' });
     }
     const userId = req.user?.sub || null;
-    const isPublic = userId ? (is_public !== false) : true;
+    const creatorKey = req.headers['x-constructor-hsr-creator-key'] || null;
+    const isPublic = typeof is_public === 'boolean' ? is_public : true;
     const client = await req.db.connect();
+    const setIdCache = new Map();
     try {
         await client.query('BEGIN');
 
         const { rows } = await client.query(
-            `INSERT INTO builds (user_id, name, character_id, notes, is_public)
-             VALUES ($1,$2,$3,$4,$5) RETURNING *`,
-            [userId, name, character_id, notes || null, isPublic]
+            `INSERT INTO builds (user_id, creator_key, name, character_id, notes, is_public)
+             VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`,
+            [userId, userId ? null : creatorKey, name, character_id, notes || null, isPublic]
         );
         const build = rows[0];
 
@@ -181,13 +209,14 @@ router.post('/', optionalAuth, async (req, res, next) => {
 
         for (const piece of pieces) {
             if (!VALID_SLOTS.includes(piece.slot)) continue;
+            const resolvedSetId = await resolveSetId(client, piece.setId, setIdCache);
             const { rows: pr } = await client.query(
                 `INSERT INTO build_pieces
                     (build_id, slot, set_id, main_stat_id, main_stat_value, obtained, drop_chance)
                  VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id`,
                 [
                     build.id, piece.slot,
-                    piece.setId || null,
+                    resolvedSetId,
                     piece.mainStat?.id || null,
                     piece.mainStat?.value?.toString() || null,
                     !!piece.obtained,
@@ -222,6 +251,7 @@ router.post('/', optionalAuth, async (req, res, next) => {
 router.put('/:id', requireAuth, async (req, res, next) => {
     const { name, character_id, notes, is_public, tags = [], pieces = [] } = req.body;
     const client = await req.db.connect();
+    const setIdCache = new Map();
     try {
         const check = await client.query(
             'SELECT user_id FROM builds WHERE id = $1', [req.params.id]
@@ -255,13 +285,14 @@ router.put('/:id', requireAuth, async (req, res, next) => {
         await client.query('DELETE FROM build_pieces WHERE build_id=$1', [req.params.id]);
         for (const piece of pieces) {
             if (!VALID_SLOTS.includes(piece.slot)) continue;
+            const resolvedSetId = await resolveSetId(client, piece.setId, setIdCache);
             const { rows: pr } = await client.query(
                 `INSERT INTO build_pieces
                     (build_id, slot, set_id, main_stat_id, main_stat_value, obtained, drop_chance)
                  VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id`,
                 [
                     req.params.id, piece.slot,
-                    piece.setId || null,
+                    resolvedSetId,
                     piece.mainStat?.id || null,
                     piece.mainStat?.value?.toString() || null,
                     !!piece.obtained,
@@ -334,11 +365,13 @@ router.patch('/:id/visibility', requireAuth, async (req, res, next) => {
     }
 });
 
-router.delete('/:id', requireAuth, async (req, res, next) => {
+router.delete('/:id', optionalAuth, async (req, res, next) => {
     try {
+        const creatorKey = req.headers['x-constructor-hsr-creator-key'] || null;
+        const userId = req.user?.sub || null;
         const { rows } = await req.db.query(
-            'DELETE FROM builds WHERE id=$1 AND user_id=$2 RETURNING id',
-            [req.params.id, req.user.sub]
+            'DELETE FROM builds WHERE id=$1 AND (user_id=$2 OR creator_key=$3) RETURNING id',
+            [req.params.id, userId, creatorKey]
         );
         if (!rows[0]) return res.status(404).json({ error: 'Not found or forbidden' });
         res.json({ ok: true, deleted: rows[0].id });

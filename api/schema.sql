@@ -94,6 +94,7 @@ CREATE TABLE tags (
 CREATE TABLE builds (
     id           UUID         PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id      UUID         REFERENCES users(id) ON DELETE SET NULL,
+    creator_key  TEXT,
     name         VARCHAR(100) NOT NULL,
     character_id VARCHAR(100) NOT NULL REFERENCES characters(id),
     notes        TEXT,

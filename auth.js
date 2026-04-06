@@ -1,4 +1,14 @@
 const AUTH_TOKEN_KEY = 'constructor_hsr_auth_token';
+const ANON_CREATOR_KEY = 'constructor_hsr_creator_key';
+
+function getCreatorKey() {
+    let key = localStorage.getItem(ANON_CREATOR_KEY);
+    if (!key) {
+        key = (crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`).replace(/[^a-zA-Z0-9-]/g, '');
+        localStorage.setItem(ANON_CREATOR_KEY, key);
+    }
+    return key;
+}
 
 function saveToken(token) {
     localStorage.setItem(AUTH_TOKEN_KEY, token);
@@ -18,18 +28,29 @@ function isLoggedIn() {
 
 window.Auth = {
     getToken,
-    isLoggedIn
+    isLoggedIn,
+    getCreatorKey
 };
 
 const originalFetch = window.fetch.bind(window);
 window.fetch = async function(input, init = {}) {
     const url = typeof input === 'string' ? input : (input?.url || '');
     const token = getToken();
+    const creatorKey = getCreatorKey();
 
     if (token && url.includes('/api/')) {
         const headers = new Headers(init.headers || {});
         if (!headers.has('Authorization')) {
             headers.set('Authorization', `Bearer ${token}`);
+        }
+        if (!headers.has('X-Constructor-HSR-Creator-Key')) {
+            headers.set('X-Constructor-HSR-Creator-Key', creatorKey);
+        }
+        init.headers = headers;
+    } else if (url.includes('/api/')) {
+        const headers = new Headers(init.headers || {});
+        if (!headers.has('X-Constructor-HSR-Creator-Key')) {
+            headers.set('X-Constructor-HSR-Creator-Key', creatorKey);
         }
         init.headers = headers;
     }
