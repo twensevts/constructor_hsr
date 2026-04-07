@@ -1,0 +1,82 @@
+@startuml class_diagram
+left to right direction
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+hide empty methods
+
+class User {
+  +id: uuid
+  +username: string
+  +email: string
+}
+
+class Character {
+  +id: string
+  +name: string
+  +element: string
+  +path: string
+  +rarity: int
+}
+
+class Build {
+  +id: uuid
+  +name: string
+  +is_public: boolean
+  +creator_key: string?
+}
+
+class BuildPiece {
+  +id: uuid
+  +slot: string
+  +obtained: boolean
+  +main_stat_value: string?
+}
+
+class BuildSubstat {
+  +id: uuid
+  +upgrades: int
+  +quality: string
+  +value: string?
+}
+
+class RelicSet {
+  +id: string
+  +name: string
+  +type: string
+}
+
+class RelicItem {
+  +id: string
+  +slot: string
+  +name: string
+}
+
+class Stat {
+  +id: string
+  +name: string
+  +unit: string
+}
+
+class Tag {
+  +id: int
+  +name: string
+}
+
+class BuildLike {
+  +build_id: uuid
+  +user_id: uuid
+}
+
+User "1" -- "0..*" Build
+Character "1" -- "0..*" Build
+Build "1" -- "0..6" BuildPiece
+BuildPiece "1" -- "0..4" BuildSubstat
+RelicSet "1" -- "2..4" RelicItem
+RelicSet "1" -- "0..*" BuildPiece
+Stat "1" -- "0..*" BuildPiece : main_stat_id
+Stat "1" -- "0..*" BuildSubstat : stat_id
+Build "0..*" -- "0..*" Tag
+Build "1" -- "0..*" BuildLike
+User "1" -- "0..*" BuildLike
+
+@enduml

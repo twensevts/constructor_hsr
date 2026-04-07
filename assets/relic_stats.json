@@ -37,7 +37,7 @@
       {"id": "hp_pct", "name": "HP%", "value": "43.2%", "weight": 15},
       {"id": "atk_pct", "name": "ATK%", "value": "43.2%", "weight": 28},
       {"id": "def_pct", "name": "DEF%", "value": "54%", "weight": 15},
-      {"id": "break_effect", "name": "Эфф. прорыва", "value": "64.8%", "weight": 18},
+      {"id": "break_effect", "name": "Эффект пробития", "value": "64.8%", "weight": 18},
       {"id": "energy_regen", "name": "Восст. энергии", "value": "19.4%", "weight": 12}
     ]
   },

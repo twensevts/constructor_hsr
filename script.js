@@ -276,8 +276,11 @@ function openArtifactModal(character, setData) {
         });
     }
 
-    if (setData && typeof setData.is_public === 'boolean' && setData.id != null) {
-        updateVisibilityRow(setData.id, setData.is_public);
+    if (setData && setData.id != null) {
+        const isPublic = typeof setData.is_public === 'boolean'
+            ? setData.is_public
+            : !!setData.is_public;
+        updateVisibilityRow(setData.id, isPublic);
     } else {
         updateVisibilityRow(null, null);
     }
@@ -455,10 +458,14 @@ function saveSet() {
     const publicToggle = document.getElementById('setIsPublic');
     const existing     = currentEditingSetId
         ? sets.find(s => s.id === currentEditingSetId) : null;
+    const isLoggedIn   = !!window.Auth?.isLoggedIn?.();
 
     input.value = existing ? existing.setName : '';
     if (tagsInput) tagsInput.value = existing?.tags?.join(', ') || '';
-    if (publicToggle) publicToggle.checked = existing?.is_public ?? true;
+    if (publicToggle) {
+        publicToggle.checked = isLoggedIn ? (existing?.is_public ?? true) : false;
+        publicToggle.disabled = !isLoggedIn;
+    }
 
     nameSetModal.classList.add('show');
     input.focus();
@@ -507,8 +514,8 @@ function confirmSetName() {
         : [];
 
     const pieces = typeof getAllPiecesForSave === 'function' ? getAllPiecesForSave() : [];
-    const isPublic = document.getElementById('setIsPublic')?.checked !== false;
     const isLoggedIn = !!window.Auth?.isLoggedIn?.();
+    const isPublic = isLoggedIn && document.getElementById('setIsPublic')?.checked !== false;
 
     if (currentEditingSetId !== null) {
         const existing = sets.find(s => s.id === currentEditingSetId);
@@ -548,6 +555,7 @@ function confirmSetName() {
     const editingId      = currentEditingSetId;
     const savedCharacter = currentCharacter;
     const createdLocalId = (!isLoggedIn && editingId === null) ? sets[sets.length - 1]?.id : null;
+    const shouldKeepArtifactOpen = isLoggedIn && editingId === null;
 
     sets = normalizeSetsForUi(sets);
     if (!isLoggedIn) {
@@ -555,7 +563,9 @@ function confirmSetName() {
     }
     renderSets();
     closeNameModal();
-    closeArtifactModal();
+    if (!shouldKeepArtifactOpen) {
+        closeArtifactModal();
+    }
 
     if (editingId === null) {
         if (!isLoggedIn && !isPublic) {
@@ -566,6 +576,15 @@ function confirmSetName() {
                 if (isLoggedIn) {
                     await loadCurrentViewData();
                     renderSets();
+                    currentEditingSetId = build.id;
+                    currentBuildIsPublic = !!build.is_public;
+                    updateVisibilityRow(build.id, !!build.is_public);
+                    const { character, pieces: editorPieces } = mapBuildDetailsToEditor(build);
+                    openArtifactModal(character, {
+                        id: build.id,
+                        pieces: editorPieces,
+                        is_public: !!build.is_public
+                    });
                 } else {
                     const created = sets.find(s => s.id === createdLocalId);
                     if (created) {
@@ -1132,7 +1151,11 @@ function updateVisibilityRow(buildId, isPublic) {
     const link   = document.getElementById('buildCopyLink');
     if (!row) return;
 
-    if (!buildId) { row.classList.add('hidden'); return; }
+    if (!buildId) {
+        row.classList.add('hidden');
+        row.style.display = '';
+        return;
+    }
 
     currentBuildIsPublic = isPublic;
     badge.textContent  = isPublic ? 'Публичный' : 'Приватный';
@@ -1140,6 +1163,7 @@ function updateVisibilityRow(buildId, isPublic) {
     toggle.textContent = isPublic ? 'Скрыть' : 'Опубликовать';
     link.classList.toggle('hidden', !isPublic);
     row.classList.remove('hidden');
+    row.style.display = 'flex';
 }
 
 async function toggleCurrentBuildVisibility() {

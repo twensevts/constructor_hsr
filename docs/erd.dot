@@ -5,26 +5,28 @@ digraph ERD {
     node [shape=record, fontname="Arial", fontsize=10, style="filled", fillcolor="#EEF4FA", color="#4A7FA5", fontcolor="#1A1A1A"];
     edge [fontname="Arial", fontsize=9, color="#333333"];
 
-    users [label="{users|id (PK): uuid|email (UQ): text|password_hash: text|created_at: timestamptz}"];
-    builds [label="{builds|id (PK): uuid|user_id (FK): uuid|character_id (FK): int|title: text|notes: text|is_public: boolean|share_code (UQ): text|created_at: timestamptz|updated_at: timestamptz}"];
-    build_pieces [label="{build_pieces|id (PK): uuid|build_id (FK): uuid|slot: text|item_id (FK): int|main_stat_id (FK): int|level: int|obtained: boolean}"];
-    build_substats [label="{build_substats|id (PK): uuid|piece_id (FK): uuid|stat_id (FK): int|value: numeric|rolls: int}"];
-    tags [label="{tags|id (PK): uuid|user_id (FK): uuid|name: text}"];
-    build_tags [label="{build_tags|build_id (FK): uuid|tag_id (FK): uuid}"];
-    characters [label="{characters|id (PK): int|key (UQ): text|name: text|rarity: int|path: text|element: text}"];
-    relic_sets [label="{relic_sets|id (PK): int|key (UQ): text|name: text|rarity: int}"];
-    relic_items [label="{relic_items|id (PK): int|set_id (FK): int|slot: text|name: text}"];
-    stats [label="{stats|id (PK): int|key (UQ): text|name: text|kind: text}"];
+    users [label="{users|id (PK): uuid|username (UQ): varchar(50)|email (UQ): varchar(255)|password_hash: varchar(255)|avatar_url: text|created_at: timestamptz|updated_at: timestamptz}"];
+    builds [label="{builds|id (PK): uuid|user_id (FK): uuid|creator_key: text|name: varchar(100)|character_id (FK): varchar(100)|notes: text|is_public: boolean|created_at: timestamptz|updated_at: timestamptz}"];
+    build_pieces [label="{build_pieces|id (PK): uuid|build_id (FK): uuid|slot: varchar(10)|set_id (FK): varchar(100)|main_stat_id (FK): varchar(50)|main_stat_value: varchar(20)|obtained: boolean|drop_chance: numeric(24,12)|UNIQUE(build_id, slot)}"];
+    build_substats [label="{build_substats|id (PK): uuid|piece_id (FK): uuid|stat_id (FK): varchar(50)|upgrades: smallint|quality: varchar(5)|value: varchar(20)|sort_order: smallint}"];
+    tags [label="{tags|id (PK): serial|name (UQ): varchar(50)}"];
+    build_tags [label="{build_tags|build_id (FK): uuid|tag_id (FK): integer}"];
+    build_likes [label="{build_likes|build_id (FK): uuid|user_id (FK): uuid|created_at: timestamptz}"];
+    characters [label="{characters|id (PK): varchar(100)|name: varchar(100)|icon_url: text|splash_url: text|rarity: smallint|element: varchar(50)|path: varchar(50)|game_version: varchar(10)|created_at: timestamptz}"];
+    relic_sets [label="{relic_sets|id (PK): varchar(100)|name: varchar(200)|icon_url: text|type: varchar(10)|bonus_2pc: text|bonus_4pc: text|created_at: timestamptz}"];
+    relic_items [label="{relic_items|id (PK): varchar(100)|set_id (FK): varchar(100)|slot: varchar(10)|name: varchar(200)|icon_url: text}"];
+    stats [label="{stats|id (PK): varchar(50)|name: varchar(100)|unit: varchar(5)|is_main: boolean|is_sub: boolean|sub_weight: smallint}"];
 
     users -> builds [label="1..N"];
-    users -> tags [label="1..N"];
     builds -> build_pieces [label="1..N"];
     build_pieces -> build_substats [label="1..N"];
     builds -> build_tags [label="0..N"];
     tags -> build_tags [label="0..N"];
+    users -> build_likes [label="1..N"];
+    builds -> build_likes [label="0..N"];
     characters -> builds [label="1..N"];
     relic_sets -> relic_items [label="1..N"];
-    relic_items -> build_pieces [label="0..N"];
+    relic_sets -> build_pieces [label="0..N"];
     stats -> build_pieces [label="0..N (main)"];
     stats -> build_substats [label="0..N (sub)"];
 }

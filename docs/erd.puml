@@ -6,20 +6,23 @@ skinparam classAttributeIconSize 0
 entity "users" as users {
   *id : uuid <<PK>>
   --
-  email : text <<UQ>>
-  password_hash : text
+  username : varchar(50) <<UQ>>
+  email : varchar(255) <<UQ>>
+  password_hash : varchar(255)
+  avatar_url : text
   created_at : timestamptz
+  updated_at : timestamptz
 }
 
 entity "builds" as builds {
   *id : uuid <<PK>>
   --
   user_id : uuid <<FK users.id>>
-  character_id : int <<FK characters.id>>
-  title : text
+  creator_key : text
+  name : varchar(100)
+  character_id : varchar(100) <<FK characters.id>>
   notes : text
   is_public : boolean
-  share_code : text <<UQ>>
   created_at : timestamptz
   updated_at : timestamptz
 }
@@ -28,83 +31,102 @@ entity "build_pieces" as build_pieces {
   *id : uuid <<PK>>
   --
   build_id : uuid <<FK builds.id>>
-  slot : text
-  item_id : int <<FK relic_items.id>>
-  main_stat_id : int <<FK stats.id>>
-  level : int
+  slot : varchar(10)
+  set_id : varchar(100) <<FK relic_sets.id>>
+  main_stat_id : varchar(50) <<FK stats.id>>
+  main_stat_value : varchar(20)
   obtained : boolean
+  drop_chance : numeric(24,12)
+  UNIQUE(build_id, slot)
 }
 
 entity "build_substats" as build_substats {
   *id : uuid <<PK>>
   --
   piece_id : uuid <<FK build_pieces.id>>
-  stat_id : int <<FK stats.id>>
-  value : numeric
-  rolls : int
+  stat_id : varchar(50) <<FK stats.id>>
+  upgrades : smallint
+  quality : varchar(5)
+  value : varchar(20)
+  sort_order : smallint
 }
 
 entity "tags" as tags {
-  *id : uuid <<PK>>
+  *id : serial <<PK>>
   --
-  user_id : uuid <<FK users.id>>
-  name : text
+  name : varchar(50) <<UQ>>
 }
 
 entity "build_tags" as build_tags {
   *build_id : uuid <<FK builds.id>>
-  *tag_id : uuid <<FK tags.id>>
+  *tag_id : integer <<FK tags.id>>
+}
+
+entity "build_likes" as build_likes {
+  *build_id : uuid <<FK builds.id>>
+  *user_id : uuid <<FK users.id>>
+  created_at : timestamptz
 }
 
 entity "characters" as characters {
-  *id : int <<PK>>
+  *id : varchar(100) <<PK>>
   --
-  key : text <<UQ>>
-  name : text
-  rarity : int
-  path : text
-  element : text
+  name : varchar(100)
+  icon_url : text
+  splash_url : text
+  rarity : smallint
+  element : varchar(50)
+  path : varchar(50)
+  game_version : varchar(10)
+  created_at : timestamptz
 }
 
 entity "relic_sets" as relic_sets {
-  *id : int <<PK>>
+  *id : varchar(100) <<PK>>
   --
-  key : text <<UQ>>
-  name : text
-  rarity : int
+  name : varchar(200)
+  icon_url : text
+  type : varchar(10)
+  bonus_2pc : text
+  bonus_4pc : text
+  created_at : timestamptz
 }
 
 entity "relic_items" as relic_items {
-  *id : int <<PK>>
+  *id : varchar(100) <<PK>>
   --
-  set_id : int <<FK relic_sets.id>>
-  slot : text
-  name : text
+  set_id : varchar(100) <<FK relic_sets.id>>
+  slot : varchar(10)
+  name : varchar(200)
+  icon_url : text
 }
 
 entity "stats" as stats {
-  *id : int <<PK>>
+  *id : varchar(50) <<PK>>
   --
-  key : text <<UQ>>
-  name : text
-  kind : text
+  name : varchar(100)
+  unit : varchar(5)
+  is_main : boolean
+  is_sub : boolean
+  sub_weight : smallint
 }
 
 users |o--o{ builds : "owns"
-users ||--o{ tags : "creates"
 builds ||--|{ build_pieces : "contains"
 build_pieces ||--o{ build_substats : "has"
 builds ||--o{ build_tags : "tagged"
 tags ||--o{ build_tags : "mapping"
+users ||--o{ build_likes : "likes"
+builds ||--o{ build_likes : "liked by"
 characters ||--o{ builds : "for character"
 relic_sets ||--|{ relic_items : "includes"
-relic_items |o--o{ build_pieces : "selected"
+relic_sets |o--o{ build_pieces : "piece set"
 stats |o--o{ build_pieces : "main stat"
 stats ||--o{ build_substats : "sub stat"
 
 note right of builds
 is_public=true -> виден в /public
-share_code -> доступ по /share/:code
+user_id может быть NULL (ON DELETE SET NULL)
 end note
 
 @enduml

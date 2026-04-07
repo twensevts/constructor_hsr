@@ -90,8 +90,8 @@ router.get('/', requireAuth, async (req, res, next) => {
         const { rows } = await req.db.query(
             `SELECT b.id, b.name, b.character_id, b.is_public, b.created_at, b.updated_at,
                     c.name AS character_name, c.element, c.rarity, c.icon_url,
-                    COUNT(bp.id)                            AS pieces_count,
-                    COUNT(bp.id) FILTER (WHERE bp.obtained) AS obtained_count,
+                    COUNT(DISTINCT bp.id)                            AS pieces_count,
+                    COUNT(DISTINCT bp.id) FILTER (WHERE bp.obtained) AS obtained_count,
                     ARRAY_AGG(DISTINCT t.name ORDER BY t.name) FILTER (WHERE t.name IS NOT NULL) AS tags
              FROM builds b
              LEFT JOIN characters   c  ON c.id = b.character_id
@@ -182,6 +182,9 @@ router.post('/', optionalAuth, async (req, res, next) => {
     const userId = req.user?.sub || null;
     const creatorKey = req.headers['x-constructor-hsr-creator-key'] || null;
     const isPublic = typeof is_public === 'boolean' ? is_public : true;
+    if (!userId && isPublic) {
+        return res.status(401).json({ error: 'Unauthorized — public builds require login' });
+    }
     const client = await req.db.connect();
     const setIdCache = new Map();
     try {
