@@ -39,6 +39,77 @@ const ELEMENT_NAMES = {
     Physical:  'Физический'
 };
 
+const UI_TO_DB_STAT_IDS = {
+    speed:        'spd',
+    effect_hit:   'eff_hit',
+    effect_res:   'eff_res',
+    break_effect: 'brk_eff',
+    energy_regen: 'energy_reg',
+    heal:         'heal_out'
+};
+
+const DB_TO_UI_STAT_IDS = Object.fromEntries(
+    Object.entries(UI_TO_DB_STAT_IDS).map(([uiId, dbId]) => [dbId, uiId])
+);
+
+const ELEMENT_TO_DMG_STAT_ID = {
+    Lightning: 'lightning_dmg',
+    Fire:      'fire_dmg',
+    Ice:       'ice_dmg',
+    Wind:      'wind_dmg',
+    Quantum:   'quantum_dmg',
+    Imaginary: 'imaginary_dmg',
+    Physical:  'physical_dmg'
+};
+
+function getUiDamageStatId(element) {
+    return ELEMENT_TO_DMG_STAT_ID[element] || 'physical_dmg';
+}
+
+function normalizeStatIdForUi(statId, element = null) {
+    if (!statId) return statId;
+    if (statId === 'dmg_bonus') return getUiDamageStatId(element);
+    return DB_TO_UI_STAT_IDS[statId] || statId;
+}
+
+function normalizeStatIdForDb(statId) {
+    if (!statId) return statId;
+    if (Object.prototype.hasOwnProperty.call(UI_TO_DB_STAT_IDS, statId)) {
+        return UI_TO_DB_STAT_IDS[statId];
+    }
+    if (statId.endsWith('_dmg')) return 'dmg_bonus';
+    return statId;
+}
+
+function normalizePieceForApi(piece) {
+    return {
+        ...piece,
+        mainStat: piece.mainStat ? {
+            ...piece.mainStat,
+            id: normalizeStatIdForDb(piece.mainStat.id)
+        } : null,
+        substats: Array.isArray(piece.substats)
+            ? piece.substats.map(sub => sub ? { ...sub, id: normalizeStatIdForDb(sub.id) } : sub)
+            : []
+    };
+}
+
+function normalizePieceForUi(piece) {
+    if (!piece || typeof piece !== 'object') return piece;
+    const normalizedSetId = piece.setId || piece.set_id || piece.set?.id || null;
+    return {
+        ...piece,
+        slot: piece.slot || '',
+        setId: normalizedSetId,
+        set_id: normalizedSetId,
+        obtained: !!piece.obtained,
+        mainStat: piece.mainStat ? { ...piece.mainStat } : null,
+        substats: Array.isArray(piece.substats)
+            ? piece.substats.map(sub => sub ? { ...sub } : sub)
+            : []
+    };
+}
+
 // ── DOM-ссылки ─────────────────────────────────────────────
 
 const addSetBtn        = document.getElementById('addSetBtn');
@@ -278,6 +349,7 @@ window.updateObtainedForCurrentSet = function(slot, obtained) {
         saveSetsToStorage();
     }
     updateModalSummary();
+    renderSets();
 };
 
 // ── Хранилище ─────────────────────────────────────────────
@@ -301,14 +373,10 @@ function normalizeSetsForUi(nextSets) {
                 tags: Array.isArray(s.tags) ? s.tags : []
             };
             const pieces = Array.isArray(s.pieces) ? s.pieces : [];
-            pieces.forEach(p => {
-                if (p && typeof p === 'object' && typeof p.obtained !== 'boolean') {
-                    p.obtained = false;
-                }
-            });
+            const normalizedPieces = pieces.map(normalizePieceForUi);
             return {
                 ...normalized,
-                pieces,
+                pieces: normalizedPieces,
                 source: normalizedSource,
                 serverId: normalizedSource === 'local' ? null : (s.serverId || s.id || null),
                 is_public: normalizedSource === 'local' ? false : !!s.is_public
@@ -410,18 +478,9 @@ async function openSet(id) {
             }
             if (!res.ok) throw new Error(`API error ${res.status}`);
             const build = await res.json();
+            const { character, pieces } = mapBuildDetailsToEditor(build);
 
             if (set.source === 'owned') {
-                const character = getCharacterById(build.character_id) || {
-                    id: build.character_id, name: build.character_name || build.character_id,
-                    icon: build.icon_url || '', photo: build.icon_url || '',
-                    element: build.element || '', path: '', rarity: build.rarity === 5 ? '5 Star' : '4 Star'
-                };
-                const pieces = (build.pieces || []).map(p => ({
-                    slot: p.slot, setId: p.set_id, obtained: !!p.obtained,
-                    mainStat: p.main_stat_id ? { id: p.main_stat_id, name: p.main_stat_name || p.main_stat_id, value: p.main_stat_value || '' } : null,
-                    substats: (p.substats || []).map(s => ({ id: s.stat_id, name: s.name || s.stat_id, upgrades: s.upgrades || 0, quality: s.quality || 'mid', value: s.value || '' }))
-                }));
                 openArtifactModal(character, { id: build.id, pieces, is_public: !!build.is_public });
             } else {
                 openSharedBuild(build);
@@ -529,6 +588,7 @@ function confirmSetName() {
                 }
             });
     } else if (typeof editingId === 'string') {
+        const apiPieces = pieces.map(normalizePieceForApi);
         fetch(`${API_BASE}/builds/${editingId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -536,7 +596,7 @@ function confirmSetName() {
                 name: setName,
                 character_id: savedCharacter.id,
                 tags,
-                pieces,
+                pieces: apiPieces,
                 is_public: isPublic
             })
         })
@@ -669,9 +729,9 @@ function renderSets() {
         const elColor        = ELEMENT_COLORS[element] || '#aaa';
         const elName         = ELEMENT_NAMES[element] || element;
 
-        const configuredPieces = (set.pieces || []).filter(p => p && (p.setId || p.set_id));
+        const configuredPieces = (set.pieces || []).filter(p => p && (p.slot || p.setId || p.set_id || p.set?.id));
         const totalPieces    = configuredPieces.length;
-        const obtainedCount  = configuredPieces.filter(p => p.obtained).length;
+        const obtainedCount  = configuredPieces.filter(p => !!p.obtained).length;
         const progressPct    = totalPieces > 0
             ? Math.round((obtainedCount / totalPieces) * 100)
             : 0;
@@ -679,8 +739,9 @@ function renderSets() {
 
         // Иконки предметов (индивидуальные piece-иконки)
         const relicIconsHtml = (set.pieces || []).map(p => {
-            if (!p.setId) return '';
-            const rs = typeof getSetById === 'function' ? getSetById(p.setId) : null;
+            const setId = p.setId || p.set_id || p.set?.id;
+            if (!setId) return '';
+            const rs = typeof getSetById === 'function' ? getSetById(setId) : null;
             if (!rs) return '';
             const item = typeof getItemForSlot === 'function' ? getItemForSlot(rs, p.slot) : null;
             const iconSrc = item?.icon || rs.icon;
@@ -920,10 +981,11 @@ window.onAuthStateChanged = async function() {
 };
 
 async function postBuildToApi(characterId, name, tags, pieces, is_public = true) {
+    const apiPieces = pieces.map(normalizePieceForApi);
     const res = await fetch(`${API_BASE}/builds`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ character_id: characterId, name, tags, pieces, is_public })
+        body: JSON.stringify({ character_id: characterId, name, tags, pieces: apiPieces, is_public })
     });
     if (!res.ok) throw new Error(`API error ${res.status}`);
     return res.json();
@@ -979,10 +1041,14 @@ function mapBuildDetailsToEditor(build) {
         setId:    p.set_id,
         obtained: !!p.obtained,
         mainStat: p.main_stat_id
-            ? { id: p.main_stat_id, name: p.main_stat_name || p.main_stat_id, value: p.main_stat_value || '' }
+            ? {
+                id: normalizeStatIdForUi(p.main_stat_id, character.element),
+                name: p.main_stat_name || p.main_stat_id,
+                value: p.main_stat_value || ''
+            }
             : null,
         substats: (p.substats || []).map(s => ({
-            id:       s.stat_id,
+            id:       normalizeStatIdForUi(s.stat_id, character.element),
             name:     s.name || s.stat_id,
             upgrades: s.upgrades || 0,
             quality:  s.quality || 'mid',
