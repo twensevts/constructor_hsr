@@ -10,38 +10,70 @@
 
 ## Быстрый старт
 
-### 1. PostgreSQL
+### 1. Установить PostgreSQL (Windows)
 
-```bash
-brew install postgresql@16
-brew services start postgresql@16
-createdb hsr_constructor
-psql hsr_constructor < api/schema.sql
-```
+1. Установите PostgreSQL через официальный инсталлятор:
+	https://www.postgresql.org/download/windows/
+2. Во время установки запомните пароль пользователя postgres.
+3. После установки у вас обычно появляется psql по пути:
+	C:\Program Files\PostgreSQL\18\bin\psql.exe
 
-### 2. Зависимости и конфиг
+Если команда psql не работает в PowerShell, используйте полный путь к psql.exe (пример ниже).
 
-```bash
+### 2. Установить зависимости
+
+В корне проекта:
+
+```powershell
+npm install
 cd api
 npm install
-cp .env.example .env
+cd ..
 ```
 
-Отредактировать `api/.env` — заменить `DB_USER` на свой логин macOS, `DB_PASS` оставить пустым (если пароль не задавался).
+### 3. Настроить api/.env
 
-### 3. Заполнить базу данными
+Скопируйте пример и заполните параметры подключения:
 
-```bash
+```powershell
+Copy-Item api/.env.example api/.env
+```
+
+Проверьте, что в api/.env корректные значения:
+
+- DB_HOST=localhost
+- DB_PORT=5432
+- DB_NAME=hsr_constructor
+- DB_USER=postgres
+- DB_PASS=ваш_пароль_postgres
+
+### 4. Создать базу и применить схему
+
+Из корня проекта (PowerShell):
+
+```powershell
+$env:PGPASSWORD="ваш_пароль_postgres"
+& "C:\Program Files\PostgreSQL\18\bin\psql.exe" -h localhost -p 5432 -U postgres -d postgres -c "CREATE DATABASE hsr_constructor;"
+& "C:\Program Files\PostgreSQL\18\bin\psql.exe" -h localhost -p 5432 -U postgres -d hsr_constructor -f api\schema.sql
+```
+
+Если база уже создана, команда CREATE DATABASE вернет ошибку, это нормально.
+
+### 5. Заполнить базу данными
+
+```powershell
 node api/seed.js
 ```
 
-### 4. Запустить сервер
+Ожидаемый результат: Seeding complete.
 
-```bash
+### 6. Запустить сервер
+
+```powershell
 node api/server.js
 ```
 
-Открыть [http://localhost:3000](http://localhost:3000).
+Откройте http://localhost:3000
 
 ## API
 
